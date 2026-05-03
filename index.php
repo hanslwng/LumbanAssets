@@ -1,5 +1,27 @@
 <?php
+// Start session if not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 require_once 'config.php';
+
+// Session timeout check (1 hour)
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 3600)) {
+    session_unset();
+    session_destroy();
+    header('Location: /login');
+    exit;
+}
+
+// Update last activity time
+if (isset($_SESSION['user_id'])) {
+    $_SESSION['last_activity'] = time();
+}
+
+// Get user info for display
+$userName = isset($_SESSION['user_name']) ? $_SESSION['user_name'] : 'User';
+$userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 'staff';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -7,9 +29,11 @@ require_once 'config.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo SYSTEM_NAME; ?></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/dashboard-modern.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
-    <link rel="stylesheet" href="assets/css/style.css">
     <script
   src="https://www.tuqlas.com/chatbot.js"
   data-key="tq_live_6942abb054d728b3d5e5e924cb228034af1d63d9"
@@ -17,9 +41,13 @@ require_once 'config.php';
   defer
 ></script>
 </head>
-<!-- Add before </body> -->
 
 <body>
+
+<!-- Hidden user data for JavaScript -->
+<div style="display: none;" 
+     data-user-name="<?php echo htmlspecialchars($userName); ?>" 
+     data-user-role="<?php echo htmlspecialchars($userRole); ?>"></div>
 
 <div class="app">
 <!-- Sidebar -->
@@ -90,6 +118,20 @@ require_once 'config.php';
       <button class="btn btn-ghost btn-sm" onclick="openModal('return-modal');populateReturnSelect()">
         <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 7H2M6 3L2 7l4 4"/></svg>Record Return
       </button>
+      <button class="btn btn-ghost btn-sm" onclick="openModal('issue-modal');populateIssueSelect()">
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7h10M8 3l4 4-4 4"/></svg>Issue Item
+      </button>
+      <button class="btn btn-dark" onclick="openModal('encode-modal')">
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 1v12M1 7h12"/></svg>Encode Item
+      </button>
+      
+      <!-- User Profile & Logout -->
+      <div class="tb-divider"></div>
+      <a href="/logout" class="btn-logout" onclick="return confirm('Are you sure you want to logout?');">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+      </a>
+    </div>
       <button class="btn btn-ghost btn-sm" onclick="openModal('issue-modal');populateIssueSelect()">
         <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7h10M8 3l4 4-4 4"/></svg>Issue Item
       </button>
@@ -235,5 +277,6 @@ require_once 'config.php';
 <div class="toast" id="toast"></div>
 
 <script src="assets/js/app.js"></script>
+<script src="assets/js/dashboard-enhancements.js"></script>
 </body>
 </html>
