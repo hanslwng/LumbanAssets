@@ -30,8 +30,8 @@ $userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 'staff';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo SYSTEM_NAME; ?></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/dashboard-modern.css">
+    <link rel="stylesheet" href="public/assets/css/style.css">
+    <link rel="stylesheet" href="public/assets/css/dashboard-modern.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
     <script
@@ -276,7 +276,7 @@ $userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 'staff';
 
 <div class="toast" id="toast"></div>
 
-<script src="assets/js/app.js"></script>
-<script src="assets/js/dashboard-enhancements.js"></script>
+<script src="public/assets/js/app.js"></script>
+<script src="public/assets/js/dashboard-enhancements.js"></script>
 </body>
 </html>
