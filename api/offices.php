@@ -1,0 +1,163 @@
+<?php
+// Suppress errors to prevent HTML in JSON response
+error_reporting(0);
+ini_set('display_errors', 0);
+
+require_once '../config.php';
+
+header('Content-Type: application/json');
+
+$method = $_SERVER['REQUEST_METHOD'];
+
+try {
+    $conn = getDBConnection();
+} catch (Exception $e) {
+    jsonResponse([
+        'success' => false,
+        'message' => 'Database connection failed',
+        'hint' => 'Please run setup-database.php to initialize the database'
+    ]);
+}
+
+switch ($method) {
+    case 'GET':
+        getOffices($conn);
+        break;
+    case 'POST':
+        createOffice($conn);
+        break;
+    case 'PUT':
+        updateOffice($conn);
+        break;
+    case 'DELETE':
+        deleteOffice($conn);
+        break;
+    default:
+        jsonResponse(['success' => false, 'message' => 'Method not allowed']);
+}
+
+function getOffices($conn) {
+    $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+    
+    if ($id > 0) {
+        // Get single office with item counts
+        $sql = "SELECT o.*, 
+                COUNT(DISTINCT p.id) as total_items,
+                COUNT(DISTINCT CASE WHEN p.category = 'SE' THEN p.id END) as se_count,
+                COUNT(DISTINCT CASE WHEN p.category = 'PPE' THEN p.id END) as ppe_count,
+                COUNT(DISTINCT CASE WHEN p.status = 'Active' THEN p.id END) as active_count,
+                COUNT(DISTINCT CASE WHEN p.status = 'Issued' THEN p.id END) as issued_count
+                FROM offices o
+                LEFT JOIN property_items p ON o.id = p.office_id
+                WHERE o.id = ?
+                GROUP BY o.id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $office = $result->fetch_assoc();
+        
+        if ($office) {
+            jsonResponse(['success' => true, 'data' => $office]);
+        } else {
+            jsonResponse(['success' => false, 'message' => 'Office not found']);
+        }
+    } else {
+        // Get all offices with item counts
+        $sql = "SELECT o.*, 
+                COUNT(DISTINCT p.id) as total_items,
+                COUNT(DISTINCT CASE WHEN p.category = 'SE' THEN p.id END) as se_count,
+                COUNT(DISTINCT CASE WHEN p.category = 'PPE' THEN p.id END) as ppe_count,
+                COUNT(DISTINCT CASE WHEN p.status = 'Active' THEN p.id END) as active_count,
+                COUNT(DISTINCT CASE WHEN p.status = 'Issued' THEN p.id END) as issued_count
+                FROM offices o
+                LEFT JOIN property_items p ON o.id = p.office_id
+                GROUP BY o.id
+                ORDER BY o.name ASC";
+        $result = $conn->query($sql);
+        
+        $offices = [];
+        while ($row = $result->fetch_assoc()) {
+            $offices[] = $row;
+        }
+        
+        jsonResponse(['success' => true, 'data' => $offices]);
+    }
+}
+
+function createOffice($conn) {
+    $data = json_decode(file_get_contents('php://input'), true);
+    
+    $name = sanitizeInput($data['name'] ?? '');
+    $code = sanitizeInput($data['code'] ?? '');
+    
+    if (empty($name) || empty($code)) {
+        jsonResponse(['success' => false, 'message' => 'Name and code are required']);
+    }
+    
+    $sql = "INSERT INTO offices (name, code) VALUES (?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('ss', $name, $code);
+    
+    if ($stmt->execute()) {
+        $office_id = $conn->insert_id;
+        jsonResponse(['success' => true, 'message' => 'Office created successfully', 'id' => $office_id]);
+    } else {
+        jsonResponse(['success' => false, 'message' => 'Failed to create office: ' . $conn->error]);
+    }
+}
+
+function updateOffice($conn) {
+    $data = json_decode(file_get_contents('php://input'), true);
+    
+    $id = intval($data['id'] ?? 0);
+    $name = sanitizeInput($data['name'] ?? '');
+    $code = sanitizeInput($data['code'] ?? '');
+    
+    if ($id <= 0 || empty($name) || empty($code)) {
+        jsonResponse(['success' => false, 'message' => 'Invalid data']);
+    }
+    
+    $sql = "UPDATE offices SET name = ?, code = ? WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('ssi', $name, $code, $id);
+    
+    if ($stmt->execute()) {
+        jsonResponse(['success' => true, 'message' => 'Office updated successfully']);
+    } else {
+        jsonResponse(['success' => false, 'message' => 'Failed to update office: ' . $conn->error]);
+    }
+}
+
+function deleteOffice($conn) {
+    $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+    
+    if ($id <= 0) {
+        jsonResponse(['success' => false, 'message' => 'Invalid office ID']);
+    }
+    
+    // Check if office has items
+    $sql = "SELECT COUNT(*) as count FROM property_items WHERE office_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    
+    if ($row['count'] > 0) {
+        jsonResponse(['success' => false, 'message' => 'Cannot delete office with existing items']);
+    }
+    
+    $sql = "DELETE FROM offices WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('i', $id);
+    
+    if ($stmt->execute()) {
+        jsonResponse(['success' => true, 'message' => 'Office deleted successfully']);
+    } else {
+        jsonResponse(['success' => false, 'message' => 'Failed to delete office: ' . $conn->error]);
+    }
+}
+
+$conn->close();
+?>

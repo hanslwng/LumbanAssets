@@ -1,0 +1,56 @@
+# LGU Property Inventory Management System
+# Git Ignore File
+
+# Storage and cache
+storage/*
+!storage/.gitkeep
+
+# Configuration (if contains sensitive data)
+# config/database.php
+
+# Logs
+*.log
+
+# OS Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE Files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Backup files
+*.bak
+*.backup
+*.sql.gz
+
+# Uploaded files (if any)
+public/uploads/*
+!public/uploads/.gitkeep
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# Composer (if used later)
+vendor/
+composer.lock
+
+# Node modules (if used later)
+node_modules/
+package-lock.json
+
+# Build files
+dist/
+build/

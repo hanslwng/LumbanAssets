@@ -1,0 +1,113 @@
+LGU PROPERTY INVENTORY SYSTEM - CHATBOT KNOWLEDGE BASE (5000 chars max)
+
+SYSTEM: PHP inventory management for Philippine LGUs. Tracks property items, PAR/ICS forms, generates COA reports.
+
+TECH: PHP 7.4+, MySQL, Vanilla JS/HTML/CSS. RESTful API, JSON responses. No frameworks.
+
+FILES:
+- config.php: DB config (getDBConnection, jsonResponse, sanitizeInput)
+- index.php: Main SPA
+- database.sql: Schema + sample data
+- api/: dashboard.php, items.php, offices.php, issuance.php, returns.php, unserviceable.php
+- assets/css/style.css: Complete styling
+- assets/js/app.js: Main logic
+- includes/modals.php: Dialogs
+
+DATABASE:
+1. offices: id, name, code
+2. property_items: id, property_number, description, category(SE/PPE), unit_value, quantity, office_id, status, condition_status, acquisition_date
+3. issuance_records: form_type(PAR/ICS), form_number, property_item_id, issued_to, issue_date
+4. return_records: issuance_id, return_date, return_action, condition_on_return
+5. unserviceable_records: property_item_id, marked_date, reason, disposal_status
+6. disposal_records: disposal_date, disposal_method
+
+BUSINESS RULES:
+- SE (Semi-Expendable): <₱50k → ICS form
+- PPE (Property/Plant/Equipment): ≥₱50k → PAR form
+- Property#: YYYY-[SE|PPE]-XXXXXX (e.g., 2025-PPE-000001)
+- Status: Active→Issued→Returned/Unserviceable→Disposed
+- PAR: For PPE, per person
+- ICS: For SE, per person
+
+API ENDPOINTS (JSON):
+GET /api/dashboard.php → stats, recent_items, recent_transactions
+GET /api/items.php?category=SE&status=Active&office_id=1&search=text
+POST /api/items.php {description, unit_value, quantity, office_id, acquisition_date}
+POST /api/issuance.php {property_item_id, issued_to, position, form_number, issue_date}
+POST /api/returns.php {issuance_id, return_date, return_action, condition_on_return}
+POST /api/unserviceable.php {property_item_id, marked_date, reason}
+
+KEY FUNCTIONS:
+- nav(page, event): Navigate pages
+- loadDashboard(): Load stats
+- openModal(id)/closeModal(id): Modals
+- showToast(msg, type): Notifications
+- saveItem(): Create property
+- liveClassify(): Auto SE/PPE classification
+- apiGet(endpoint)/apiPost(endpoint, data): API calls
+
+PAGES:
+1. Dashboard: Stats, recent items/transactions
+2. By Office: Office inventory
+3. All Items: Full inventory + filters
+4. Semi-Expendable: SE only
+5. PPE: PPE only
+6. Issuance: PAR/ICS records
+7. Returns: Return tracking
+8. Unserviceable: Damaged items
+9. Disposal: Disposed items
+10. COA Report: Audit report
+
+MODALS:
+- encode-modal: Add item
+- issue-modal: Issue PAR/ICS
+- return-modal: Record return (transfer/unserviceable)
+- unserv-modal: Mark unserviceable
+- detail-modal: View details
+
+COMMON ISSUES:
+1. Clicks not working: Check nav(page, event) has event param. Clear cache Ctrl+Shift+R
+2. DB connection failed: Check config.php, import database.sql
+3. CSS not loading: Verify assets/css/style.css exists
+4. API errors: Check PHP logs, test with test-connection.php
+
+SECURITY:
+- Prepared statements (SQL injection prevention)
+- Input sanitization (htmlspecialchars, strip_tags)
+- Foreign key constraints
+- Session management
+
+CONFIG (config.php):
+- DB_HOST, DB_USER, DB_PASS, DB_NAME
+- PPE_THRESHOLD: 50000
+- SYSTEM_NAME, AGENCY_NAME, SYSTEM_VERSION
+
+WORKFLOWS:
+Encode: Click "Encode Item" → Enter details → Auto-classify SE/PPE → Generate property# → Save
+Issue: Click "Issue Item" → Select item → System determines PAR/ICS → Enter recipient → Save → Status="Issued"
+Return: Click "Record Return" → Select issued item → Choose action (Unserviceable/Transfer) → Save → Update status
+
+SAMPLE DATA: 10 offices (MAYOR, VMAY, ACCT, BUDG, TRES, ENGR, HLTH, SWDO, PLAN, GSO)
+
+TESTING:
+- test-connection.php: DB test
+- diagnose.html: System diagnostic
+- F12→Console: JS errors
+- F12→Network: API status
+
+INSTALL:
+1. Import database.sql
+2. Update config.php credentials
+3. Place in web root
+4. Access http://localhost/lgu-inventory/
+
+DEBUG:
+- Clear cache: Ctrl+Shift+Delete
+- Hard refresh: Ctrl+Shift+R
+- Check Console (F12)
+- Check Network tab
+- Use diagnose.html
+
+CSS: IBM Plex Sans/Mono fonts. Sidebar 220px. Colors: --ink, --blue, --green, --red, --amber
+
+VERSION: v2.0, PHP 7.4+, MySQL 5.7+, Chrome 90+/Firefox 88+/Safari 14+/Edge 90+

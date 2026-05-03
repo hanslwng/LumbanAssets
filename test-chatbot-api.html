@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot API Test</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            padding: 20px; 
+            background: #f5f5f5;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        h1 { color: #16150E; }
+        .section { 
+            background: white; 
+            padding: 20px; 
+            margin: 20px 0; 
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            background: #16150E;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        button:hover { background: #2a2a20; }
+        .result {
+            background: #f8f8f8;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+        .success { color: #16733A; }
+        .error { color: #BE1D1D; }
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .endpoint {
+            background: #16150E;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #16150E;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>🤖 Chatbot API Test Interface</h1>
+    
+    <div class="section">
+        <h2>📊 API Endpoints</h2>
+        <table>
+            <tr>
+                <th>Endpoint</th>
+                <th>Description</th>
+                <th>Action</th>
+            </tr>
+            <tr>
+                <td><code>GET /api/chatbot.php?action=summary</code></td>
+                <td>Get system summary (counts, totals)</td>
+                <td><button onclick="testSummary()">Test</button></td>
+            </tr>
+            <tr>
+                <td><code>GET /api/chatbot.php?action=items</code></td>
+                <td>Get all property items</td>
+                <td><button onclick="testItems()">Test</button></td>
+            </tr>
+            <tr>
+                <td><code>GET /api/chatbot.php?action=offices</code></td>
+                <td>Get all offices with counts</td>
+                <td><button onclick="testOffices()">Test</button></td>
+            </tr>
+            <tr>
+                <td><code>GET /api/chatbot.php?action=issuances</code></td>
+                <td>Get issuance records</td>
+                <td><button onclick="testIssuances()">Test</button></td>
+            </tr>
+            <tr>
+                <td><code>GET /api/chatbot.php?action=returns</code></td>
+                <td>Get return records</td>
+                <td><button onclick="testReturns()">Test</button></td>
+            </tr>
+            <tr>
+                <td><code>GET /api/chatbot.php?action=unserviceable</code></td>
+                <td>Get unserviceable items</td>
+                <td><button onclick="testUnserviceable()">Test</button></td>
+            </tr>
+            <tr>
+                <td><code>GET /api/chatbot.php?action=stats</code></td>
+                <td>Get detailed statistics</td>
+                <td><button onclick="testStats()">Test</button></td>
+            </tr>
+            <tr>
+                <td><code>GET /api/chatbot.php?action=search&q=laptop</code></td>
+                <td>Search across all data</td>
+                <td><button onclick="testSearch()">Test</button></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>🔍 Search Test</h2>
+        <input type="text" id="searchQuery" placeholder="Search for items..." value="laptop">
+        <button onclick="testSearchCustom()">Search</button>
+        <div id="searchResult" class="result"></div>
+    </div>
+
+    <div class="section">
+        <h2>💬 Natural Language Query Test</h2>
+        <input type="text" id="nlQuery" placeholder="Ask a question..." value="How many items are there?" style="width: 500px;">
+        <button onclick="testNaturalQuery()">Ask</button>
+        <div id="nlResult" class="result"></div>
+    </div>
+
+    <div class="section">
+        <h2>📋 Test Results</h2>
+        <div id="result" class="result">Click a test button to see results...</div>
+    </div>
+
+    <div class="section">
+        <h2>📖 Usage Examples for Chatbot</h2>
+        <h3>JavaScript Example:</h3>
+        <pre style="background: #f8f8f8; padding: 15px; border-radius: 5px; overflow-x: auto;">
+// Get summary
+fetch('api/chatbot.php?action=summary')
+    .then(res => res.json())
+    .then(data => console.log(data));
+
+// Get items with filters
+fetch('api/chatbot.php?action=items&category=PPE&limit=10')
+    .then(res => res.json())
+    .then(data => console.log(data));
+
+// Search
+fetch('api/chatbot.php?action=search&q=laptop')
+    .then(res => res.json())
+    .then(data => console.log(data));
+
+// Natural language query
+fetch('api/chatbot.php', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({query: 'How many items are there?'})
+})
+    .then(res => res.json())
+    .then(data => console.log(data));
+        </pre>
+
+        <h3>cURL Example:</h3>
+        <pre style="background: #f8f8f8; padding: 15px; border-radius: 5px; overflow-x: auto;">
+# Get summary
+curl "http://localhost/lgu-inventory/api/chatbot.php?action=summary"
+
+# Get items
+curl "http://localhost/lgu-inventory/api/chatbot.php?action=items&limit=5"
+
+# Search
+curl "http://localhost/lgu-inventory/api/chatbot.php?action=search&q=laptop"
+
+# Natural language query
+curl -X POST "http://localhost/lgu-inventory/api/chatbot.php" \
+     -H "Content-Type: application/json" \
+     -d '{"query":"How many items are there?"}'
+        </pre>
+    </div>
+
+    <script>
+        const baseUrl = 'api/chatbot.php';
+
+        function displayResult(data) {
+            document.getElementById('result').innerHTML = 
+                '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+        }
+
+        async function testSummary() {
+            try {
+                const response = await fetch(`${baseUrl}?action=summary`);
+                const data = await response.json();
+                displayResult(data);
+            } catch (error) {
+                displayResult({error: error.message});
+            }
+        }
+
+        async function testItems() {
+            try {
+                const response = await fetch(`${baseUrl}?action=items&limit=10`);
+                const data = await response.json();
+                displayResult(data);
+            } catch (error) {
+                displayResult({error: error.message});
+            }
+        }
+
+        async function testOffices() {
+            try {
+                const response = await fetch(`${baseUrl}?action=offices`);
+                const data = await response.json();
+                displayResult(data);
+            } catch (error) {
+                displayResult({error: error.message});
+            }
+        }
+
+        async function testIssuances() {
+            try {
+                const response = await fetch(`${baseUrl}?action=issuances&limit=10`);
+                const data = await response.json();
+                displayResult(data);
+            } catch (error) {
+                displayResult({error: error.message});
+            }
+        }
+
+        async function testReturns() {
+            try {
+                const response = await fetch(`${baseUrl}?action=returns&limit=10`);
+                const data = await response.json();
+                displayResult(data);
+            } catch (error) {
+                displayResult({error: error.message});
+            }
+        }
+
+        async function testUnserviceable() {
+            try {
+                const response = await fetch(`${baseUrl}?action=unserviceable`);
+                const data = await response.json();
+                displayResult(data);
+            } catch (error) {
+                displayResult({error: error.message});
+            }
+        }
+
+        async function testStats() {
+            try {
+                const response = await fetch(`${baseUrl}?action=stats`);
+                const data = await response.json();
+                displayResult(data);
+            } catch (error) {
+                displayResult({error: error.message});
+            }
+        }
+
+        async function testSearch() {
+            try {
+                const response = await fetch(`${baseUrl}?action=search&q=laptop`);
+                const data = await response.json();
+                displayResult(data);
+            } catch (error) {
+                displayResult({error: error.message});
+            }
+        }
+
+        async function testSearchCustom() {
+            const query = document.getElementById('searchQuery').value;
+            try {
+                const response = await fetch(`${baseUrl}?action=search&q=${encodeURIComponent(query)}`);
+                const data = await response.json();
+                document.getElementById('searchResult').innerHTML = 
+                    '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            } catch (error) {
+                document.getElementById('searchResult').innerHTML = 
+                    '<pre class="error">' + error.message + '</pre>';
+            }
+        }
+
+        async function testNaturalQuery() {
+            const query = document.getElementById('nlQuery').value;
+            try {
+                const response = await fetch(baseUrl, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({query: query})
+                });
+                const data = await response.json();
+                document.getElementById('nlResult').innerHTML = 
+                    '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            } catch (error) {
+                document.getElementById('nlResult').innerHTML = 
+                    '<pre class="error">' + error.message + '</pre>';
+            }
+        }
+    </script>
+</body>
+</html>
