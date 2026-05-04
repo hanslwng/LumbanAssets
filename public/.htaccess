@@ -1,17 +1,14 @@
-# Apache Configuration for URL Rewriting
-# Redirect all requests to index.php
+# Apache Configuration for Public Assets
+# Allow direct access to all files in this directory
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
     
-    # Redirect to public folder if accessing root
-    RewriteCond %{REQUEST_URI} !^/public/
-    RewriteRule ^(.*)$ /public/$1 [L]
-    
-    # Handle Front Controller
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^ index.php [L]
+    # Allow direct access to all files (CSS, JS, images, etc.)
+    # Do NOT redirect to index.php
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
 </IfModule>
 
 # Prevent directory listing
@@ -22,4 +19,30 @@ Options -Indexes
     Header set X-Content-Type-Options "nosniff"
     Header set X-Frame-Options "SAMEORIGIN"
     Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# Set proper MIME types for CSS and JS
+<IfModule mod_mime.c>
+    AddType text/css .css
+    AddType application/javascript .js
+    AddType image/svg+xml .svg
+    AddType image/png .png
+    AddType image/jpeg .jpg .jpeg
+    AddType image/gif .gif
+</IfModule>
+
+# Enable compression for text files
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript application/json
+</IfModule>
+
+# Cache static assets
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
 </IfModule>

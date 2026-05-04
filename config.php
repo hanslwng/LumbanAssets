@@ -10,31 +10,31 @@ define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_NAME', 'lgu_inventory');
 
-// Create database connection
+// Create database connection (PDO)
 function getDBConnection() {
     try {
-        $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+        $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
+        $options = [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES => false,
+        ];
         
-        if ($conn->connect_error) {
-            header('Content-Type: application/json');
-            http_response_code(500);
-            die(json_encode([
-                'success' => false, 
-                'message' => 'Database connection failed. Please ensure the database is set up.',
-                'error' => 'Connection error',
-                'hint' => 'Run setup-database.php to initialize the database'
-            ]));
+        $conn = new PDO($dsn, DB_USER, DB_PASS, $options);
+        return $conn;
+    } catch (PDOException $e) {
+        // For non-JSON requests, show user-friendly error
+        if (!isset($_SERVER['HTTP_ACCEPT']) || strpos($_SERVER['HTTP_ACCEPT'], 'application/json') === false) {
+            die('Database connection failed. Please ensure the database is set up. Error: ' . $e->getMessage());
         }
         
-        $conn->set_charset('utf8mb4');
-        return $conn;
-    } catch (Exception $e) {
         header('Content-Type: application/json');
         http_response_code(500);
         die(json_encode([
             'success' => false, 
-            'message' => 'Database error occurred',
-            'error' => $e->getMessage()
+            'message' => 'Database connection failed. Please ensure the database is set up.',
+            'error' => 'Connection error',
+            'hint' => 'Run setup-database.php to initialize the database'
         ]));
     }
 }
@@ -48,8 +48,10 @@ define('SYSTEM_VERSION', 'v2.0');
 define('PPE_THRESHOLD', 50000); // Items >= 50,000 are PPE
 define('SE_THRESHOLD', 50000);  // Items < 50,000 are Semi-Expendable
 
-// Session configuration
-session_start();
+// Session configuration (only start if not already started)
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Helper function to return JSON response
 function jsonResponse($data) {

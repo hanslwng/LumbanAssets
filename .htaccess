@@ -1,0 +1,42 @@
+# LGU Inventory System - Apache Configuration
+# Routes all requests through router.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /lgu_invent/
+    
+    # Allow direct access to assets
+    RewriteCond %{REQUEST_URI} ^/lgu_invent/(assets|public)/
+    RewriteRule ^ - [L]
+    
+    # Allow direct access to API
+    RewriteCond %{REQUEST_URI} ^/lgu_invent/api/
+    RewriteRule ^ - [L]
+    
+    # Allow direct access to setup files
+    RewriteCond %{REQUEST_URI} ^/lgu_invent/(setup-database|setup-test-users|test-connection|test-auth-system|test-css-access)\.php$
+    RewriteRule ^ - [L]
+    
+    # Route everything else through router.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ router.php [QSA,L]
+</IfModule>
+
+# Prevent directory listing
+Options -Indexes
+
+# Security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# PHP settings
+<IfModule mod_php7.c>
+    php_value upload_max_filesize 10M
+    php_value post_max_size 10M
+    php_value max_execution_time 300
+    php_value max_input_time 300
+</IfModule>
