@@ -123,13 +123,6 @@ $userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 'staff';
       <button class="btn btn-dark" onclick="openModal('encode-modal')">
         <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 1v12M1 7h12"/></svg>Encode Item
       </button>
-      
-      <!-- User Profile & Logout -->
-      <div class="tb-divider"></div>
-      <a href="/logout" class="btn-logout" onclick="return confirm('Are you sure you want to logout?');">
-        <i class="fas fa-sign-out-alt"></i>
-        <span>Logout</span>
-      </a>
     </div>
   </div>
 
