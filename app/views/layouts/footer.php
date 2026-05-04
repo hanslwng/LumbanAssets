@@ -32,6 +32,6 @@
     </div>
     
     <!-- JavaScript -->
-    <script src="assets/js/app.js"></script>
+    <script src="/lgu_invent/assets/js/app.js"></script>
 </body>
 </html>

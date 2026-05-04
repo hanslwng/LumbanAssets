@@ -30,8 +30,8 @@ $userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 'staff';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo SYSTEM_NAME; ?></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="public/assets/css/style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="/lgu_invent/assets/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
     <script
   src="https://www.tuqlas.com/chatbot.js"
@@ -51,6 +51,13 @@ $userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 'staff';
 <div class="app">
 <!-- Sidebar -->
 <aside class="sb">
+  <!-- Toggle Button -->
+  <div class="sb-toggle-btn" onclick="toggleSidebar()" title="Toggle Sidebar">
+    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M5 2L10 7L5 12"/>
+    </svg>
+  </div>
+  
   <div class="sb-logo">
     <div class="gov"><?php echo AGENCY_NAME; ?></div>
     <div class="sys"><?php echo SYSTEM_NAME; ?></div>
@@ -60,45 +67,45 @@ $userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 'staff';
     <div class="sb-sec">Overview</div>
     <div class="sb-item active" onclick="nav('dashboard', event)">
       <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1"/></svg>
-      Dashboard
+      <span class="sb-item-text">Dashboard</span>
     </div>
     <div class="sb-sec">Inventory</div>
     <div class="sb-item" onclick="nav('semi', event)">
       <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="2" width="12" height="10" rx="1"/><path d="M4 7h6M7 4v6"/></svg>
-      Semi-Expendable
+      <span class="sb-item-text">Semi-Expendable</span>
       <span class="sb-badge" id="nb-se">0</span>
     </div>
     <div class="sb-item" onclick="nav('ppe', event)">
       <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M7 4v3l2 2"/></svg>
-      PPE
+      <span class="sb-item-text">PPE</span>
       <span class="sb-badge" id="nb-ppe">0</span>
     </div>
     <div class="sb-sec">Transactions</div>
     <div class="sb-item" onclick="nav('issuance', event)">
       <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
-      Issuance (PAR / ICS)
+      <span class="sb-item-text">Issuance (PAR / ICS)</span>
       <span class="sb-badge" id="nb-iss">0</span>
     </div>
     <div class="sb-item" onclick="nav('returns', event)">
       <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 7H2M6 3L2 7l4 4"/></svg>
-      Returns
+      <span class="sb-item-text">Returns</span>
       <span class="sb-badge" id="nb-ret">0</span>
     </div>
     <div class="sb-sec">Asset Status</div>
     <div class="sb-item" onclick="nav('unserviceable', event)">
       <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 1L1 13h12L7 1zM7 5v4M7 10.5v.5"/></svg>
-      Unserviceable
+      <span class="sb-item-text">Unserviceable</span>
       <span class="sb-badge" id="nb-uns">0</span>
     </div>
     <div class="sb-item" onclick="nav('disposal', event)">
       <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h10l-1 8H3L2 4zM5 4V3a2 2 0 014 0v1"/></svg>
-      Disposal Records
+      <span class="sb-item-text">Disposal Records</span>
       <span class="sb-badge" id="nb-dis">0</span>
     </div>
     <div class="sb-sec">Reports</div>
     <div class="sb-item" onclick="nav('coa', event)">
       <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="1" width="10" height="12" rx="1"/><path d="M5 5h4M5 8h4M5 11h2"/></svg>
-      COA Report
+      <span class="sb-item-text">COA Report</span>
     </div>
   </nav>
   <div class="sb-foot"><?php echo SYSTEM_VERSION; ?> · Property Inv. System</div>
@@ -261,6 +268,6 @@ $userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 'staff';
 
 <div class="toast" id="toast"></div>
 
-<script src="public/assets/js/app.js"></script>
+<script src="/lgu_invent/assets/js/app.js"></script>
 </body>
 </html>

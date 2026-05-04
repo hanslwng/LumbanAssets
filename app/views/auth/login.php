@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - LGU Property Inventory System</title>
-    <link rel="stylesheet" href="public/assets/css/style.css">
-    <link rel="stylesheet" href="public/assets/css/login.css">
+    <link rel="stylesheet" href="/lgu_invent/public/assets/css/style.css">
+    <link rel="stylesheet" href="/lgu_invent/public/assets/css/login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="login-body">
@@ -20,7 +20,7 @@
             <div class="login-header">
                 <div class="logo-wrapper">
                     <!-- TODO: Replace with official LGU logo -->
-                    <img src="public/assets/logo.png" alt="LGU Logo" class="login-logo" 
+                    <img src="/lgu_invent/public/assets/logo.png" alt="LGU Logo" class="login-logo" 
                          onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2248%22 fill=%22%23B22222%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2236%22 font-weight=%22bold%22 fill=%22%23fff%22%3ELGU%3C/text%3E%3C/svg%3E'">
                 </div>
                 <h1 class="system-title">LGU Property Inventory</h1>
