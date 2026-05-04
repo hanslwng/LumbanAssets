@@ -6,8 +6,7 @@
     <title><?php echo $pageTitle ?? 'LGU Property Inventory System'; ?></title>
     
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="public/assets/css/style.css">
-    <link rel="stylesheet" href="public/assets/css/dashboard-modern.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
