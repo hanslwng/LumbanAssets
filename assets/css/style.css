@@ -58,6 +58,8 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:13
 .btn-amber{background:var(--amber);color:#fff}.btn-amber:hover{opacity:.9}
 .btn-sm{padding:5px 10px;font-size:11px}
 .btn-xs{padding:3px 8px;font-size:10px}
+.btn-logout{display:inline-flex;align-items:center;gap:5px;padding:6px 13px;border-radius:var(--r);font-size:12px;font-weight:500;cursor:pointer;text-decoration:none;color:var(--text2);transition:all .13s;border:1px solid var(--border2);background:transparent}
+.btn-logout:hover{background:var(--red-bg);color:var(--red);border-color:var(--red)}
 
 /* ── Layout ── */
 .main{display:flex;flex-direction:column;overflow:hidden;height:100vh}

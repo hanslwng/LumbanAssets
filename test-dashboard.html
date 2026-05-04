@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard Test</title>
+</head>
+<body>
+    <h1>Testing Dashboard API</h1>
+    <div id="result"></div>
+    
+    <script>
+        async function testAPI() {
+            const result = document.getElementById('result');
+            result.innerHTML = '<p>Testing API endpoints...</p>';
+            
+            try {
+                // Test offices
+                const officesResponse = await fetch('api/offices.php');
+                const officesText = await officesResponse.text();
+                result.innerHTML += `<h2>Offices API:</h2><pre>${officesText}</pre>`;
+                
+                // Test dashboard
+                const dashResponse = await fetch('api/dashboard.php');
+                const dashText = await dashResponse.text();
+                result.innerHTML += `<h2>Dashboard API:</h2><pre>${dashText}</pre>`;
+                
+                // Test items
+                const itemsResponse = await fetch('api/items.php');
+                const itemsText = await itemsResponse.text();
+                result.innerHTML += `<h2>Items API:</h2><pre>${itemsText}</pre>`;
+                
+            } catch (error) {
+                result.innerHTML += `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+        
+        testAPI();
+    </script>
+</body>
+</html>

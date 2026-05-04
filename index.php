@@ -131,13 +131,6 @@ $userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 'staff';
         <span>Logout</span>
       </a>
     </div>
-      <button class="btn btn-ghost btn-sm" onclick="openModal('issue-modal');populateIssueSelect()">
-        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7h10M8 3l4 4-4 4"/></svg>Issue Item
-      </button>
-      <button class="btn btn-dark" onclick="openModal('encode-modal')">
-        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 1v12M1 7h12"/></svg>Encode Item
-      </button>
-    </div>
   </div>
 
   <div class="content">
