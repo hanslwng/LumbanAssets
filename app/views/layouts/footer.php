@@ -32,7 +32,7 @@
     </div>
     
     <!-- JavaScript -->
-    <script src="public/assets/js/app.js"></script>
-    <script src="public/assets/js/dashboard-enhancements.js"></script>
+    <script src="/public/assets/js/app.js"></script>
+    <script src="/public/assets/js/dashboard-enhancements.js"></script>
 </body>
 </html>

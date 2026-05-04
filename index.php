@@ -30,7 +30,7 @@ $userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 'staff';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo SYSTEM_NAME; ?></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="public/assets/css/style.css">
+    <link rel="stylesheet" href="/public/assets/css/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
     <script
@@ -57,7 +57,7 @@ $userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 'staff';
     <div class="dept">Internal Use Only</div>
   </div>
   <nav class="sb-nav">
-    <div class="sb-sec">Bakla</div>
+    <div class="sb-sec">Overview</div>
     <div class="sb-item active" onclick="nav('dashboard', event)">
       <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1"/></svg>
       Dashboard
@@ -275,6 +275,6 @@ $userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 'staff';
 
 <div class="toast" id="toast"></div>
 
-<script src="public/assets/js/app.js"></script>
+<script src="/public/assets/js/app.js"></script>
 </body>
 </html>
