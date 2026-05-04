@@ -1255,3 +1255,153 @@ async function viewItemDetail(id) {
 function exportAllOfficesPDF() {
     showToast('PDF export feature coming soon', 'info');
 }
+
+
+// ═══════════════════════════════════════════════════════════
+// UI ENHANCEMENTS - Collapsible Sidebar & User Profile
+// ═══════════════════════════════════════════════════════════
+
+(function() {
+    'use strict';
+    
+    // Initialize UI enhancements when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initUIEnhancements);
+    } else {
+        initUIEnhancements();
+    }
+    
+    function initUIEnhancements() {
+        initSidebarToggle();
+        initUserProfile();
+        initScrollToTop();
+        console.log('✨ UI Enhancements loaded');
+    }
+    
+    // ─────────────────────────────────────────────────────────
+    // Collapsible Sidebar
+    // ─────────────────────────────────────────────────────────
+    function initSidebarToggle() {
+        const sidebar = document.querySelector('.sb');
+        const app = document.querySelector('.app');
+        
+        if (!sidebar || !app) return;
+        
+        // Create toggle button
+        const toggleBtn = document.createElement('div');
+        toggleBtn.className = 'sb-toggle';
+        toggleBtn.innerHTML = '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 2L10 7L5 12"/></svg>';
+        toggleBtn.title = 'Toggle Sidebar';
+        sidebar.appendChild(toggleBtn);
+        
+        // Load saved state
+        const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+        if (isCollapsed) {
+            app.classList.add('sidebar-collapsed');
+        }
+        
+        // Toggle functionality
+        toggleBtn.addEventListener('click', function() {
+            app.classList.toggle('sidebar-collapsed');
+            const collapsed = app.classList.contains('sidebar-collapsed');
+            localStorage.setItem('sidebarCollapsed', collapsed);
+            
+            // Trigger resize for any charts/tables
+            window.dispatchEvent(new Event('resize'));
+        });
+    }
+    
+    // ─────────────────────────────────────────────────────────
+    // User Profile Display
+    // ─────────────────────────────────────────────────────────
+    function initUserProfile() {
+        const userDataEl = document.querySelector('[data-user-name]');
+        if (!userDataEl) return;
+        
+        const userName = userDataEl.getAttribute('data-user-name') || 'User';
+        const userRole = userDataEl.getAttribute('data-user-role') || 'Staff';
+        
+        // Get initials
+        const initials = userName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+        
+        // Create user profile section
+        const topbarRight = document.querySelector('.tb-right');
+        if (!topbarRight) return;
+        
+        // Check if already exists
+        if (document.querySelector('.user-profile')) return;
+        
+        const userProfile = document.createElement('div');
+        userProfile.className = 'user-profile';
+        userProfile.innerHTML = `
+            <div class="profile-circle" title="User Profile">${initials}</div>
+            <div class="user-info-text">
+                <div class="user-name">${userName}</div>
+                <div class="user-role">${userRole}</div>
+            </div>
+        `;
+        
+        // Insert before first button or at the beginning
+        const firstBtn = topbarRight.querySelector('.btn');
+        if (firstBtn) {
+            topbarRight.insertBefore(userProfile, firstBtn);
+        } else {
+            topbarRight.prepend(userProfile);
+        }
+        
+        // Add divider after profile
+        const divider = document.createElement('div');
+        divider.className = 'tb-divider';
+        userProfile.after(divider);
+    }
+    
+    // ─────────────────────────────────────────────────────────
+    // Scroll to Top Button
+    // ─────────────────────────────────────────────────────────
+    function initScrollToTop() {
+        const content = document.querySelector('.content');
+        if (!content) return;
+        
+        // Create button
+        const scrollBtn = document.createElement('button');
+        scrollBtn.className = 'scroll-to-top';
+        scrollBtn.innerHTML = '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 12V2M3 6L7 2L11 6"/></svg>';
+        scrollBtn.title = 'Scroll to Top';
+        scrollBtn.style.cssText = `
+            position:fixed;bottom:30px;right:30px;width:44px;height:44px;
+            border-radius:50%;background:var(--ink);color:#fff;border:none;
+            cursor:pointer;opacity:0;visibility:hidden;transition:all 0.3s ease;
+            z-index:99;box-shadow:0 4px 12px rgba(0,0,0,0.2);display:flex;
+            align-items:center;justify-content:center;
+        `;
+        document.body.appendChild(scrollBtn);
+        
+        // Show/hide on scroll
+        content.addEventListener('scroll', function() {
+            if (content.scrollTop > 300) {
+                scrollBtn.style.opacity = '1';
+                scrollBtn.style.visibility = 'visible';
+            } else {
+                scrollBtn.style.opacity = '0';
+                scrollBtn.style.visibility = 'hidden';
+            }
+        });
+        
+        // Scroll to top
+        scrollBtn.addEventListener('click', function() {
+            content.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // Hover effect
+        scrollBtn.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-4px) scale(1.05)';
+            this.style.boxShadow = '0 6px 20px rgba(0,0,0,0.3)';
+        });
+        
+        scrollBtn.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+            this.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+        });
+    }
+    
+})();
