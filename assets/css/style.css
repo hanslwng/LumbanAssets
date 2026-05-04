@@ -243,27 +243,4 @@ tbody tr:hover td{background:#FAFAF6}
 .office-items.expanded{max-height:2000px;padding-left:16px;padding-top:10px;padding-bottom:10px}
 .office-items table{margin-top:0}
 
-/* Semi-Expandable Table */
-.semi-expandable-table{width:100%;border-collapse:collapse}
-.category-header-row{background:var(--surface2);cursor:pointer;user-select:none;transition:all .13s;border-top:2px solid var(--border2)}
-.category-header-row:hover{background:var(--surface3)}
-.category-header-row.expanded{background:var(--blue-bg)}
-.category-header-cell{padding:10px 14px;font-weight:700;font-size:12px;color:var(--text);position:relative}
-.category-header-cell .expand-icon{display:inline-block;width:14px;height:14px;margin-right:8px;transition:transform .2s;vertical-align:middle}
-.category-header-row.expanded .expand-icon{transform:rotate(90deg)}
-.category-total-cell{text-align:right;font-family:var(--mono);font-size:12px;font-weight:700;padding:10px 14px}
-.category-items-row{display:none}
-.category-items-row.visible{display:table-row}
-.category-items-cell{padding:0;background:var(--surface)}
-.nested-items-table{width:100%;border-collapse:collapse;margin:0}
-.nested-items-table td{padding:8px 14px;font-size:11px;border-bottom:1px solid var(--border);background:var(--surface)}
-.nested-items-table tr:hover td{background:#FAFAF6}
-.nested-items-table tr:last-child td{border-bottom:none}
-.category-subtotal-row{background:var(--surface2);font-weight:600}
-.category-subtotal-row td{padding:8px 14px;font-size:11px;border-top:1px solid var(--border2)}
-.grand-total-row{background:var(--ink);color:#fff;font-weight:700;font-size:13px}
-.grand-total-row td{padding:12px 14px}
-.expand-all-btn{margin-bottom:10px;padding:6px 12px;font-size:11px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);cursor:pointer;transition:all .13s}
-.expand-all-btn:hover{background:var(--surface3);border-color:var(--border2)}
-
 @media print{.sb,.topbar,.m-foot,.btn,.toast{display:none!important}.main{overflow:visible}.content{padding:0}.card{box-shadow:none;border:1px solid #ddd}}
