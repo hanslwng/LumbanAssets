@@ -57,7 +57,7 @@ $userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 'staff';
     <div class="dept">Internal Use Only</div>
   </div>
   <nav class="sb-nav">
-    <div class="sb-sec">Overview</div>
+    <div class="sb-sec">Bakla</div>
     <div class="sb-item active" onclick="nav('dashboard', event)">
       <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1"/></svg>
       Dashboard
