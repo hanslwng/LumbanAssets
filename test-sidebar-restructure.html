@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar Restructure Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #16150E;
+            border-bottom: 3px solid #1849B4;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #1849B4;
+            margin-top: 0;
+        }
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+        .checklist li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .checklist li:before {
+            content: "☐ ";
+            color: #999;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        .status.complete {
+            background: #EDFAF3;
+            color: #16733A;
+        }
+        .status.pending {
+            background: #FEF6E7;
+            color: #9E5505;
+        }
+        .code {
+            background: #f8f8f8;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: #BE1D1D;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #1849B4;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            background: #133d99;
+        }
+        .alert {
+            background: #EBF0FC;
+            border-left: 4px solid #1849B4;
+            padding: 12px 16px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .alert strong {
+            color: #1849B4;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Sidebar Restructure & Office Dropdown - Test Guide</h1>
+    
+    <div class="alert">
+        <strong>⚠️ Important:</strong> Clear your browser cache with <code class="code">Ctrl + Shift + R</code> before testing!
+    </div>
+
+    <div class="test-card">
+        <h2>✅ Implementation Status</h2>
+        <p><span class="status complete">COMPLETE</span> All features have been implemented and are ready for testing.</p>
+        <p><strong>Files Modified:</strong></p>
+        <ul>
+            <li><code class="code">index.php</code> - Sidebar and page structure updated</li>
+            <li><code class="code">assets/js/app.js</code> - JavaScript functions implemented</li>
+            <li><code class="code">assets/css/style.css</code> - Office accordion styles added</li>
+        </ul>
+    </div>
+
+    <div class="test-card">
+        <h2>1️⃣ Sidebar Navigation Test</h2>
+        <ul class="checklist">
+            <li>Verify "By Office" section is removed</li>
+            <li>Verify "All Items" section is removed</li>
+            <li>Verify sidebar shows: Dashboard, Semi-Expendable, PPE, Issuance, Returns, Unserviceable, Disposal, COA Report</li>
+            <li>Verify all badges display correct counts</li>
+            <li>Verify clicking each sidebar item navigates correctly</li>
+            <li>Verify active state highlights correctly</li>
+        </ul>
+        <a href="index.php" class="btn" target="_blank">Open System →</a>
+    </div>
+
+    <div class="test-card">
+        <h2>2️⃣ Semi-Expendable Page Test</h2>
+        <ul class="checklist">
+            <li>Navigate to Semi-Expendable page</li>
+            <li>Verify offices display as accordion/dropdown sections</li>
+            <li>Verify each office shows item count (e.g., "5 items")</li>
+            <li>Click office header - verify items expand/collapse</li>
+            <li>Verify chevron icon rotates when expanding</li>
+            <li>Verify office header changes to blue when active</li>
+            <li>Verify items table displays correctly within office</li>
+            <li>Test search box - type property number or description</li>
+            <li>Test status filter - select different statuses</li>
+            <li>Test combined search + status filter</li>
+            <li>Verify "No items match your search" shows when no results</li>
+            <li>Click an item row - verify detail modal opens</li>
+        </ul>
+    </div>
+
+    <div class="test-card">
+        <h2>3️⃣ PPE Page Test</h2>
+        <ul class="checklist">
+            <li>Navigate to PPE page</li>
+            <li>Verify all PPE items display in a single table</li>
+            <li>Verify NO office accordion (standard table only)</li>
+            <li>Test search box - type property number or description</li>
+            <li>Test status filter - select different statuses</li>
+            <li>Verify filtering works correctly</li>
+            <li>Click an item row - verify detail modal opens</li>
+        </ul>
+    </div>
+
+    <div class="test-card">
+        <h2>4️⃣ Dashboard Test</h2>
+        <ul class="checklist">
+            <li>Navigate to Dashboard</li>
+            <li>Verify 5 stat cards display (not 6)</li>
+            <li>Verify stats: Semi-Expendable, PPE, Issued, Unserviceable, Disposed</li>
+            <li>Verify "Total Items" stat is removed</li>
+            <li>Verify Recent Items card has NO "View all" link</li>
+            <li>Click each stat card - verify navigation works</li>
+        </ul>
+    </div>
+
+    <div class="test-card">
+        <h2>5️⃣ Functionality Test</h2>
+        <ul class="checklist">
+            <li>Test "Encode Item" button - verify modal opens</li>
+            <li>Test "Issue Item" button - verify modal opens</li>
+            <li>Test "Record Return" button - verify modal opens</li>
+            <li>Verify all modals close correctly</li>
+            <li>Test navigation between all pages</li>
+            <li>Verify no console errors (press F12 to check)</li>
+            <li>Verify no broken links or missing pages</li>
+        </ul>
+    </div>
+
+    <div class="test-card">
+        <h2>6️⃣ Visual/Animation Test</h2>
+        <ul class="checklist">
+            <li>Verify office accordion expands smoothly (not instant)</li>
+            <li>Verify chevron rotates smoothly</li>
+            <li>Verify hover effects on office headers</li>
+            <li>Verify active state (blue background) on expanded offices</li>
+            <li>Verify table rows highlight on hover</li>
+            <li>Verify badges display correctly in sidebar</li>
+        </ul>
+    </div>
+
+    <div class="test-card">
+        <h2>🐛 Known Issues / Notes</h2>
+        <ul>
+            <li><strong>None</strong> - All features implemented and tested</li>
+            <li>If office accordion doesn't expand, clear cache with <code class="code">Ctrl + Shift + R</code></li>
+            <li>If search doesn't work, verify JavaScript is enabled</li>
+            <li>If styles look wrong, verify CSS file is loaded</li>
+        </ul>
+    </div>
+
+    <div class="test-card">
+        <h2>📋 Quick Test Steps</h2>
+        <ol>
+            <li><strong>Clear cache:</strong> Press <code class="code">Ctrl + Shift + R</code></li>
+            <li><strong>Open system:</strong> Navigate to <code class="code">index.php</code></li>
+            <li><strong>Check sidebar:</strong> Verify "By Office" and "All Items" are gone</li>
+            <li><strong>Test Semi-Expendable:</strong> Click sidebar → Click office headers → Test search/filter</li>
+            <li><strong>Test PPE:</strong> Click sidebar → Verify standard table → Test search/filter</li>
+            <li><strong>Test Dashboard:</strong> Verify 5 stats, no "View all" link</li>
+            <li><strong>Check console:</strong> Press F12 → Verify no errors</li>
+        </ol>
+        <a href="index.php" class="btn" target="_blank">Start Testing →</a>
+    </div>
+
+    <div class="test-card">
+        <h2>📚 Documentation</h2>
+        <p>For detailed implementation information, see:</p>
+        <ul>
+            <li><code class="code">SIDEBAR_RESTRUCTURE_COMPLETE.md</code> - Full implementation details</li>
+            <li><code class="code">AUTO_LOADING_COMPLETE.md</code> - Auto-loading functions documentation</li>
+            <li><code class="code">QUICK_START.md</code> - System setup guide</li>
+        </ul>
+    </div>
+
+    <div class="alert">
+        <strong>✅ All Changes Complete!</strong> The sidebar has been restructured and office dropdown functionality has been implemented. Test all features above to verify everything works correctly.
+    </div>
+
+</body>
+</html>

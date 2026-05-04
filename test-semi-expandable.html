@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semi-Expandable Table Demo - LGU Inventory System</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body style="padding: 20px; background: var(--bg);">
+    
+    <div class="card">
+        <div class="card-hd">
+            <h3 class="card-ttl">📋 Semi-Expandable Property Report</h3>
+            <div>
+                <button onclick="window.print()" class="btn btn-primary">
+                    <i class="fas fa-print"></i> Print Report
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <p style="font-size: 12px; color: #666;">Generated on <?php echo date('F d, Y h:i A'); ?></p>
+            </div>
+            
+            <div id="semi-expandable-container">
+                <!-- Table will be rendered here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+    <script>
+        // Sample data matching the image structure
+        const sampleData = [
+            // OFFICE FIXTURES & FURNITURES
+            {
+                item_category: 'OFFICE FIXTURES & FURNITURES',
+                item_name: 'Table',
+                description: 'Executive table, SY 2020',
+                property_number: '0000-07-010-01001-01',
+                unit_of_measure: 'pc',
+                unit_value: 18000.00,
+                quantity: 1,
+                available_quantity: 1,
+                remarks: ''
+            },
+            {
+                item_category: 'OFFICE FIXTURES & FURNITURES',
+                item_name: 'Table',
+                description: 'Side table round tempered glass',
+                property_number: '0000-07-010-01002-01',
+                unit_of_measure: 'pc',
+                unit_value: 2802.00,
+                quantity: 1,
+                available_quantity: 1,
+                remarks: ''
+            },
+            {
+                item_category: 'OFFICE FIXTURES & FURNITURES',
+                item_name: 'Table',
+                description: 'Fabricated Table with 3 Drawers Dark Brown',
+                property_number: '0000-07-010-01003-01',
+                unit_of_measure: 'pc',
+                unit_value: 6000.00,
+                quantity: 1,
+                available_quantity: 1,
+                remarks: ''
+            },
+            {
+                item_category: 'OFFICE FIXTURES & FURNITURES',
+                item_name: 'Table',
+                description: 'L-Type Table',
+                property_number: '0000-07-010-01004-01',
+                unit_of_measure: 'pc',
+                unit_value: 12000.00,
+                quantity: 1,
+                available_quantity: 1,
+                remarks: ''
+            },
+            {
+                item_category: 'OFFICE FIXTURES & FURNITURES',
+                item_name: 'Table',
+                description: 'Fabricated Table with 3 Drawers Dark Brown',
+                property_number: '0000-07-010-01005-01',
+                unit_of_measure: 'pc',
+                unit_value: 6000.00,
+                quantity: 1,
+                available_quantity: 1,
+                remarks: ''
+            },
+            {
+                item_category: 'OFFICE FIXTURES & FURNITURES',
+                item_name: 'Cubicle Partition',
+                description: 'Cubicle Partition',
+                property_number: '0000-07-010-01006-01',
+                unit_of_measure: 'pc',
+                unit_value: 6500.00,
+                quantity: 1,
+                available_quantity: 1,
+                remarks: ''
+            },
+            {
+                item_category: 'OFFICE FIXTURES & FURNITURES',
+                item_name: 'Cubicle Partition',
+                description: 'Cubicle Partition',
+                property_number: '0000-07-010-01007-01',
+                unit_of_measure: 'pc',
+                unit_value: 6500.00,
+                quantity: 1,
+                available_quantity: 1,
+                remarks: ''
+            },
+            {
+                item_category: 'OFFICE FIXTURES & FURNITURES',
+                item_name: 'Cubicle Partition',
+                description: 'Cubicle Partition',
+                property_number: '0000-07-010-01008-01',
+                unit_of_measure: 'pc',
+                unit_value: 6500.00,
+                quantity: 1,
+                available_quantity: 1,
+                remarks: ''
+            },
+            {
+                item_category: 'OFFICE FIXTURES & FURNITURES',
+                item_name: 'Cubicle Partition',
+                description: 'Cubicle Partition',
+                property_number: '0000-07-010-01009-01',
+                unit_of_measure: 'pc',
+                unit_value: 5718.00,
+                quantity: 1,
+                available_quantity: 1,
+                remarks: ''
+            },
+            
+            // INFORMATION AND COMMUNICATION TECHNOLOGY EQUIPMENT
+            {
+                item_category: 'INFORMATION AND COMMUNICATION TECHNOLOGY EQUIPMENT',
+                item_name: 'Desktop Computer',
+                description: 'Dell OptiPlex 7090, Intel i7, 16GB RAM',
+                property_number: '0000-07-020-02001-01',
+                unit_of_measure: 'unit',
+                unit_value: 45000.00,
+                quantity: 1,
+                available_quantity: 1,
+                remarks: ''
+            },
+            {
+                item_category: 'INFORMATION AND COMMUNICATION TECHNOLOGY EQUIPMENT',
+                item_name: 'Laptop',
+                description: 'HP ProBook 450 G8, Intel i5, 8GB RAM',
+                property_number: '0000-07-020-02002-01',
+                unit_of_measure: 'unit',
+                unit_value: 38000.00,
+                quantity: 1,
+                available_quantity: 1,
+                remarks: ''
+            },
+            {
+                item_category: 'INFORMATION AND COMMUNICATION TECHNOLOGY EQUIPMENT',
+                item_name: 'Printer',
+                description: 'HP LaserJet Pro M404dn',
+                property_number: '0000-07-020-02003-01',
+                unit_of_measure: 'unit',
+                unit_value: 15500.00,
+                quantity: 1,
+                available_quantity: 1,
+                remarks: ''
+            },
+            {
+                item_category: 'INFORMATION AND COMMUNICATION TECHNOLOGY EQUIPMENT',
+                item_name: 'Monitor',
+                description: 'Dell 24" LED Monitor',
+                property_number: '0000-07-020-02004-01',
+                unit_of_measure: 'unit',
+                unit_value: 8500.00,
+                quantity: 2,
+                available_quantity: 2,
+                remarks: ''
+            },
+            
+            // OFFICE EQUIPMENT
+            {
+                item_category: 'OFFICE EQUIPMENT',
+                item_name: 'Air Conditioner',
+                description: 'Split Type Inverter 1.5HP',
+                property_number: '0000-07-030-03001-01',
+                unit_of_measure: 'unit',
+                unit_value: 28000.00,
+                quantity: 1,
+                available_quantity: 1,
+                remarks: ''
+            },
+            {
+                item_category: 'OFFICE EQUIPMENT',
+                item_name: 'Electric Fan',
+                description: 'Stand Fan 16 inches',
+                property_number: '0000-07-030-03002-01',
+                unit_of_measure: 'unit',
+                unit_value: 1800.00,
+                quantity: 3,
+                available_quantity: 3,
+                remarks: ''
+            },
+            {
+                item_category: 'OFFICE EQUIPMENT',
+                item_name: 'Water Dispenser',
+                description: 'Hot and Cold Water Dispenser',
+                property_number: '0000-07-030-03003-01',
+                unit_of_measure: 'unit',
+                unit_value: 4500.00,
+                quantity: 1,
+                available_quantity: 1,
+                remarks: ''
+            }
+        ];
+
+        // Render the table on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            renderSemiExpandableReport(sampleData, 'semi-expandable-container');
+        });
+    </script>
+</body>
+</html>

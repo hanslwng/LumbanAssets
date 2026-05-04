@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-box { 
+            padding: 20px; 
+            margin: 10px 0; 
+            background: #f0f0f0; 
+            border: 2px solid #ccc;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .test-box:hover { background: #e0e0e0; }
+        .success { color: green; font-weight: bold; }
+        .error { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>🧪 LGU Inventory System - Click Test</h1>
+    
+    <h2>Test 1: Basic Click</h2>
+    <div class="test-box" onclick="test1()">
+        Click me! (Test 1)
+    </div>
+    <div id="result1"></div>
+
+    <h2>Test 2: Click with Event Parameter</h2>
+    <div class="test-box" onclick="test2(event)">
+        Click me! (Test 2)
+    </div>
+    <div id="result2"></div>
+
+    <h2>Test 3: Navigation Function</h2>
+    <div class="test-box" onclick="testNav('dashboard', event)">
+        Click me! (Test Navigation)
+    </div>
+    <div id="result3"></div>
+
+    <h2>Test 4: Load Main App JavaScript</h2>
+    <button onclick="loadMainJS()" style="padding: 10px 20px; font-size: 16px; cursor: pointer;">
+        Load app.js
+    </button>
+    <div id="result4"></div>
+
+    <hr>
+    <h2>Next Step:</h2>
+    <p>Kung lahat ng tests ay PASSED, open the main application:</p>
+    <a href="index.php" style="display: inline-block; padding: 10px 20px; background: #16150E; color: white; text-decoration: none; border-radius: 5px;">
+        Open Main Application →
+    </a>
+
+    <script>
+        function test1() {
+            document.getElementById('result1').innerHTML = '<p class="success">✅ Test 1 PASSED - Basic click works!</p>';
+        }
+
+        function test2(event) {
+            if (event && event.target) {
+                document.getElementById('result2').innerHTML = '<p class="success">✅ Test 2 PASSED - Event parameter works!</p>';
+            } else {
+                document.getElementById('result2').innerHTML = '<p class="error">❌ Test 2 FAILED - Event parameter not working</p>';
+            }
+        }
+
+        function testNav(page, event) {
+            let result = '<p class="success">✅ Test 3 PASSED</p>';
+            result += '<ul>';
+            result += '<li>Page parameter: ' + page + '</li>';
+            result += '<li>Event object: ' + (event ? 'Present ✅' : 'Missing ❌') + '</li>';
+            result += '<li>Event target: ' + (event && event.target ? 'Present ✅' : 'Missing ❌') + '</li>';
+            result += '</ul>';
+            document.getElementById('result3').innerHTML = result;
+        }
+
+        function loadMainJS() {
+            const script = document.createElement('script');
+            script.src = 'assets/js/app.js';
+            script.onload = function() {
+                document.getElementById('result4').innerHTML = '<p class="success">✅ Test 4 PASSED - app.js loaded successfully!</p>';
+                
+                // Test if nav function exists
+                if (typeof nav === 'function') {
+                    document.getElementById('result4').innerHTML += '<p class="success">✅ nav() function is available!</p>';
+                } else {
+                    document.getElementById('result4').innerHTML += '<p class="error">❌ nav() function not found!</p>';
+                }
+            };
+            script.onerror = function() {
+                document.getElementById('result4').innerHTML = '<p class="error">❌ Test 4 FAILED - Error loading app.js</p>';
+            };
+            document.head.appendChild(script);
+        }
+    </script>
+</body>
+</html>
