@@ -1141,7 +1141,7 @@ async function populateIssueSelect() {
     if (result.success && result.data.length > 0) {
         select.innerHTML = '<option value="">— select item —</option>' +
             result.data.map(item => 
-                `<option value="${item.id}" data-category="${item.category}" data-office="${item.office_id}">${item.property_number} - ${item.description}</option>`
+                `<option value="${item.id}" data-category="${item.category}" data-office-id="${item.office_id}" data-office-name="${item.office_name || 'Unknown Office'}">${item.property_number} - ${item.description}</option>`
             ).join('');
     } else {
         select.innerHTML = '<option value="">No active items available</option>';
@@ -1185,8 +1185,14 @@ function updateIssueForm() {
     
     if (option.value) {
         const category = option.getAttribute('data-category');
+        const officeName = option.getAttribute('data-office-name');
         const formType = category === 'PPE' ? 'PAR' : 'ICS';
+        
         document.getElementById('iss-type').value = formType;
+        document.getElementById('iss-office').value = officeName || '';
+    } else {
+        document.getElementById('iss-type').value = '';
+        document.getElementById('iss-office').value = '';
     }
 }
 
