@@ -5,6 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 require_once 'config.php';
+require_once 'app/helpers/PermissionHelper.php';
 
 // Session timeout check (1 hour)
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 3600)) {
@@ -20,8 +21,17 @@ if (isset($_SESSION['user_id'])) {
 }
 
 // Get user info for display
-$userName = isset($_SESSION['user_name']) ? $_SESSION['user_name'] : 'User';
-$userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 'staff';
+$userName = $_SESSION['user_name'] ?? 'User';
+$userRole = $_SESSION['user_role'] ?? 'staff';
+$userRoleDisplay = PermissionHelper::getRoleDisplayName($userRole);
+
+// Check permissions
+$canCreate = PermissionHelper::can('create');
+$canEdit = PermissionHelper::can('edit');
+$canDelete = PermissionHelper::can('delete');
+$canExport = PermissionHelper::can('export');
+$canPrint = PermissionHelper::can('print');
+$isViewer = PermissionHelper::isViewer();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,9 +54,13 @@ $userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 'staff';
 <body>
 
 <!-- Hidden user data for JavaScript -->
-<div style="display: none;" 
+<div id="userData" style="display: none;" 
      data-user-name="<?php echo htmlspecialchars($userName); ?>" 
-     data-user-role="<?php echo htmlspecialchars($userRole); ?>"></div>
+     data-user-role="<?php echo htmlspecialchars($userRole); ?>"
+     data-can-create="<?php echo $canCreate ? '1' : '0'; ?>"
+     data-can-edit="<?php echo $canEdit ? '1' : '0'; ?>"
+     data-can-delete="<?php echo $canDelete ? '1' : '0'; ?>"
+     data-is-viewer="<?php echo $isViewer ? '1' : '0'; ?>"></div>
 
 <div class="app">
 <!-- Sidebar -->
@@ -121,6 +135,7 @@ $userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 'staff';
       </div>
     </div>
     <div class="tb-right">
+      <?php if ($canCreate): ?>
       <button class="btn btn-ghost btn-sm" onclick="openModal('return-modal');populateReturnSelect()">
         <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 7H2M6 3L2 7l4 4"/></svg>Record Return
       </button>
@@ -130,6 +145,16 @@ $userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 'staff';
       <button class="btn btn-dark" onclick="openModal('encode-modal')">
         <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 1v12M1 7h12"/></svg>Encode Item
       </button>
+      <?php endif; ?>
+      
+      <?php if ($isViewer): ?>
+      <div class="viewer-badge">
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" style="width: 14px; height: 14px;">
+          <circle cx="7" cy="7" r="6"/><path d="M7 4v3M7 9v.5"/>
+        </svg>
+        Read-Only Mode
+      </div>
+      <?php endif; ?>
       
       <!-- User Profile with Logout -->
       <div class="user-profile-wrapper">
@@ -137,7 +162,7 @@ $userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 'staff';
           <div class="profile-circle"><?php echo strtoupper(substr($userName, 0, 1)); ?></div>
           <div class="user-info-text">
             <div class="user-name"><?php echo htmlspecialchars($userName); ?></div>
-            <div class="user-role"><?php echo htmlspecialchars($userRole); ?></div>
+            <div class="user-role"><?php echo htmlspecialchars($userRoleDisplay); ?></div>
           </div>
           <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" style="width: 12px; height: 12px; margin-left: 4px;">
             <path d="M3 5l4 4 4-4"/>

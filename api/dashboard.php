@@ -4,8 +4,12 @@ error_reporting(0);
 ini_set('display_errors', 0);
 
 require_once '../config.php';
+require_once '../app/helpers/PermissionHelper.php';
 
 header('Content-Type: application/json');
+
+// Dashboard is view-only, require view permission
+PermissionHelper::require('view');
 
 try {
     $conn = getDBConnection();

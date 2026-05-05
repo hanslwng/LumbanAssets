@@ -4,6 +4,7 @@ error_reporting(0);
 ini_set('display_errors', 0);
 
 require_once '../config.php';
+require_once '../app/helpers/PermissionHelper.php';
 
 header('Content-Type: application/json');
 
@@ -21,15 +22,19 @@ try {
 
 switch ($method) {
     case 'GET':
+        PermissionHelper::require('view');
         getOffices($conn);
         break;
     case 'POST':
+        PermissionHelper::require('manage_offices');
         createOffice($conn);
         break;
     case 'PUT':
+        PermissionHelper::require('manage_offices');
         updateOffice($conn);
         break;
     case 'DELETE':
+        PermissionHelper::require('manage_offices');
         deleteOffice($conn);
         break;
     default:

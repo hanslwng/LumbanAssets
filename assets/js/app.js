@@ -8,6 +8,55 @@ let seItemsByOffice = {};
 let ppeItemsByOffice = {};
 let selectedReturnAction = null;
 
+// User permissions
+let userPermissions = {
+    canCreate: false,
+    canEdit: false,
+    canDelete: false,
+    isViewer: false
+};
+
+// Load user permissions on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const userData = document.getElementById('userData');
+    if (userData) {
+        userPermissions.canCreate = userData.dataset.canCreate === '1';
+        userPermissions.canEdit = userData.dataset.canEdit === '1';
+        userPermissions.canDelete = userData.dataset.canDelete === '1';
+        userPermissions.isViewer = userData.dataset.isViewer === '1';
+    }
+    
+    // Restore sidebar state
+    const savedState = localStorage.getItem('sidebarCollapsed');
+    if (savedState === 'true') {
+        const app = document.querySelector('.app');
+        if (app) {
+            app.classList.add('collapsed');
+        }
+    }
+    
+    loadOffices();
+    loadDashboard();
+    setTodayDate();
+});
+
+// Check if user has permission
+function checkPermission(action) {
+    if (action === 'create' && !userPermissions.canCreate) {
+        showToast('You do not have permission to create items (Read-Only Mode)', 'error');
+        return false;
+    }
+    if (action === 'edit' && !userPermissions.canEdit) {
+        showToast('You do not have permission to edit items (Read-Only Mode)', 'error');
+        return false;
+    }
+    if (action === 'delete' && !userPermissions.canDelete) {
+        showToast('You do not have permission to delete items (Read-Only Mode)', 'error');
+        return false;
+    }
+    return true;
+}
+
 // ─────────────────────────────────────────────────────────
 // User Menu Toggle Function
 // ─────────────────────────────────────────────────────────
@@ -406,6 +455,11 @@ function liveClassify() {
 
 // Save new item
 async function saveItem() {
+    // Check permission
+    if (!checkPermission('create')) {
+        return;
+    }
+    
     const data = {
         description: document.getElementById('e-name').value,
         unit_value: parseFloat(document.getElementById('e-amt').value),
