@@ -5,10 +5,11 @@ ini_set('display_errors', 0);
 ini_set('display_startup_errors', 0);
 
 // Database configuration
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_NAME', 'lgu_inventory');
+define('DB_HOST', 'sql12.freesqldatabase.com
+');
+define('DB_USER', 'sql12825446');
+define('DB_PASS', 'MwqXtXXLkk');
+define('DB_NAME', 'sql12825446');
 
 // Create database connection (PDO)
 function getDBConnection() {
