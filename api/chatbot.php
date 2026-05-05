@@ -83,31 +83,31 @@ function getSummary($conn) {
     
     // Total items
     $result = $conn->query("SELECT COUNT(*) as total FROM property_items");
-    $summary['total_items'] = $result->fetch_assoc()['total'];
+    $summary['total_items'] = $result->fetch(PDO::FETCH_ASSOC)['total'];
     
     // By category
     $result = $conn->query("SELECT category, COUNT(*) as count FROM property_items GROUP BY category");
-    while ($row = $result->fetch_assoc()) {
+    foreach ($result->fetchAll(PDO::FETCH_ASSOC) as $row) {
         $summary['by_category'][$row['category']] = $row['count'];
     }
     
     // By status
     $result = $conn->query("SELECT status, COUNT(*) as count FROM property_items GROUP BY status");
-    while ($row = $result->fetch_assoc()) {
+    foreach ($result->fetchAll(PDO::FETCH_ASSOC) as $row) {
         $summary['by_status'][$row['status']] = $row['count'];
     }
     
     // Total value
     $result = $conn->query("SELECT SUM(unit_value * quantity) as total_value FROM property_items");
-    $summary['total_value'] = $result->fetch_assoc()['total_value'] ?? 0;
+    $summary['total_value'] = $result->fetch(PDO::FETCH_ASSOC)['total_value'] ?? 0;
     
     // Offices count
     $result = $conn->query("SELECT COUNT(*) as total FROM offices");
-    $summary['total_offices'] = $result->fetch_assoc()['total'];
+    $summary['total_offices'] = $result->fetch(PDO::FETCH_ASSOC)['total'];
     
     // Recent activity
     $result = $conn->query("SELECT COUNT(*) as total FROM property_items WHERE DATE(created_at) = CURDATE()");
-    $summary['items_today'] = $result->fetch_assoc()['total'];
+    $summary['items_today'] = $result->fetch(PDO::FETCH_ASSOC)['total'];
     
     jsonResponse(['success' => true, 'data' => $summary]);
 }
@@ -126,40 +126,29 @@ function getItems($conn) {
             WHERE 1=1";
     
     $params = [];
-    $types = '';
     
     if ($category) {
         $sql .= " AND p.category = ?";
         $params[] = $category;
-        $types .= 's';
     }
     
     if ($status) {
         $sql .= " AND p.status = ?";
         $params[] = $status;
-        $types .= 's';
     }
     
     if ($office_id > 0) {
         $sql .= " AND p.office_id = ?";
         $params[] = $office_id;
-        $types .= 'i';
     }
     
     $sql .= " ORDER BY p.created_at DESC LIMIT ? OFFSET ?";
     $params[] = $limit;
     $params[] = $offset;
-    $types .= 'ii';
     
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param($types, ...$params);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    $items = [];
-    while ($row = $result->fetch_assoc()) {
-        $items[] = $row;
-    }
+    $stmt->execute($params);
+    $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     jsonResponse(['success' => true, 'data' => $items, 'count' => count($items)]);
 }
@@ -177,10 +166,7 @@ function getOffices($conn) {
             ORDER BY o.name ASC";
     
     $result = $conn->query($sql);
-    $offices = [];
-    while ($row = $result->fetch_assoc()) {
-        $offices[] = $row;
-    }
+    $offices = $result->fetchAll(PDO::FETCH_ASSOC);
     
     jsonResponse(['success' => true, 'data' => $offices]);
 }
@@ -197,14 +183,8 @@ function getIssuances($conn) {
             LIMIT ?";
     
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('i', $limit);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    $issuances = [];
-    while ($row = $result->fetch_assoc()) {
-        $issuances[] = $row;
-    }
+    $stmt->execute([$limit]);
+    $issuances = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     jsonResponse(['success' => true, 'data' => $issuances]);
 }
@@ -221,14 +201,8 @@ function getReturns($conn) {
             LIMIT ?";
     
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('i', $limit);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    $returns = [];
-    while ($row = $result->fetch_assoc()) {
-        $returns[] = $row;
-    }
+    $stmt->execute([$limit]);
+    $returns = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     jsonResponse(['success' => true, 'data' => $returns]);
 }
@@ -242,10 +216,7 @@ function getUnserviceable($conn) {
             ORDER BY u.marked_date DESC";
     
     $result = $conn->query($sql);
-    $items = [];
-    while ($row = $result->fetch_assoc()) {
-        $items[] = $row;
-    }
+    $items = $result->fetchAll(PDO::FETCH_ASSOC);
     
     jsonResponse(['success' => true, 'data' => $items]);
 }
@@ -268,12 +239,8 @@ function searchData($conn) {
             WHERE p.description LIKE ? OR p.property_number LIKE ?
             LIMIT 20";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('ss', $searchTerm, $searchTerm);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    while ($row = $result->fetch_assoc()) {
-        $results['items'][] = $row;
-    }
+    $stmt->execute([$searchTerm, $searchTerm]);
+    $results['items'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     // Search issuances
     $sql = "SELECT 'issuance' as type, i.id, i.form_number, i.issued_to, p.description 
@@ -282,12 +249,8 @@ function searchData($conn) {
             WHERE i.issued_to LIKE ? OR i.form_number LIKE ?
             LIMIT 20";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('ss', $searchTerm, $searchTerm);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    while ($row = $result->fetch_assoc()) {
-        $results['issuances'][] = $row;
-    }
+    $stmt->execute([$searchTerm, $searchTerm]);
+    $results['issuances'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     jsonResponse(['success' => true, 'data' => $results, 'query' => $query]);
 }
@@ -310,17 +273,17 @@ function getStats($conn) {
             FROM property_items";
     
     $result = $conn->query($sql);
-    $stats['items'] = $result->fetch_assoc();
+    $stats['items'] = $result->fetch(PDO::FETCH_ASSOC);
     
     // Issuance stats
     $result = $conn->query("SELECT COUNT(*) as total, form_type, COUNT(DISTINCT issued_to) as unique_recipients FROM issuance_records GROUP BY form_type");
-    while ($row = $result->fetch_assoc()) {
+    foreach ($result->fetchAll(PDO::FETCH_ASSOC) as $row) {
         $stats['issuances'][$row['form_type']] = $row;
     }
     
     // Return stats
     $result = $conn->query("SELECT COUNT(*) as total, return_action FROM return_records GROUP BY return_action");
-    while ($row = $result->fetch_assoc()) {
+    foreach ($result->fetchAll(PDO::FETCH_ASSOC) as $row) {
         $stats['returns'][$row['return_action']] = $row['total'];
     }
     
@@ -332,9 +295,7 @@ function getStats($conn) {
             ORDER BY item_count DESC
             LIMIT 10";
     $result = $conn->query($sql);
-    while ($row = $result->fetch_assoc()) {
-        $stats['top_offices'][] = $row;
-    }
+    $stats['top_offices'] = $result->fetchAll(PDO::FETCH_ASSOC);
     
     jsonResponse(['success' => true, 'data' => $stats]);
 }
@@ -349,38 +310,38 @@ function processNaturalQuery($conn, $query) {
         // Count queries
         if (strpos($query_lower, 'item') !== false) {
             $result = $conn->query("SELECT COUNT(*) as count FROM property_items");
-            $count = $result->fetch_assoc()['count'];
+            $count = $result->fetch(PDO::FETCH_ASSOC)['count'];
             $response['answer'] = "There are $count property items in the system.";
             $response['data'] = ['count' => $count];
         } elseif (strpos($query_lower, 'office') !== false) {
             $result = $conn->query("SELECT COUNT(*) as count FROM offices");
-            $count = $result->fetch_assoc()['count'];
+            $count = $result->fetch(PDO::FETCH_ASSOC)['count'];
             $response['answer'] = "There are $count offices in the system.";
             $response['data'] = ['count' => $count];
         }
     } elseif (strpos($query_lower, 'total value') !== false || strpos($query_lower, 'worth') !== false) {
         // Value queries
         $result = $conn->query("SELECT SUM(unit_value * quantity) as total FROM property_items");
-        $total = $result->fetch_assoc()['total'] ?? 0;
+        $total = $result->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
         $formatted = number_format($total, 2);
         $response['answer'] = "The total value of all property items is ₱$formatted.";
         $response['data'] = ['total_value' => $total];
     } elseif (strpos($query_lower, 'unserviceable') !== false) {
         // Unserviceable queries
         $result = $conn->query("SELECT COUNT(*) as count FROM property_items WHERE status = 'Unserviceable'");
-        $count = $result->fetch_assoc()['count'];
+        $count = $result->fetch(PDO::FETCH_ASSOC)['count'];
         $response['answer'] = "There are $count unserviceable items.";
         $response['data'] = ['count' => $count];
     } elseif (strpos($query_lower, 'ppe') !== false) {
         // PPE queries
         $result = $conn->query("SELECT COUNT(*) as count FROM property_items WHERE category = 'PPE'");
-        $count = $result->fetch_assoc()['count'];
+        $count = $result->fetch(PDO::FETCH_ASSOC)['count'];
         $response['answer'] = "There are $count PPE (Property, Plant & Equipment) items.";
         $response['data'] = ['count' => $count];
     } elseif (strpos($query_lower, 'se') !== false || strpos($query_lower, 'semi') !== false) {
         // SE queries
         $result = $conn->query("SELECT COUNT(*) as count FROM property_items WHERE category = 'SE'");
-        $count = $result->fetch_assoc()['count'];
+        $count = $result->fetch(PDO::FETCH_ASSOC)['count'];
         $response['answer'] = "There are $count Semi-Expendable items.";
         $response['data'] = ['count' => $count];
     } else {
@@ -391,6 +352,4 @@ function processNaturalQuery($conn, $query) {
     $response['query'] = $query;
     jsonResponse($response);
 }
-
-$conn->close();
 ?>

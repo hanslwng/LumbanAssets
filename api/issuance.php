@@ -44,10 +44,8 @@ function getIssuances($conn) {
                 LEFT JOIN offices o ON i.office_id = o.id
                 WHERE i.id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('i', $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $issuance = $result->fetch_assoc();
+        $stmt->execute([$id]);
+        $issuance = $stmt->fetch(PDO::FETCH_ASSOC);
         
         if ($issuance) {
             jsonResponse(['success' => true, 'data' => $issuance]);
@@ -63,18 +61,15 @@ function getIssuances($conn) {
                 WHERE 1=1";
         
         $params = [];
-        $types = '';
         
         if ($form_type) {
             $sql .= " AND i.form_type = ?";
             $params[] = $form_type;
-            $types .= 's';
         }
         
         if ($office_id > 0) {
             $sql .= " AND i.office_id = ?";
             $params[] = $office_id;
-            $types .= 'i';
         }
         
         if ($search) {
@@ -83,23 +78,17 @@ function getIssuances($conn) {
             $params[] = $searchTerm;
             $params[] = $searchTerm;
             $params[] = $searchTerm;
-            $types .= 'sss';
         }
         
         $sql .= " ORDER BY i.issue_date DESC, i.created_at DESC";
         
-        if ($types) {
+        if (count($params) > 0) {
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param($types, ...$params);
-            $stmt->execute();
-            $result = $stmt->get_result();
+            $stmt->execute($params);
+            $issuances = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } else {
             $result = $conn->query($sql);
-        }
-        
-        $issuances = [];
-        while ($row = $result->fetch_assoc()) {
-            $issuances[] = $row;
+            $issuances = $result->fetchAll(PDO::FETCH_ASSOC);
         }
         
         jsonResponse(['success' => true, 'data' => $issuances]);
@@ -123,10 +112,8 @@ function createIssuance($conn) {
     // Get item details
     $sql = "SELECT category, office_id, status FROM property_items WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('i', $property_item_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $item = $result->fetch_assoc();
+    $stmt->execute([$property_item_id]);
+    $item = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if (!$item) {
         jsonResponse(['success' => false, 'message' => 'Property item not found']);
@@ -144,21 +131,17 @@ function createIssuance($conn) {
     $sql = "INSERT INTO issuance_records (form_type, form_number, property_item_id, office_id, issued_to, position, issue_date, remarks) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('ssiissss', $form_type, $form_number, $property_item_id, $office_id, $issued_to, $position, $issue_date, $remarks);
     
-    if ($stmt->execute()) {
+    if ($stmt->execute([$form_type, $form_number, $property_item_id, $office_id, $issued_to, $position, $issue_date, $remarks])) {
         // Update item status to Issued
         $sql = "UPDATE property_items SET status = 'Issued' WHERE id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('i', $property_item_id);
-        $stmt->execute();
+        $stmt->execute([$property_item_id]);
         
-        $issuance_id = $conn->insert_id;
+        $issuance_id = $conn->lastInsertId();
         jsonResponse(['success' => true, 'message' => 'Issuance created successfully', 'id' => $issuance_id, 'form_type' => $form_type]);
     } else {
-        jsonResponse(['success' => false, 'message' => 'Failed to create issuance: ' . $conn->error]);
+        jsonResponse(['success' => false, 'message' => 'Failed to create issuance']);
     }
 }
-
-$conn->close();
 ?>

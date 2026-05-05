@@ -50,10 +50,8 @@ function getItems($conn) {
                 LEFT JOIN offices o ON p.office_id = o.id 
                 WHERE p.id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('i', $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $item = $result->fetch_assoc();
+        $stmt->execute([$id]);
+        $item = $stmt->fetch(PDO::FETCH_ASSOC);
         
         if ($item) {
             jsonResponse(['success' => true, 'data' => $item]);
@@ -68,24 +66,20 @@ function getItems($conn) {
                 WHERE 1=1";
         
         $params = [];
-        $types = '';
         
         if ($category) {
             $sql .= " AND p.category = ?";
             $params[] = $category;
-            $types .= 's';
         }
         
         if ($status) {
             $sql .= " AND p.status = ?";
             $params[] = $status;
-            $types .= 's';
         }
         
         if ($office_id > 0) {
             $sql .= " AND p.office_id = ?";
             $params[] = $office_id;
-            $types .= 'i';
         }
         
         if ($search) {
@@ -93,23 +87,17 @@ function getItems($conn) {
             $searchTerm = "%$search%";
             $params[] = $searchTerm;
             $params[] = $searchTerm;
-            $types .= 'ss';
         }
         
         $sql .= " ORDER BY p.created_at DESC";
         
-        if ($types) {
+        if (count($params) > 0) {
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param($types, ...$params);
-            $stmt->execute();
-            $result = $stmt->get_result();
+            $stmt->execute($params);
+            $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } else {
             $result = $conn->query($sql);
-        }
-        
-        $items = [];
-        while ($row = $result->fetch_assoc()) {
-            $items[] = $row;
+            $items = $result->fetchAll(PDO::FETCH_ASSOC);
         }
         
         jsonResponse(['success' => true, 'data' => $items]);
@@ -138,10 +126,8 @@ function createItem($conn) {
     $year = date('Y');
     $sql = "SELECT COUNT(*) as count FROM property_items WHERE category = ? AND YEAR(created_at) = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('si', $category, $year);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
+    $stmt->execute([$category, $year]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
     $sequence = str_pad($row['count'] + 1, 6, '0', STR_PAD_LEFT);
     $property_number = "$year-$category-$sequence";
     
@@ -149,13 +135,12 @@ function createItem($conn) {
     $sql = "INSERT INTO property_items (property_number, description, category, unit_value, quantity, office_id, acquisition_date, remarks) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('sssdiiss', $property_number, $description, $category, $unit_value, $quantity, $office_id, $acquisition_date, $remarks);
     
-    if ($stmt->execute()) {
-        $item_id = $conn->insert_id;
+    if ($stmt->execute([$property_number, $description, $category, $unit_value, $quantity, $office_id, $acquisition_date, $remarks])) {
+        $item_id = $conn->lastInsertId();
         jsonResponse(['success' => true, 'message' => 'Item created successfully', 'id' => $item_id, 'property_number' => $property_number]);
     } else {
-        jsonResponse(['success' => false, 'message' => 'Failed to create item: ' . $conn->error]);
+        jsonResponse(['success' => false, 'message' => 'Failed to create item']);
     }
 }
 
@@ -176,12 +161,11 @@ function updateItem($conn) {
     
     $sql = "UPDATE property_items SET description = ?, unit_value = ?, quantity = ?, status = ?, condition_status = ?, remarks = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('sdisssi', $description, $unit_value, $quantity, $status, $condition_status, $remarks, $id);
     
-    if ($stmt->execute()) {
+    if ($stmt->execute([$description, $unit_value, $quantity, $status, $condition_status, $remarks, $id])) {
         jsonResponse(['success' => true, 'message' => 'Item updated successfully']);
     } else {
-        jsonResponse(['success' => false, 'message' => 'Failed to update item: ' . $conn->error]);
+        jsonResponse(['success' => false, 'message' => 'Failed to update item']);
     }
 }
 
@@ -195,10 +179,8 @@ function deleteItem($conn) {
     // Check if item has related records
     $sql = "SELECT COUNT(*) as count FROM issuance_records WHERE property_item_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('i', $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
+    $stmt->execute([$id]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if ($row['count'] > 0) {
         jsonResponse(['success' => false, 'message' => 'Cannot delete item with existing issuance records']);
@@ -206,14 +188,11 @@ function deleteItem($conn) {
     
     $sql = "DELETE FROM property_items WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('i', $id);
     
-    if ($stmt->execute()) {
+    if ($stmt->execute([$id])) {
         jsonResponse(['success' => true, 'message' => 'Item deleted successfully']);
     } else {
-        jsonResponse(['success' => false, 'message' => 'Failed to delete item: ' . $conn->error]);
+        jsonResponse(['success' => false, 'message' => 'Failed to delete item']);
     }
 }
-
-$conn->close();
 ?>

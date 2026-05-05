@@ -45,10 +45,8 @@ function getReturns($conn) {
                 LEFT JOIN offices o2 ON r.transfer_to_office_id = o2.id
                 WHERE r.id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('i', $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $return = $result->fetch_assoc();
+        $stmt->execute([$id]);
+        $return = $stmt->fetch(PDO::FETCH_ASSOC);
         
         if ($return) {
             jsonResponse(['success' => true, 'data' => $return]);
@@ -67,20 +65,15 @@ function getReturns($conn) {
                 WHERE 1=1";
         
         if ($search) {
-            $sql .= " AND (r.returned_by LIKE ? OR p.description LIKE ? OR i.issued_to LIKE ?)";
+            $sql .= " AND (r.returned_by LIKE ? OR p.description LIKE ? OR i.issued_to LIKE ?) ORDER BY r.return_date DESC, r.created_at DESC";
             $searchTerm = "%$search%";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param('sss', $searchTerm, $searchTerm, $searchTerm);
-            $stmt->execute();
-            $result = $stmt->get_result();
+            $stmt->execute([$searchTerm, $searchTerm, $searchTerm]);
+            $returns = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } else {
             $sql .= " ORDER BY r.return_date DESC, r.created_at DESC";
             $result = $conn->query($sql);
-        }
-        
-        $returns = [];
-        while ($row = $result->fetch_assoc()) {
-            $returns[] = $row;
+            $returns = $result->fetchAll(PDO::FETCH_ASSOC);
         }
         
         jsonResponse(['success' => true, 'data' => $returns]);
@@ -113,16 +106,15 @@ function createReturn($conn) {
     }
     
     // Start transaction
-    $conn->begin_transaction();
+    $conn->beginTransaction();
     
     try {
         // Insert return record
         $sql = "INSERT INTO return_records (issuance_id, property_item_id, return_date, returned_by, return_action, transfer_to_office_id, condition_on_return, remarks) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('iissssss', $issuance_id, $property_item_id, $return_date, $returned_by, $return_action, $transfer_to_office_id, $condition_on_return, $remarks);
-        $stmt->execute();
-        $return_id = $conn->insert_id;
+        $stmt->execute([$issuance_id, $property_item_id, $return_date, $returned_by, $return_action, $transfer_to_office_id, $condition_on_return, $remarks]);
+        $return_id = $conn->lastInsertId();
         
         // Update item status based on return action
         if ($return_action === 'Unserviceable') {
@@ -132,8 +124,7 @@ function createReturn($conn) {
             // Update office_id if transferring
             $sql = "UPDATE property_items SET office_id = ?, status = ?, condition_status = ? WHERE id = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param('issi', $transfer_to_office_id, $new_status, $condition_on_return, $property_item_id);
-            $stmt->execute();
+            $stmt->execute([$transfer_to_office_id, $new_status, $condition_on_return, $property_item_id]);
         } else {
             $new_status = 'Active';
         }
@@ -142,8 +133,7 @@ function createReturn($conn) {
         if ($return_action !== 'Transfer') {
             $sql = "UPDATE property_items SET status = ?, condition_status = ? WHERE id = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param('ssi', $new_status, $condition_on_return, $property_item_id);
-            $stmt->execute();
+            $stmt->execute([$new_status, $condition_on_return, $property_item_id]);
         }
         
         $conn->commit();
@@ -154,6 +144,4 @@ function createReturn($conn) {
         jsonResponse(['success' => false, 'message' => 'Failed to record return: ' . $e->getMessage()]);
     }
 }
-
-$conn->close();
 ?>

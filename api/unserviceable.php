@@ -44,10 +44,8 @@ function getUnserviceables($conn) {
                 LEFT JOIN offices o ON p.office_id = o.id
                 WHERE u.id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('i', $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $unserv = $result->fetch_assoc();
+        $stmt->execute([$id]);
+        $unserv = $stmt->fetch(PDO::FETCH_ASSOC);
         
         if ($unserv) {
             jsonResponse(['success' => true, 'data' => $unserv]);
@@ -62,11 +60,7 @@ function getUnserviceables($conn) {
                 LEFT JOIN offices o ON p.office_id = o.id
                 ORDER BY u.marked_date DESC, u.created_at DESC";
         $result = $conn->query($sql);
-        
-        $items = [];
-        while ($row = $result->fetch_assoc()) {
-            $items[] = $row;
-        }
+        $items = $result->fetchAll(PDO::FETCH_ASSOC);
         
         jsonResponse(['success' => true, 'data' => $items]);
     }
@@ -88,10 +82,8 @@ function createUnserviceable($conn) {
     // Check if item exists and is not already unserviceable
     $sql = "SELECT status FROM property_items WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('i', $property_item_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $item = $result->fetch_assoc();
+    $stmt->execute([$property_item_id]);
+    $item = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if (!$item) {
         jsonResponse(['success' => false, 'message' => 'Property item not found']);
@@ -102,22 +94,20 @@ function createUnserviceable($conn) {
     }
     
     // Start transaction
-    $conn->begin_transaction();
+    $conn->beginTransaction();
     
     try {
         // Insert unserviceable record
         $sql = "INSERT INTO unserviceable_records (property_item_id, marked_date, reason, marked_by, remarks) 
                 VALUES (?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('issss', $property_item_id, $marked_date, $reason, $marked_by, $remarks);
-        $stmt->execute();
-        $unserv_id = $conn->insert_id;
+        $stmt->execute([$property_item_id, $marked_date, $reason, $marked_by, $remarks]);
+        $unserv_id = $conn->lastInsertId();
         
         // Update item status
         $sql = "UPDATE property_items SET status = 'Unserviceable' WHERE id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('i', $property_item_id);
-        $stmt->execute();
+        $stmt->execute([$property_item_id]);
         
         $conn->commit();
         jsonResponse(['success' => true, 'message' => 'Item marked as unserviceable', 'id' => $unserv_id]);
@@ -142,31 +132,25 @@ function updateDisposalStatus($conn) {
     
     $sql = "UPDATE unserviceable_records SET disposal_status = ?, disposal_date = ?, disposal_method = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('sssi', $disposal_status, $disposal_date, $disposal_method, $id);
     
-    if ($stmt->execute()) {
+    if ($stmt->execute([$disposal_status, $disposal_date, $disposal_method, $id])) {
         // If disposed, update item status
         if ($disposal_status === 'Disposed') {
             $sql = "SELECT property_item_id FROM unserviceable_records WHERE id = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param('i', $id);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $row = $result->fetch_assoc();
+            $stmt->execute([$id]);
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
             
             if ($row) {
                 $sql = "UPDATE property_items SET status = 'Disposed' WHERE id = ?";
                 $stmt = $conn->prepare($sql);
-                $stmt->bind_param('i', $row['property_item_id']);
-                $stmt->execute();
+                $stmt->execute([$row['property_item_id']]);
             }
         }
         
         jsonResponse(['success' => true, 'message' => 'Disposal status updated']);
     } else {
-        jsonResponse(['success' => false, 'message' => 'Failed to update: ' . $conn->error]);
+        jsonResponse(['success' => false, 'message' => 'Failed to update disposal status']);
     }
 }
-
-$conn->close();
 ?>

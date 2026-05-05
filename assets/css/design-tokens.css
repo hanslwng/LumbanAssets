@@ -1,0 +1,118 @@
+/* ============================================================
+   DESIGN TOKENS — LGU Inventory System
+   Edit here to restyle the entire product.
+   ============================================================ */
+
+:root {
+  /* ── Brand Colors (10% accent rule) ── */
+  --color-brand:       #B22222;   /* Firebrick - Primary CTA, active states */
+  --color-brand-light: #FEF0F0;   /* Brand tint for backgrounds */
+  --color-brand-dark:  #8B0000;   /* Dark red - hover/pressed states */
+  --color-brand-accent:#FFD700;   /* Gold - badges, highlights */
+  
+  /* ── Surfaces (60% canvas, 30% secondary) ── */
+  --color-canvas:   #F5F4F0;      /* Page background (60%) - warm off-white */
+  --color-surface:  #FFFFFF;      /* Card / panel (30%) - pure white */
+  --color-overlay:  #F8F7F4;      /* Sidebar, input backgrounds */
+  --color-surface2: #EFEDE8;      /* Secondary surface */
+  
+  /* ── Text Hierarchy ── */
+  --color-text-primary:   #16150E;  /* Primary text - near black */
+  --color-text-secondary: #64624F;  /* Secondary text */
+  --color-text-muted:     #9C9A8E;  /* Muted text, metadata */
+  
+  /* ── Borders (visible contrast) ── */
+  --color-border:        #E3E1D8;  /* Default border - 10%+ darker than surface */
+  --color-border-strong: #C8C5B8;  /* Hover / emphasis border */
+  
+  /* ── Semantic Colors ── */
+  --color-success:      #16733A;
+  --color-success-bg:   #EDFAF3;
+  --color-warning:      #9E5505;
+  --color-warning-bg:   #FEF6E7;
+  --color-error:        #BE1D1D;
+  --color-error-bg:     #FEF0F0;
+  --color-info:         #1849B4;
+  --color-info-bg:      #EBF0FC;
+  
+  /* ── Shadows (subtle only) ── */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.09), 0 4px 8px rgba(0, 0, 0, 0.05);
+  
+  /* ── Border Radius Scale ── */
+  --radius-xs:   4px;   /* Tiny chips, inner badges */
+  --radius-sm:   6px;   /* Buttons, small inputs */
+  --radius-md:   10px;  /* Cards, panels */
+  --radius-lg:   14px;  /* Modals, drawers, large cards */
+  --radius-xl:   18px;  /* Hero blocks, feature sections */
+  --radius-full: 9999px;/* Pills, avatar circles */
+  
+  /* ── Transitions ── */
+  --transition-fast: 100ms ease;
+  --transition-base: 180ms ease;
+  --transition-slow: 320ms ease;
+  
+  /* ── Type Scale ── */
+  --text-xs:   11px;  /* Timestamps, overline labels */
+  --text-sm:   13px;  /* Secondary body, metadata */
+  --text-base: 15px;  /* Primary body text */
+  --text-md:   17px;  /* Lead / intro paragraphs */
+  --text-lg:   20px;  /* Section headings */
+  --text-xl:   24px;  /* Page subheadings */
+  --text-2xl:  30px;  /* Page headings */
+  --text-3xl:  40px;  /* Hero display */
+  
+  /* ── Typography ── */
+  --font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'SF Mono', Monaco, 'Cascadia Code', monospace;
+  
+  /* ── Spacing Scale ── */
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md:  12px;
+  --space-lg:  16px;
+  --space-xl:  24px;
+  --space-2xl: 32px;
+}
+
+/* ── Global Base Transitions ── */
+button, a, [role="button"], .btn {
+  transition:
+    color          var(--transition-base),
+    background-color var(--transition-base),
+    border-color   var(--transition-base),
+    box-shadow     var(--transition-base),
+    transform      var(--transition-base),
+    opacity        var(--transition-base);
+}
+
+/* ── Minimum Animation Layer ── */
+.card {
+  transition: 
+    box-shadow var(--transition-base),
+    transform  var(--transition-base);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn:hover {
+  transform: scale(1.01);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* ── Focus States ── */
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--color-brand);
+  box-shadow: 0 0 0 3px rgba(178, 34, 34, 0.1);
+  transform: translateY(-1px);
+  transition: all var(--transition-base);
+}

@@ -9,6 +9,51 @@ let ppeItemsByOffice = {};
 let selectedReturnAction = null;
 
 // ─────────────────────────────────────────────────────────
+// User Menu Toggle Function
+// ─────────────────────────────────────────────────────────
+function toggleUserMenu(event) {
+    event.stopPropagation();
+    const userMenu = document.getElementById('userMenu');
+    const userProfile = event.currentTarget;
+    
+    if (!userMenu) {
+        console.error('User menu element not found');
+        return;
+    }
+    
+    // Toggle menu visibility
+    const isShowing = userMenu.classList.contains('show');
+    
+    if (isShowing) {
+        userMenu.classList.remove('show');
+        userProfile.classList.remove('active');
+        console.log('User menu closed');
+    } else {
+        userMenu.classList.add('show');
+        userProfile.classList.add('active');
+        console.log('User menu opened');
+    }
+}
+
+// Close user menu when clicking outside
+document.addEventListener('click', function(event) {
+    const userMenu = document.getElementById('userMenu');
+    const userProfileWrapper = document.querySelector('.user-profile-wrapper');
+    
+    if (userMenu && userProfileWrapper) {
+        // Check if click is outside the wrapper (which contains both profile and menu)
+        if (!userProfileWrapper.contains(event.target)) {
+            userMenu.classList.remove('show');
+            const userProfile = userProfileWrapper.querySelector('.user-profile');
+            if (userProfile) {
+                userProfile.classList.remove('active');
+            }
+            console.log('User menu closed (clicked outside)');
+        }
+    }
+});
+
+// ─────────────────────────────────────────────────────────
 // Sidebar Toggle Function
 // ─────────────────────────────────────────────────────────
 function toggleSidebar() {

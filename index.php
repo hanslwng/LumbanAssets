@@ -130,6 +130,35 @@ $userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 'staff';
       <button class="btn btn-dark" onclick="openModal('encode-modal')">
         <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 1v12M1 7h12"/></svg>Encode Item
       </button>
+      
+      <!-- User Profile with Logout -->
+      <div class="user-profile-wrapper">
+        <div class="user-profile" onclick="toggleUserMenu(event)">
+          <div class="profile-circle"><?php echo strtoupper(substr($userName, 0, 1)); ?></div>
+          <div class="user-info-text">
+            <div class="user-name"><?php echo htmlspecialchars($userName); ?></div>
+            <div class="user-role"><?php echo htmlspecialchars($userRole); ?></div>
+          </div>
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" style="width: 12px; height: 12px; margin-left: 4px;">
+            <path d="M3 5l4 4 4-4"/>
+          </svg>
+        </div>
+        
+        <!-- User Dropdown Menu -->
+        <div class="user-menu" id="userMenu">
+          <div class="user-menu-header">
+            <div class="user-menu-name"><?php echo htmlspecialchars($userName); ?></div>
+            <div class="user-menu-email"><?php echo htmlspecialchars($_SESSION['user_email'] ?? 'user@gso.local'); ?></div>
+          </div>
+          <div class="user-menu-divider"></div>
+          <a href="/lgu_invent/logout" class="user-menu-item logout-item" onclick="event.stopPropagation();">
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M5 13H2a1 1 0 01-1-1V2a1 1 0 011-1h3M10 10l3-3-3-3M13 7H5"/>
+            </svg>
+            <span>Logout</span>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 

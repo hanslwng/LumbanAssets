@@ -52,10 +52,8 @@ function getOffices($conn) {
                 WHERE o.id = ?
                 GROUP BY o.id";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('i', $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $office = $result->fetch_assoc();
+        $stmt->execute([$id]);
+        $office = $stmt->fetch(PDO::FETCH_ASSOC);
         
         if ($office) {
             jsonResponse(['success' => true, 'data' => $office]);
@@ -75,11 +73,7 @@ function getOffices($conn) {
                 GROUP BY o.id
                 ORDER BY o.name ASC";
         $result = $conn->query($sql);
-        
-        $offices = [];
-        while ($row = $result->fetch_assoc()) {
-            $offices[] = $row;
-        }
+        $offices = $result->fetchAll(PDO::FETCH_ASSOC);
         
         jsonResponse(['success' => true, 'data' => $offices]);
     }
@@ -97,13 +91,12 @@ function createOffice($conn) {
     
     $sql = "INSERT INTO offices (name, code) VALUES (?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('ss', $name, $code);
     
-    if ($stmt->execute()) {
-        $office_id = $conn->insert_id;
+    if ($stmt->execute([$name, $code])) {
+        $office_id = $conn->lastInsertId();
         jsonResponse(['success' => true, 'message' => 'Office created successfully', 'id' => $office_id]);
     } else {
-        jsonResponse(['success' => false, 'message' => 'Failed to create office: ' . $conn->error]);
+        jsonResponse(['success' => false, 'message' => 'Failed to create office']);
     }
 }
 
@@ -120,12 +113,11 @@ function updateOffice($conn) {
     
     $sql = "UPDATE offices SET name = ?, code = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('ssi', $name, $code, $id);
     
-    if ($stmt->execute()) {
+    if ($stmt->execute([$name, $code, $id])) {
         jsonResponse(['success' => true, 'message' => 'Office updated successfully']);
     } else {
-        jsonResponse(['success' => false, 'message' => 'Failed to update office: ' . $conn->error]);
+        jsonResponse(['success' => false, 'message' => 'Failed to update office']);
     }
 }
 
@@ -139,10 +131,8 @@ function deleteOffice($conn) {
     // Check if office has items
     $sql = "SELECT COUNT(*) as count FROM property_items WHERE office_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('i', $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
+    $stmt->execute([$id]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if ($row['count'] > 0) {
         jsonResponse(['success' => false, 'message' => 'Cannot delete office with existing items']);
@@ -150,14 +140,11 @@ function deleteOffice($conn) {
     
     $sql = "DELETE FROM offices WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('i', $id);
     
-    if ($stmt->execute()) {
+    if ($stmt->execute([$id])) {
         jsonResponse(['success' => true, 'message' => 'Office deleted successfully']);
     } else {
-        jsonResponse(['success' => false, 'message' => 'Failed to delete office: ' . $conn->error]);
+        jsonResponse(['success' => false, 'message' => 'Failed to delete office']);
     }
 }
-
-$conn->close();
 ?>
