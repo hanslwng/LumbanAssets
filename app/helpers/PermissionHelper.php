@@ -63,11 +63,17 @@ class PermissionHelper {
      * Check if current user has permission
      */
     public static function can($permission) {
+        // Start session if not started
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        
         if (!isset($_SESSION['user_role'])) {
             return false;
         }
         
-        $role = $_SESSION['user_role'];
+        // Get normalized role
+        $role = self::getRole();
         
         if (!isset(self::$rolePermissions[$role])) {
             return false;
@@ -80,6 +86,9 @@ class PermissionHelper {
      * Check if current user is admin
      */
     public static function isAdmin() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         return isset($_SESSION['user_role']) && $_SESSION['user_role'] === self::ROLE_ADMIN;
     }
     
@@ -87,6 +96,9 @@ class PermissionHelper {
      * Check if current user is staff
      */
     public static function isStaff() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         return isset($_SESSION['user_role']) && $_SESSION['user_role'] === self::ROLE_STAFF;
     }
     
@@ -94,6 +106,9 @@ class PermissionHelper {
      * Check if current user is viewer
      */
     public static function isViewer() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         return isset($_SESSION['user_role']) && $_SESSION['user_role'] === self::ROLE_VIEWER;
     }
     
@@ -101,13 +116,50 @@ class PermissionHelper {
      * Get current user role
      */
     public static function getRole() {
-        return $_SESSION['user_role'] ?? 'guest';
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        
+        if (!isset($_SESSION['user_role'])) {
+            return 'guest';
+        }
+        
+        // Normalize role to lowercase and map 'User' to 'staff'
+        $role = strtolower($_SESSION['user_role']);
+        if ($role === 'user') {
+            $role = 'staff';
+            // Update session with normalized role
+            $_SESSION['user_role'] = $role;
+        }
+        
+        return $role;
     }
     
     /**
      * Require permission (throw error if not allowed)
      */
     public static function require($permission) {
+        // Start session if not started
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        
+        // Check if user is logged in
+        if (!isset($_SESSION['user_id'])) {
+            http_response_code(401);
+            if (self::isApiRequest()) {
+                header('Content-Type: application/json');
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Authentication required',
+                    'error' => 'You must be logged in to access this resource'
+                ]);
+            } else {
+                header('Location: /lgu_invent/login');
+            }
+            exit;
+        }
+        
         if (!self::can($permission)) {
             http_response_code(403);
             if (self::isApiRequest()) {
@@ -126,7 +178,7 @@ class PermissionHelper {
     <title>403 - Permission Denied</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -141,28 +193,36 @@ class PermissionHelper {
             padding: 40px;
             background: rgba(0,0,0,0.3);
             border-radius: 14px;
+            backdrop-filter: blur(10px);
         }
         h1 {
             font-size: 72px;
             margin: 0;
+            font-weight: 800;
         }
         p {
             font-size: 18px;
             margin: 20px 0;
+            line-height: 1.6;
         }
         a {
             color: #FFD700;
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 600;
             font-size: 16px;
+            transition: opacity 0.2s;
+        }
+        a:hover {
+            opacity: 0.8;
         }
         .role-badge {
             display: inline-block;
-            padding: 6px 12px;
+            padding: 8px 16px;
             background: rgba(255,255,255,0.2);
             border-radius: 20px;
             font-size: 14px;
             margin-top: 10px;
+            border: 1px solid rgba(255,255,255,0.3);
         }
     </style>
 </head>

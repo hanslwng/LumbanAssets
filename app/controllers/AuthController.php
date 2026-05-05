@@ -55,7 +55,12 @@ class AuthController {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_email'] = $user['email'];
             $_SESSION['user_name'] = $user['full_name'];
-            $_SESSION['user_role'] = $user['role'];
+            // Convert role to lowercase and map 'User' to 'staff'
+            $role = strtolower($user['role']);
+            if ($role === 'user') {
+                $role = 'staff';
+            }
+            $_SESSION['user_role'] = $role;
             $_SESSION['last_activity'] = time();
             
             // Update last login
