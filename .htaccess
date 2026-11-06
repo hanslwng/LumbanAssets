@@ -12,10 +12,21 @@
     # Allow direct access to API
     RewriteCond %{REQUEST_URI} ^/lgu_invent/api/
     RewriteRule ^ - [L]
-    
-    # Allow direct access to setup files
-    RewriteCond %{REQUEST_URI} ^/lgu_invent/(setup-database|setup-test-users|test-connection|test-auth-system|test-css-access)\.php$
+
+    # Maintenance scripts are CLI-only (real inventory data)
+    RewriteCond %{REQUEST_URI} ^/lgu_invent/scripts/
+    RewriteRule ^ - [F,L]
+    RewriteRule ^setup-database\.php$ - [F,L]
+    RewriteRule ^setup-test-users\.php$ - [F,L]
+
+    # Print scripts under print/
+    RewriteCond %{REQUEST_URI} ^/lgu_invent/print/
     RewriteRule ^ - [L]
+
+    # Legacy bookmarks → new locations (shortcuts at project root URLs)
+    RewriteRule ^print-issuance\.php$ print/print-issuance.php [L,QSA]
+    RewriteRule ^print-procurement\.php$ print/print-procurement.php [L,QSA]
+    RewriteRule ^print-physical-count-report\.php$ print/print-physical-count-report.php [L,QSA]
     
     # Route everything else through router.php
     RewriteCond %{REQUEST_FILENAME} !-f

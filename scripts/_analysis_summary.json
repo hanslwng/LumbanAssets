@@ -1,0 +1,24 @@
+{
+  "analysis_date": "2026-09-02T22:04:23.281914",
+  "workbook_path": "e:\\RPCSP-semi-expendable-2025.xlsx",
+  "total_sheets": 30,
+  "departments": 29,
+  "total_records": 1793,
+  "report_years": [
+    "2023",
+    "2024",
+    "2025"
+  ],
+  "data_quality": {
+    "missing_property_no": 36,
+    "property_0000_year": 1226,
+    "missing_description": 70,
+    "missing_unit_value": 362,
+    "duplicate_property_nos": 46
+  },
+  "ml_readiness": {
+    "temporal_dimension": 3,
+    "forecasting_viable": true,
+    "recommendation": "Further analysis required"
+  }
+}

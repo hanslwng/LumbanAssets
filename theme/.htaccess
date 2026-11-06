@@ -1,0 +1,5 @@
+# Block direct browsing of theme PHP/Router files (included only via require from project root).
+
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>

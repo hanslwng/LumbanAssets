@@ -8,7 +8,9 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once '../config.php';
+require_once dirname(__DIR__) . '/bootstrap.php';
+require_once dirname(__DIR__) . '/includes/audit_log.php';
+require_once dirname(__DIR__) . '/includes/unserviceable_helpers.php';
 require_once '../app/helpers/PermissionHelper.php';
 
 header('Content-Type: application/json');
@@ -21,7 +23,7 @@ try {
     jsonResponse([
         'success' => false,
         'message' => 'Database connection failed',
-        'hint' => 'Please run setup-database.php to initialize the database'
+        'hint' => 'Please run scripts/setup-database.php to initialize the database'
     ]);
 }
 
@@ -31,8 +33,10 @@ switch ($method) {
         getReturns($conn);
         break;
     case 'POST':
-        PermissionHelper::require('create');
-        createReturn($conn);
+        jsonResponse([
+            'success' => false,
+            'message' => 'Returns are no longer used. Report the item under Unserviceable, then mark Still works if it is working.',
+        ]);
         break;
     default:
         jsonResponse(['success' => false, 'message' => 'Method not allowed']);
@@ -100,8 +104,16 @@ function createReturn($conn) {
     $condition_on_return = sanitizeInput($data['condition_on_return'] ?? 'Good');
     $remarks = sanitizeInput($data['remarks'] ?? '');
     
-    if ($issuance_id <= 0 || $property_item_id <= 0 || empty($returned_by)) {
+    if ($issuance_id <= 0 || $property_item_id <= 0) {
         jsonResponse(['success' => false, 'message' => 'Missing required fields']);
+    }
+    $nameErr = lgueNameError($returned_by, 'Returned by');
+    if ($nameErr !== null) {
+        jsonResponse(['success' => false, 'message' => $nameErr]);
+    }
+    $remErr = lgueOptionalTextError($remarks, 'Remarks');
+    if ($remErr !== null) {
+        jsonResponse(['success' => false, 'message' => $remErr]);
     }
     
     // Validate return action
@@ -127,6 +139,30 @@ function createReturn($conn) {
         // Update item status based on return action
         if ($return_action === 'Unserviceable') {
             $new_status = 'Unserviceable';
+
+            // Ensure the item shows up in the Unserviceable Records module too
+            if (function_exists('unserviceableRemoveWorkingReports')) {
+                unserviceableRemoveWorkingReports($conn, $property_item_id);
+            }
+            $existsStmt = $conn->prepare(
+                "SELECT id FROM unserviceable_records
+                 WHERE property_item_id = ?
+                   AND COALESCE(repair_status, 'Pending') <> 'Serviceable'
+                 LIMIT 1"
+            );
+            $existsStmt->execute([$property_item_id]);
+            if (!$existsStmt->fetch(PDO::FETCH_ASSOC)) {
+                $unsSql = "INSERT INTO unserviceable_records (property_item_id, marked_date, reason, marked_by, remarks)
+                           VALUES (?, ?, ?, ?, ?)";
+                $unsStmt = $conn->prepare($unsSql);
+                $unsStmt->execute([
+                    $property_item_id,
+                    $return_date,
+                    'Returned in unserviceable condition' . ($remarks ? ": $remarks" : ''),
+                    $returned_by,
+                    $remarks,
+                ]);
+            }
         } elseif ($return_action === 'Transfer') {
             $new_status = 'Transferred';
             // Update office_id if transferring
@@ -145,6 +181,14 @@ function createReturn($conn) {
         }
         
         $conn->commit();
+        if (!function_exists('auditLogWrite')) {
+            require_once dirname(__DIR__) . '/includes/audit_log.php';
+        }
+        $note = $return_action;
+        if ($return_action === 'Transfer' && $transfer_to_office_id) {
+            $note = 'Transfer to ' . auditLogOfficeName($conn, $transfer_to_office_id);
+        }
+        auditLogWrite($conn, $property_item_id, 'Returned', 'Issued', $note . ' by ' . $returned_by);
         jsonResponse(['success' => true, 'message' => 'Return recorded successfully', 'id' => $return_id]);
         
     } catch (Exception $e) {

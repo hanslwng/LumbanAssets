@@ -1,0 +1,197 @@
+FILE: Lumban_LGU_PR_Historical_Jan-Sep_2026_ML_Dataset.xlsx
+SIZE: 74,038 bytes
+SHEETS: ['PR Transactions', 'Monthly Department Summary', 'Budget & Demand', 'Notes']
+
+=== SHEET: PR Transactions ===
+header_cols=7 data_rows=1165
+headers=['PR No.', 'PR Date', 'Department Code', 'Department', 'Items in the PR', 'PR Total', 'Monthly Budget Ceiling']
+sample_rows:
+  2: {"PR No.": "PR-2026-260001", "PR Date": "2026-01-01 00:00:00", "Department Code": "SWM", "Department": "Solid Waste Management", "Items in the PR": "Ballpen blue 60 pcs, Highlighter 10 pcs, Face masks 40 box, Correction tape 10 pcs, Notepads 20 pcs, Logbook 5 pcs", "PR Total": 9900, "Monthly Budget Ceiling": 29500}
+  3: {"PR No.": "PR-2026-260002", "PR Date": "2026-01-10 00:00:00", "Department Code": "SWM", "Department": "Solid Waste Management", "Items in the PR": "Highlighter 10 pcs, Cleaning rag 60 pcs, Ballpen blue 30 pcs, Carbon paper 5 box, Pencils 30 pcs, Detergent 20 kg, Broom 15 pcs, Paper clips 10 box", "PR Total": 7350, "Monthly Budget Ceiling": 29500}
+  4: {"PR No.": "PR-2026-260003", "PR Date": "2026-01-12 00:00:00", "Department Code": "SWM", "Department": "Solid Waste Management", "Items in the PR": "Bleach 20 bottle, Ballpen black 60 pcs, Permanent marker 10 pcs, Carbon paper 20 box, Mop head 15 pcs, Staples 80 box, Garbage bags, large 20 roll, Masking tape 20 roll", "PR Total": 7900, "Monthly Budget Ceiling": 29500}
+
+=== SHEET: Monthly Department Summary ===
+header_cols=14 data_rows=27
+headers=['Department Code', 'Department', 'Base Max Monthly Budget', 'Jan 2026', 'Feb 2026', 'Mar 2026', 'Apr 2026', 'May 2026', 'Jun 2026', 'Jul 2026', 'Aug 2026', 'Sep 2026', 'Jan-Sep Total', 'PR Count']
+sample_rows:
+  2: {"Department Code": "SWM", "Department": "Solid Waste Management", "Base Max Monthly Budget": 32000, "Jan 2026": 64900, "Feb 2026": 65750, "Mar 2026": 44000, "Apr 2026": 42450, "May 2026": 36900, "Jun 2026": 68650, "Jul 2026": 71450, "Aug 2026": 50550, "Sep 2026": 61600, "Jan-Sep Total": 506250, "PR Count": 57}
+  3: {"Department Code": "PDAO", "Department": "Office of the Person With Disability Affairs", "Base Max Monthly Budget": 9000, "Jan 2026": 24650, "Feb 2026": 6850, "Mar 2026": 9000, "Apr 2026": 15200, "May 2026": 9500, "Jun 2026": 11050, "Jul 2026": 18700, "Aug 2026": 16100, "Sep 2026": 13700, "Jan-Sep Total": 124750, "PR Count": 29}
+  4: {"Department Code": "SENIOR", "Department": "Office of the Senior Citizen Affairs (OSCA)", "Base Max Monthly Budget": 10000, "Jan 2026": 13350, "Feb 2026": 8350, "Mar 2026": 26400, "Apr 2026": 25950, "May 2026": 10700, "Jun 2026": 23700, "Jul 2026": 18250, "Aug 2026": 15800, "Sep 2026": 11700, "Jan-Sep Total": 154200, "PR Count": 31}
+
+=== SHEET: Budget & Demand ===
+header_cols=12 data_rows=27
+headers=['Department Code', 'Department', 'Base Max Monthly Budget', 'Jan Ceiling', 'Feb Ceiling', 'Mar Ceiling', 'Apr Ceiling', 'May Ceiling', 'Jun Ceiling', 'Jul Ceiling', 'Aug Ceiling', 'Sep Ceiling']
+sample_rows:
+  2: {"Department Code": "SWM", "Department": "Solid Waste Management", "Base Max Monthly Budget": 32000, "Jan Ceiling": 29500, "Feb Ceiling": 26000, "Mar Ceiling": 32500, "Apr Ceiling": 29000, "May Ceiling": 30000, "Jun Ceiling": 32000, "Jul Ceiling": 35500, "Aug Ceiling": 33000, "Sep Ceiling": 33500}
+  3: {"Department Code": "PDAO", "Department": "Office of the Person With Disability Affairs", "Base Max Monthly Budget": 9000, "Jan Ceiling": 8500, "Feb Ceiling": 7500, "Mar Ceiling": 9000, "Apr Ceiling": 9500, "May Ceiling": 9000, "Jun Ceiling": 10500, "Jul Ceiling": 9500, "Aug Ceiling": 9500, "Sep Ceiling": 10500}
+  4: {"Department Code": "SENIOR", "Department": "Office of the Senior Citizen Affairs (OSCA)", "Base Max Monthly Budget": 10000, "Jan Ceiling": 8500, "Feb Ceiling": 8500, "Mar Ceiling": 9000, "Apr Ceiling": 8500, "May Ceiling": 9500, "Jun Ceiling": 10500, "Jul Ceiling": 10000, "Aug Ceiling": 10500, "Sep Ceiling": 10500}
+
+=== SHEET: Notes ===
+header_cols=1 data_rows=7
+headers=['Historical ML dataset assumptions']
+sample_rows:
+  2: {"Historical ML dataset assumptions": "Period: January 2026 through September 2026."}
+  3: {"Historical ML dataset assumptions": "Synthetic historical data for demand-forecasting model development; it is not official LGU procurement/appropriation data."}
+  4: {"Historical ML dataset assumptions": "Each row is one Purchase Request. Each PR contains multiple related consumable items."}
+
+USING SHEET: PR Transactions
+COLUMN MAP: {"office": "Department", "pr_no": null, "pr_date": "PR Date", "item": null, "qty": null, "unit": null, "unit_cost": null, "amount": null, "month": null, "status": null, "purpose": null, "category": null}
+
+PARSED DATA ROWS: 1165
+=== COVERAGE ===
+departments=27
+unique_items=0
+unique_pr_numbers=0
+months=['2026-01', '2026-02', '2026-03', '2026-04', '2026-05', '2026-06', '2026-07', '2026-08', '2026-09']
+date_range=2026-01-01 .. 2026-09-27
+
+=== DEPARTMENTS ===
+  - Accounting Office
+  - Administrative Office
+  - Assessor’s Office
+  - Budget Office
+  - Commission on Audit
+  - Department of Agriculture
+  - Department of Education
+  - Department of the Interior and Local Government
+  - Engineering Office
+  - General Services Office
+  - Human Resource Management Office
+  - License Office
+  - Lumban Public Market
+  - Lumban Waterworks System
+  - Municipal Civil Registrar
+  - Municipal Disaster Risk Reduction and Management Office
+  - Municipal Planning and Development Office
+  - Municipal Social Welfare and Development Office
+  - Office of the Mayor
+  - Office of the Person With Disability Affairs
+  - Office of the Senior Citizen Affairs (OSCA)
+  - Organic Trading Post
+  - Public Employment Services Office
+  - Rural Health Unit
+  - Sangguniang Bayan Office
+  - Solid Waste Management
+  - Treasury Office
+
+=== PER DEPARTMENT: PR count / month + top items ===
+Accounting Office
+  lines=36 prs=0 avgPR/mo=4.00 series=[2, 4, 5, 2, 5, 3, 4, 5, 6]
+  top_items: 
+Administrative Office
+  lines=45 prs=0 avgPR/mo=5.00 series=[4, 4, 6, 4, 7, 7, 5, 4, 4]
+  top_items: 
+Assessor’s Office
+  lines=30 prs=0 avgPR/mo=3.33 series=[3, 2, 3, 5, 2, 6, 5, 2, 2]
+  top_items: 
+Budget Office
+  lines=34 prs=0 avgPR/mo=3.78 series=[4, 5, 2, 5, 2, 3, 4, 4, 5]
+  top_items: 
+Commission on Audit
+  lines=33 prs=0 avgPR/mo=3.67 series=[3, 3, 4, 5, 2, 3, 4, 5, 4]
+  top_items: 
+Department of Agriculture
+  lines=50 prs=0 avgPR/mo=5.56 series=[7, 5, 6, 7, 6, 5, 6, 4, 4]
+  top_items: 
+Department of Education
+  lines=51 prs=0 avgPR/mo=5.67 series=[4, 6, 4, 7, 5, 8, 7, 5, 5]
+  top_items: 
+Department of the Interior and Local Government
+  lines=35 prs=0 avgPR/mo=3.89 series=[5, 5, 2, 4, 2, 6, 5, 4, 2]
+  top_items: 
+Engineering Office
+  lines=48 prs=0 avgPR/mo=5.33 series=[6, 5, 4, 7, 7, 6, 5, 4, 4]
+  top_items: 
+General Services Office
+  lines=62 prs=0 avgPR/mo=6.89 series=[8, 8, 6, 5, 7, 7, 8, 8, 5]
+  top_items: 
+Human Resource Management Office
+  lines=33 prs=0 avgPR/mo=3.67 series=[3, 2, 4, 3, 5, 3, 4, 4, 5]
+  top_items: 
+License Office
+  lines=33 prs=0 avgPR/mo=3.67 series=[3, 4, 3, 3, 3, 6, 3, 3, 5]
+  top_items: 
+Lumban Public Market
+  lines=49 prs=0 avgPR/mo=5.44 series=[4, 7, 7, 5, 5, 5, 4, 5, 7]
+  top_items: 
+Lumban Waterworks System
+  lines=58 prs=0 avgPR/mo=6.44 series=[5, 6, 5, 6, 7, 9, 7, 5, 8]
+  top_items: 
+Municipal Civil Registrar
+  lines=51 prs=0 avgPR/mo=5.67 series=[7, 7, 5, 4, 4, 4, 4, 8, 8]
+  top_items: 
+Municipal Disaster Risk Reduction and Management Office
+  lines=58 prs=0 avgPR/mo=6.44 series=[6, 5, 8, 7, 7, 6, 6, 5, 8]
+  top_items: 
+Municipal Planning and Development Office
+  lines=33 prs=0 avgPR/mo=3.67 series=[2, 5, 5, 3, 2, 3, 5, 5, 3]
+  top_items: 
+Municipal Social Welfare and Development Office
+  lines=50 prs=0 avgPR/mo=5.56 series=[4, 4, 4, 7, 6, 7, 7, 7, 4]
+  top_items: 
+Office of the Mayor
+  lines=36 prs=0 avgPR/mo=4.00 series=[3, 5, 3, 4, 4, 5, 3, 5, 4]
+  top_items: 
+Office of the Person With Disability Affairs
+  lines=29 prs=0 avgPR/mo=3.22 series=[4, 2, 2, 3, 2, 3, 5, 4, 4]
+  top_items: 
+Office of the Senior Citizen Affairs (OSCA)
+  lines=31 prs=0 avgPR/mo=3.44 series=[3, 2, 5, 5, 2, 6, 3, 3, 2]
+  top_items: 
+Organic Trading Post
+  lines=49 prs=0 avgPR/mo=5.44 series=[4, 4, 5, 6, 7, 5, 6, 6, 6]
+  top_items: 
+Public Employment Services Office
+  lines=35 prs=0 avgPR/mo=3.89 series=[5, 4, 5, 3, 4, 5, 3, 2, 4]
+  top_items: 
+Rural Health Unit
+  lines=56 prs=0 avgPR/mo=6.22 series=[5, 6, 8, 5, 7, 8, 6, 5, 6]
+  top_items: 
+Sangguniang Bayan Office
+  lines=32 prs=0 avgPR/mo=3.56 series=[2, 4, 4, 2, 3, 4, 5, 3, 5]
+  top_items: 
+Solid Waste Management
+  lines=57 prs=0 avgPR/mo=6.33 series=[8, 8, 6, 5, 5, 6, 7, 6, 6]
+  top_items: 
+Treasury Office
+  lines=51 prs=0 avgPR/mo=5.67 series=[6, 5, 7, 4, 6, 7, 7, 4, 5]
+  top_items: 
+
+=== ITEM OVERLAP (are all depts requesting same items?) ===
+avg pairwise Jaccard item-set similarity=0.000 (0=unique, 1=identical)
+office pairs with identical item catalogs=0
+items in EVERY office=0
+most shared items:
+
+=== PR FREQUENCY DIVERSITY ===
+avgPR/mo across depts: min=3.22 max=6.89 mean=4.79 CV=0.240
+rounded avgPR buckets={'3': 3, '4': 10, '5': 4, '6': 9, '7': 1}
+
+=== SPENDING DIVERSITY ===
+total ₱ Jan-Sep by office: min=0 max=0
+  top Accounting Office: ₱0
+  top Administrative Office: ₱0
+  top Assessor’s Office: ₱0
+  top Budget Office: ₱0
+  top Commission on Audit: ₱0
+  top Department of Agriculture: ₱0
+  top Department of Education: ₱0
+  top Department of the Interior and Local Government: ₱0
+...
+  low Accounting Office: ₱0
+  low Administrative Office: ₱0
+  low Assessor’s Office: ₱0
+  low Budget Office: ₱0
+  low Commission on Audit: ₱0
+
+=== TOP 20 ITEMS (by PR line frequency) ===
+
+=== DATA QUALITY ===
+blank_office=0 blank_item=1165 blank_month/date=0 blank_pr_no=1165 negative_qty/amt=0
+rows_with_amount=0 rows_with_unit_cost=0
+
+=== IMPORT READINESS NOTES ===
+- Need office-name mapping to lgu_invent.offices
+- Need PR header grouping by pr_number (or date+office if no PR no)
+- Line fields: item/description, qty, unit, unit_cost/amount
+- Consumable classification assumed for all rows in this dataset

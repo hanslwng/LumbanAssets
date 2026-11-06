@@ -8,7 +8,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once '../config.php';
+require_once dirname(__DIR__) . '/bootstrap.php';
 require_once '../app/helpers/PermissionHelper.php';
 
 header('Content-Type: application/json');
@@ -21,7 +21,7 @@ try {
     jsonResponse([
         'success' => false,
         'message' => 'Database connection failed',
-        'hint' => 'Please run setup-database.php to initialize the database'
+        'hint' => 'Please run scripts/setup-database.php to initialize the database'
     ]);
 }
 
@@ -98,12 +98,30 @@ function createOffice($conn) {
     if (empty($name) || empty($code)) {
         jsonResponse(['success' => false, 'message' => 'Name and code are required']);
     }
+    $nameErr = lgueRequiredTextError($name, 'Department name', 3);
+    if ($nameErr !== null) {
+        jsonResponse(['success' => false, 'message' => $nameErr]);
+    }
+    $codeErr = lgueOfficeCodeError($code);
+    if ($codeErr !== null) {
+        jsonResponse(['success' => false, 'message' => $codeErr]);
+    }
     
     $sql = "INSERT INTO offices (name, code) VALUES (?, ?)";
     $stmt = $conn->prepare($sql);
     
     if ($stmt->execute([$name, $code])) {
         $office_id = $conn->lastInsertId();
+        if (!function_exists('activityLog')) {
+            require_once dirname(__DIR__) . '/includes/audit_log.php';
+        }
+        activityLog($conn, 'offices', 'Office created', [
+            'office_id' => (int) $office_id,
+            'entity_type' => 'office',
+            'entity_id' => (int) $office_id,
+            'entity_label' => $name,
+            'new_value' => $code,
+        ]);
         jsonResponse(['success' => true, 'message' => 'Office created successfully', 'id' => $office_id]);
     } else {
         jsonResponse(['success' => false, 'message' => 'Failed to create office']);
@@ -120,11 +138,29 @@ function updateOffice($conn) {
     if ($id <= 0 || empty($name) || empty($code)) {
         jsonResponse(['success' => false, 'message' => 'Invalid data']);
     }
+    $nameErr = lgueRequiredTextError($name, 'Department name', 3);
+    if ($nameErr !== null) {
+        jsonResponse(['success' => false, 'message' => $nameErr]);
+    }
+    $codeErr = lgueOfficeCodeError($code);
+    if ($codeErr !== null) {
+        jsonResponse(['success' => false, 'message' => $codeErr]);
+    }
     
     $sql = "UPDATE offices SET name = ?, code = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
     
     if ($stmt->execute([$name, $code, $id])) {
+        if (!function_exists('activityLog')) {
+            require_once dirname(__DIR__) . '/includes/audit_log.php';
+        }
+        activityLog($conn, 'offices', 'Office updated', [
+            'office_id' => $id,
+            'entity_type' => 'office',
+            'entity_id' => $id,
+            'entity_label' => $name,
+            'new_value' => $code,
+        ]);
         jsonResponse(['success' => true, 'message' => 'Office updated successfully']);
     } else {
         jsonResponse(['success' => false, 'message' => 'Failed to update office']);
@@ -148,10 +184,29 @@ function deleteOffice($conn) {
         jsonResponse(['success' => false, 'message' => 'Cannot delete office with existing items']);
     }
     
+    $label = '';
+    try {
+        $nm = $conn->prepare('SELECT name, code FROM offices WHERE id = ?');
+        $nm->execute([$id]);
+        $orow = $nm->fetch(PDO::FETCH_ASSOC) ?: [];
+        $label = trim((string) ($orow['name'] ?? '') . ' ' . (string) ($orow['code'] ?? ''));
+    } catch (PDOException $e) {
+        $label = 'Office #' . $id;
+    }
+
     $sql = "DELETE FROM offices WHERE id = ?";
     $stmt = $conn->prepare($sql);
     
     if ($stmt->execute([$id])) {
+        if (!function_exists('activityLog')) {
+            require_once dirname(__DIR__) . '/includes/audit_log.php';
+        }
+        activityLog($conn, 'offices', 'Office deleted', [
+            'office_id' => $id,
+            'entity_type' => 'office',
+            'entity_id' => $id,
+            'entity_label' => $label !== '' ? $label : ('Office #' . $id),
+        ]);
         jsonResponse(['success' => true, 'message' => 'Office deleted successfully']);
     } else {
         jsonResponse(['success' => false, 'message' => 'Failed to delete office']);

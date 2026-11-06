@@ -1,0 +1,467 @@
+[
+  {
+    "abbrev": "RHU",
+    "full_name": "Rural Health Unit",
+    "officer": "CARMELA L. JAVAN",
+    "report_year": "2025",
+    "total_items": 316,
+    "total_unit_value": 2207110.1,
+    "items_0000": 189,
+    "items_with_remarks": 7,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "Date:",
+      "OFFICE EQUIPMENTS, TOOLS & APPLIANCES",
+      "COMMUNICATION EQUIPMENTS",
+      "IT EQUIPMENTS"
+    ]
+  },
+  {
+    "abbrev": "MDRRMO",
+    "full_name": "Municipal Disaster Risk Reduction and Management Office",
+    "officer": "WILFREDO C. FRESTO",
+    "report_year": "2025",
+    "total_items": 203,
+    "total_unit_value": 2309733.0,
+    "items_0000": 81,
+    "items_with_remarks": 24,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "OTHERS",
+      "Date:",
+      "OFFICE EQUIPMENTS, TOOLS & APPLIANCES",
+      "COMMUNICATION EQUIPMENTS",
+      "IT EQUIPMENTS"
+    ]
+  },
+  {
+    "abbrev": "SB",
+    "full_name": "Sangguniang Bayan Office",
+    "officer": "IRENEO R. BALDOVINO",
+    "report_year": "2025",
+    "total_items": 131,
+    "total_unit_value": 1156301.0,
+    "items_0000": 101,
+    "items_with_remarks": 0,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "Date:",
+      "OFFICE EQUIPMENTS, TOOLS & APPLIANCES",
+      "IT EQUIPMENTS"
+    ]
+  },
+  {
+    "abbrev": "OM",
+    "full_name": "Office of the Mayor",
+    "officer": "BELEN B. RAGA",
+    "report_year": "2025",
+    "total_items": 115,
+    "total_unit_value": 1645469.36,
+    "items_0000": 107,
+    "items_with_remarks": 0,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "Date:",
+      "OTHERS",
+      "OFFICE EQUIPMENTS, TOOLS & APPLIANCES",
+      "SOUND SYSTEM"
+    ]
+  },
+  {
+    "abbrev": "ASSESSOR",
+    "full_name": "Assessor's Office",
+    "officer": "HANIE LEINE S. SUYOM",
+    "report_year": "2025",
+    "total_items": 97,
+    "total_unit_value": 664141.5,
+    "items_0000": 63,
+    "items_with_remarks": 0,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "Date:",
+      "OFFICE EQUIPMENTS, TOOLS & APPLIANCES",
+      "IT EQUIPMENTS"
+    ]
+  },
+  {
+    "abbrev": "ACCOUNTING",
+    "full_name": "Accounting Office",
+    "officer": "MAUREEN M. PEREZ",
+    "report_year": "2025",
+    "total_items": 84,
+    "total_unit_value": 699863.0,
+    "items_0000": 70,
+    "items_with_remarks": 0,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "Date:",
+      "OFFICE EQUIPMENTS, TOOLS & APPLIANCES",
+      "IT EQUIPMENTS"
+    ]
+  },
+  {
+    "abbrev": "TREASURY",
+    "full_name": "Treasury Office",
+    "officer": "IMELDA M. HERNANDEZ",
+    "report_year": "2025",
+    "total_items": 83,
+    "total_unit_value": 563711.0,
+    "items_0000": 77,
+    "items_with_remarks": 1,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "Date:",
+      "OFFICE EQUIPMENTS, TOOLS & APPLIANCES",
+      "IT EQUIPMENTS"
+    ]
+  },
+  {
+    "abbrev": "ADMIN",
+    "full_name": "Administrative Office",
+    "officer": "CHARITY IRIENE R. TABIO",
+    "report_year": "2025",
+    "total_items": 82,
+    "total_unit_value": 654972.3,
+    "items_0000": 74,
+    "items_with_remarks": 0,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "Date:",
+      "OFFICE EQUIPMENTS, TOOLS & APPLIANCES",
+      "SOUND SYSTEM",
+      "IT EQUIPMENTS"
+    ]
+  },
+  {
+    "abbrev": "LWS",
+    "full_name": "Lumban Waterworks System",
+    "officer": "ROBEL M. DEL VALLE",
+    "report_year": "2025",
+    "total_items": 79,
+    "total_unit_value": 580728.0,
+    "items_0000": 70,
+    "items_with_remarks": 5,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "Date:",
+      "OFFICE EQUIPMENTS, TOOLS & APPLIANCES",
+      "IT EQUIPMENTS"
+    ]
+  },
+  {
+    "abbrev": "MSWDO",
+    "full_name": "Municipal Social Welfare and Development Office",
+    "officer": "ROBERTO Y. DE RAMOS",
+    "report_year": "2025",
+    "total_items": 65,
+    "total_unit_value": 578613.5,
+    "items_0000": 43,
+    "items_with_remarks": 4,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "Date:",
+      "Other Supplies",
+      "OFFICE EQUIPMENTS, TOOLS & APPLIANCES",
+      "IT EQUIPMENTS"
+    ]
+  },
+  {
+    "abbrev": "ENGR",
+    "full_name": "Engineering Office",
+    "officer": "JOHN MARK D. VILLANUEVA",
+    "report_year": "2025",
+    "total_items": 63,
+    "total_unit_value": 581209.53,
+    "items_0000": 32,
+    "items_with_remarks": 5,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "Date:",
+      "OFFICE EQUIPMENTS, TOOLS & APPLIANCES",
+      "COMMUNICATION EQUIPMENTS",
+      "SERVICE VEHICLE",
+      "IT EQUIPMENTS"
+    ]
+  },
+  {
+    "abbrev": "GSO",
+    "full_name": "General Services Office",
+    "officer": "RHONALIZA A. ALVIAR",
+    "report_year": "2025",
+    "total_items": 51,
+    "total_unit_value": 446327.0,
+    "items_0000": 35,
+    "items_with_remarks": 0,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "Date:",
+      "OFFICE EQUIPMENTS, TOOLS & APPLIANCES",
+      "IT EQUIPMENTS"
+    ]
+  },
+  {
+    "abbrev": "DA",
+    "full_name": "Department of Agriculture",
+    "officer": "CATHERINE H. RANOCO",
+    "report_year": "2025",
+    "total_items": 50,
+    "total_unit_value": 340120.8,
+    "items_0000": 30,
+    "items_with_remarks": 0,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "Date:",
+      "OFFICE EQUIPMENTS, TOOLS & APPLIANCES",
+      "IT EQUIPMENTS"
+    ]
+  },
+  {
+    "abbrev": "SENIOR",
+    "full_name": "Office of the Senior Citizen Affairs (OSCA)",
+    "officer": "ELENITA R. DE RAMOS",
+    "report_year": "2025",
+    "total_items": 47,
+    "total_unit_value": 122918.0,
+    "items_0000": 26,
+    "items_with_remarks": 1,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "Date:",
+      "OFFICE EQUIPMENTS, TOOLS & APPLIANCES",
+      "IT EQUIPMENTS"
+    ]
+  },
+  {
+    "abbrev": "BUDGET",
+    "full_name": "Budget Office",
+    "officer": "AURA KRISTELA G. RANQUE",
+    "report_year": "2025",
+    "total_items": 39,
+    "total_unit_value": 296804.7,
+    "items_0000": 28,
+    "items_with_remarks": 0,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "Date:",
+      "OFFICE EQUIPMENTS, TOOLS & APPLIANCES",
+      "IT EQUIPMENTS"
+    ]
+  },
+  {
+    "abbrev": "MARKET",
+    "full_name": "Lumban Public Market",
+    "officer": "KERVIN LORENZ N. BADULIS",
+    "report_year": "2025",
+    "total_items": 38,
+    "total_unit_value": 253565.0,
+    "items_0000": 31,
+    "items_with_remarks": 19,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "Date:",
+      "OFFICE EQUIPMENTS, TOOLS & APPLIANCES",
+      "IT EQUIPMENTS"
+    ]
+  },
+  {
+    "abbrev": "MCR",
+    "full_name": "Municipal Civil Registrar",
+    "officer": "HELEN A. RANA",
+    "report_year": "2025",
+    "total_items": 34,
+    "total_unit_value": 194553.0,
+    "items_0000": 18,
+    "items_with_remarks": 0,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "Date:",
+      "IT EQUIPMENTS"
+    ]
+  },
+  {
+    "abbrev": "HRMO",
+    "full_name": "Human Resource Management Office",
+    "officer": "JAYSON M. LAGRADA",
+    "report_year": "2025",
+    "total_items": 34,
+    "total_unit_value": 327220.5,
+    "items_0000": 28,
+    "items_with_remarks": 0,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "Date:",
+      "OFFICE EQUIPMENTS, TOOLS & APPLIANCES",
+      "IT EQUIPMENTS",
+      "SERVICE VEHICLES"
+    ]
+  },
+  {
+    "abbrev": "TRADING POST",
+    "full_name": "Organic Trading Post",
+    "officer": "CATHERINE H. RANOCO",
+    "report_year": "2025",
+    "total_items": 32,
+    "total_unit_value": 235824.4,
+    "items_0000": 26,
+    "items_with_remarks": 17,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "Date:",
+      "OFFICE EQUIPMENTS, TOOLS & APPLIANCES"
+    ]
+  },
+  {
+    "abbrev": "SWM",
+    "full_name": "Solid Waste Management",
+    "officer": "ROWELL E. CABRERA",
+    "report_year": "2025",
+    "total_items": 28,
+    "total_unit_value": 131825.5,
+    "items_0000": 21,
+    "items_with_remarks": 0,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "Date:",
+      "OFFICE EQUIPMENTS, TOOLS & APPLIANCES",
+      "IT EQUIPMENTS"
+    ]
+  },
+  {
+    "abbrev": "MPDC",
+    "full_name": "Municipal Planning and Development Office",
+    "officer": "SOTERO Y. HIMOC",
+    "report_year": "2025",
+    "total_items": 25,
+    "total_unit_value": 238657.3,
+    "items_0000": 18,
+    "items_with_remarks": 2,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "Date:",
+      "IT EQUIPMENTS",
+      "OFFICE EQUIPMENTS, TOOLS, & APPLIANCES"
+    ]
+  },
+  {
+    "abbrev": "LICENSE",
+    "full_name": "License Office",
+    "officer": "MARIA FE P. SABIDO",
+    "report_year": "2025",
+    "total_items": 22,
+    "total_unit_value": 153890.0,
+    "items_0000": 17,
+    "items_with_remarks": 0,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "Date:",
+      "OFFICE EQUIPMENTS, TOOLS & APPLIANCES",
+      "IT EQUIPMENTS"
+    ]
+  },
+  {
+    "abbrev": "PESO",
+    "full_name": "Public Employment Services Office",
+    "officer": "ROBEL M. DEL VALLE",
+    "report_year": "2025",
+    "total_items": 21,
+    "total_unit_value": 220071.0,
+    "items_0000": 11,
+    "items_with_remarks": 4,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "Date:",
+      "OFFICE EQUIPMENTS, TOOLS & APPLIANCES",
+      "IT EQUIPMENTS"
+    ]
+  },
+  {
+    "abbrev": "DILG",
+    "full_name": "Department of the Interior and Local Government",
+    "officer": "APRILYN L. MAYRONG",
+    "report_year": "2025",
+    "total_items": 20,
+    "total_unit_value": 115994.8,
+    "items_0000": 15,
+    "items_with_remarks": 0,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "Date:",
+      "IT EQUIPMENTS"
+    ]
+  },
+  {
+    "abbrev": "COA",
+    "full_name": "Commission on Audit",
+    "officer": "",
+    "report_year": "2025",
+    "total_items": 20,
+    "total_unit_value": 315829.5,
+    "items_0000": 15,
+    "items_with_remarks": 0,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "Date:",
+      "OFFICE EQUIPMENTS, TOOLS & APPLIANCES",
+      "IT EQUIPMENTS"
+    ]
+  },
+  {
+    "abbrev": "DEPED",
+    "full_name": "Department of Education",
+    "officer": "",
+    "report_year": "2024",
+    "total_items": 6,
+    "total_unit_value": 31520.0,
+    "items_0000": 0,
+    "items_with_remarks": 0,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "Date:",
+      "OFFICE EQUIPMENTS, TOOLS & APPLIANCES",
+      "IT EQUIPMENTS"
+    ]
+  },
+  {
+    "abbrev": "PDAO",
+    "full_name": "Office of the Person With Disability Affairs",
+    "officer": "ANTHONY MERCADO",
+    "report_year": "2024",
+    "total_items": 4,
+    "total_unit_value": 0,
+    "items_0000": 0,
+    "items_with_remarks": 0,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "Date:",
+      "IT EQUIPMENTS"
+    ]
+  },
+  {
+    "abbrev": "Sheet",
+    "full_name": "Sheet",
+    "officer": "",
+    "report_year": "2023",
+    "total_items": 2,
+    "total_unit_value": 0,
+    "items_0000": 0,
+    "items_with_remarks": 0,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "Date:"
+    ]
+  },
+  {
+    "abbrev": "Sheet (6)",
+    "full_name": "Sheet (6)",
+    "officer": "",
+    "report_year": "2023",
+    "total_items": 2,
+    "total_unit_value": 0,
+    "items_0000": 0,
+    "items_with_remarks": 0,
+    "categories": [
+      "OFFICE FIXTURES & FURNITURES",
+      "Date:"
+    ]
+  }
+]

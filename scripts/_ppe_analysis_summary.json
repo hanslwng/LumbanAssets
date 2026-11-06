@@ -1,0 +1,608 @@
+{
+  "file": "e:\\RPCPPE-update-to-2025.xlsx",
+  "sheets": [
+    "LAND FINAL",
+    "SUPPLIES AND EQUIPMENT FINAL",
+    "SEF SCHOOL BUILDING",
+    "SEF OFFICE EQUIPMENT",
+    "LAND TITLE",
+    "FORM",
+    "IIRUP"
+  ],
+  "sheet_meta": [
+    {
+      "sheet": "LAND FINAL",
+      "max_row": 192,
+      "max_col": 11,
+      "nonempty_rows": 186,
+      "header_row": 12,
+      "report_as_of": "As of December 31, 2025",
+      "officer": "RHONALIZA A. ALVIAR",
+      "designation": "GSO - Designate",
+      "entity": "Municipal Goverment of Lumban, Laguna",
+      "assumption": "2025-12-31 00:00:00",
+      "formula_count": 11,
+      "records": 162,
+      "categories": [
+        "ROAD NETWORKS",
+        "SCHOOL BUILDINGS",
+        "Flood Control System",
+        "BUILDINGS",
+        "Other Land Improvements",
+        "Other Infrastructure Assets",
+        "Other Structures",
+        "Hospitals and Health Centers",
+        "Markets",
+        "Prepared by:",
+        "RHONALIZA A. ALVIAR",
+        "GSO - Designate / PRO III",
+        "Date:"
+      ],
+      "notes": ""
+    },
+    {
+      "sheet": "SUPPLIES AND EQUIPMENT FINAL",
+      "max_row": 366,
+      "max_col": 11,
+      "nonempty_rows": 124,
+      "header_row": 12,
+      "report_as_of": "As of December 31, 2025",
+      "officer": "RHONALIZA A. ALVIAR",
+      "designation": "GSO - DESIGNATE",
+      "entity": "Municipal Goverment of Lumban, Laguna",
+      "assumption": "2025-12-31 00:00:00",
+      "formula_count": 14,
+      "records": 97,
+      "categories": [
+        "OFFICE FIXTURES & FURNITURES",
+        "OFFICE EQUIPMENTS, TOOLS & APPLIANCES",
+        "IT EQUIPMENTS",
+        "COMMUNICATION EQUIPMENTS",
+        "OTHER MACHINERY AND EQUIPMENT",
+        "AGRICULTURAL, FORESTY, FISHERY EQUIPMENT",
+        "MEDICAL DENTAL LABORATORY EQUIPMENT",
+        "OTHER PROPERTY, PLANT AND EQUIPMENT",
+        "WATER SUPPLY SYSTEM",
+        "MILITARY, POLICE AND SECURITY EQUIPMENT",
+        "MACHINERY",
+        "DISASTER RESPONSE AND RESCUE EQUIPMENT",
+        "ELECTRIC TRANSFORMERS",
+        "RHONALIZA A. ALVIAR",
+        "GSO - Designate / PRO III",
+        "Date:"
+      ],
+      "notes": ""
+    },
+    {
+      "sheet": "SEF SCHOOL BUILDING",
+      "max_row": 43,
+      "max_col": 10,
+      "nonempty_rows": 38,
+      "header_row": 12,
+      "report_as_of": "As of December 31, 2025",
+      "officer": "RHONALIZA A. ALVIAR",
+      "designation": "GSO - DESIGNATE",
+      "entity": "Municipal Goverment of Lumban, Laguna",
+      "assumption": "2025-12-31 00:00:00",
+      "formula_count": 7,
+      "records": 17,
+      "categories": [
+        "OFFICE EQUIPMENT - SEF",
+        "OTHER PROPERTY, PLANT AND EQUIPMENT",
+        "INFORMATION AND COMMUNICATION TECHNOLOGY  EQUIPMENT",
+        "SCHOOL BUILDING - SEF",
+        "OTHER STRUCTURE - SEF",
+        "LAND - SEF",
+        "Prepared by:",
+        "RHONALIZA A. ALVIAR",
+        "GSO - Designate / PRO III",
+        "Date:"
+      ],
+      "notes": ""
+    },
+    {
+      "sheet": "SEF OFFICE EQUIPMENT",
+      "max_row": 34,
+      "max_col": 10,
+      "nonempty_rows": 27,
+      "header_row": 12,
+      "report_as_of": "As of December 31, 2024",
+      "officer": "RHONALIZA A. ALVIAR",
+      "designation": "GSO - DESIGNATE",
+      "entity": "Municipal Goverment of Lumban, Laguna",
+      "assumption": "2024-12-31 00:00:00",
+      "formula_count": 4,
+      "records": 11,
+      "categories": [
+        "OFFICE EQUIPMENT - SEF",
+        "OTHER PROPERTY, PLANT AND EQUIPMENT",
+        "INFORMATION AND COMMUNICATION TECHNOLOGY  EQUIPMENT",
+        "Prepared by:",
+        "RHONALIZA A. ALVIAR",
+        "PRO III / GSO-Designate"
+      ],
+      "notes": ""
+    },
+    {
+      "sheet": "LAND TITLE",
+      "max_row": 71,
+      "max_col": 10,
+      "nonempty_rows": 65,
+      "header_row": 12,
+      "report_as_of": "As of December 31, 2025",
+      "officer": "RHONALIZA A. ALVIAR",
+      "designation": "GSO - DESIGNATE",
+      "entity": "Municipal Goverment of Lumban, Laguna",
+      "assumption": "2025-12-31 00:00:00",
+      "formula_count": 2,
+      "records": 49,
+      "categories": [
+        "LAND TITLE",
+        "Prepared by:",
+        "RHONALIZA A. ALVIAR",
+        "GSO - Designate / PRO III",
+        "Date:"
+      ],
+      "notes": ""
+    },
+    {
+      "sheet": "FORM",
+      "max_row": 39,
+      "max_col": 10,
+      "nonempty_rows": 15,
+      "header_row": 12,
+      "report_as_of": "As of December 31, 2024",
+      "officer": "",
+      "designation": "",
+      "entity": "Municipal Goverment of Lumban, Laguna",
+      "assumption": "",
+      "formula_count": 2,
+      "records": 0,
+      "categories": [],
+      "notes": "Template / no item records"
+    },
+    {
+      "sheet": "IIRUP",
+      "max_row": 31,
+      "max_col": 18,
+      "nonempty_rows": 20,
+      "header_row": null,
+      "report_as_of": "As at December 2023",
+      "officer": "",
+      "designation": "",
+      "entity": "",
+      "assumption": "",
+      "formula_count": 8,
+      "records": 8,
+      "categories": [],
+      "notes": "IIRUP form; not RPCPPE physical-count layout"
+    }
+  ],
+  "rpcppe_records": 336,
+  "iirup_records": 8,
+  "total_extracted_rows": 344,
+  "by_sheet": {
+    "LAND FINAL": 162,
+    "SUPPLIES AND EQUIPMENT FINAL": 97,
+    "SEF SCHOOL BUILDING": 17,
+    "SEF OFFICE EQUIPMENT": 11,
+    "LAND TITLE": 49
+  },
+  "categories": {
+    "ROAD NETWORKS": 68,
+    "SCHOOL BUILDINGS": 3,
+    "Flood Control System": 17,
+    "BUILDINGS": 28,
+    "Other Land Improvements": 5,
+    "Other Infrastructure Assets": 16,
+    "Other Structures": 20,
+    "Hospitals and Health Centers": 2,
+    "Markets": 3,
+    "Prepared by:": 0,
+    "RHONALIZA A. ALVIAR": 0,
+    "GSO - Designate / PRO III": 0,
+    "Date:": 0,
+    "OFFICE FIXTURES & FURNITURES": 3,
+    "OFFICE EQUIPMENTS, TOOLS & APPLIANCES": 21,
+    "IT EQUIPMENTS": 29,
+    "COMMUNICATION EQUIPMENTS": 3,
+    "OTHER MACHINERY AND EQUIPMENT": 7,
+    "AGRICULTURAL, FORESTY, FISHERY EQUIPMENT": 4,
+    "MEDICAL DENTAL LABORATORY EQUIPMENT": 3,
+    "OTHER PROPERTY, PLANT AND EQUIPMENT": 12,
+    "WATER SUPPLY SYSTEM": 5,
+    "MILITARY, POLICE AND SECURITY EQUIPMENT": 3,
+    "MACHINERY": 1,
+    "DISASTER RESPONSE AND RESCUE EQUIPMENT": 2,
+    "ELECTRIC TRANSFORMERS": 6,
+    "OFFICE EQUIPMENT - SEF": 12,
+    "INFORMATION AND COMMUNICATION TECHNOLOGY  EQUIPMENT": 7,
+    "SCHOOL BUILDING - SEF": 4,
+    "OTHER STRUCTURE - SEF": 1,
+    "LAND - SEF": 2,
+    "PRO III / GSO-Designate": 0,
+    "LAND TITLE": 49
+  },
+  "units": {
+    "lot": 222,
+    "unit": 78,
+    "sets": 5,
+    "set": 8
+  },
+  "remarks_top": [],
+  "remarks_filled": 0,
+  "missing": {
+    "property_no": 0,
+    "description": 9,
+    "unit_value": 4,
+    "card_qty": 73,
+    "count_qty": 73,
+    "shortage_qty_blank": 336,
+    "shortage_val_blank": 336
+  },
+  "zero_unit_value": 0,
+  "neg_unit_value": 0,
+  "duplicate_property_numbers": 12,
+  "duplicate_pn_examples": [
+    [
+      "2021-03-990-01FJ0108-01FJ",
+      2
+    ],
+    [
+      "Total",
+      4
+    ],
+    [
+      "10705020-001-004-002-OE-00058",
+      2
+    ],
+    [
+      "10705020-001-004-002-OE-00056",
+      2
+    ],
+    [
+      "10705020-001-004-002-OE-00057",
+      2
+    ],
+    [
+      "10705020-001-001-OE-00051",
+      2
+    ],
+    [
+      "10705020-001-001-OE-00049",
+      2
+    ],
+    [
+      "10705020-001-001-OE-00050",
+      2
+    ],
+    [
+      "10799990-001-909-OP-00019",
+      2
+    ],
+    [
+      "10705030-001-001-ICT-00104",
+      2
+    ],
+    [
+      "10705030-001-909-ICT-00113",
+      2
+    ],
+    [
+      "10705030-001-004-ICT-00110",
+      2
+    ]
+  ],
+  "cross_sheet_property_numbers": {
+    "Total": [
+      "LAND TITLE",
+      "SEF OFFICE EQUIPMENT",
+      "SEF SCHOOL BUILDING",
+      "SUPPLIES AND EQUIPMENT FINAL"
+    ],
+    "10705020-001-004-002-OE-00058": [
+      "SEF OFFICE EQUIPMENT",
+      "SEF SCHOOL BUILDING"
+    ],
+    "10705020-001-004-002-OE-00056": [
+      "SEF OFFICE EQUIPMENT",
+      "SEF SCHOOL BUILDING"
+    ],
+    "10705020-001-004-002-OE-00057": [
+      "SEF OFFICE EQUIPMENT",
+      "SEF SCHOOL BUILDING"
+    ],
+    "10705020-001-001-OE-00051": [
+      "SEF OFFICE EQUIPMENT",
+      "SEF SCHOOL BUILDING"
+    ],
+    "10705020-001-001-OE-00049": [
+      "SEF OFFICE EQUIPMENT",
+      "SEF SCHOOL BUILDING"
+    ],
+    "10705020-001-001-OE-00050": [
+      "SEF OFFICE EQUIPMENT",
+      "SEF SCHOOL BUILDING"
+    ],
+    "10799990-001-909-OP-00019": [
+      "SEF OFFICE EQUIPMENT",
+      "SEF SCHOOL BUILDING"
+    ],
+    "10705030-001-001-ICT-00104": [
+      "SEF OFFICE EQUIPMENT",
+      "SEF SCHOOL BUILDING"
+    ],
+    "10705030-001-909-ICT-00113": [
+      "SEF OFFICE EQUIPMENT",
+      "SEF SCHOOL BUILDING"
+    ],
+    "10705030-001-004-ICT-00110": [
+      "SEF OFFICE EQUIPMENT",
+      "SEF SCHOOL BUILDING"
+    ]
+  },
+  "cross_sheet_count": 11,
+  "years_from_property_no": {
+    "1999": 1,
+    "2006": 1,
+    "2007": 10,
+    "2008": 7,
+    "2009": 2,
+    "2010": 1,
+    "2011": 6,
+    "2012": 1,
+    "2013": 3,
+    "2015": 1,
+    "2017": 7,
+    "2018": 27,
+    "2019": 10,
+    "2020": 22,
+    "2021": 50,
+    "2022": 30,
+    "2023": 23,
+    "2024": 18,
+    "2025": 29,
+    "2026": 4
+  },
+  "pn_0000": 0,
+  "unit_value_stats": {
+    "count": 332,
+    "sum": 404962073.34999996,
+    "mean": 1219765.2811746986,
+    "median": 160845.0,
+    "min": 550.0,
+    "max": 114483375.28,
+    "stdev": 7754870.277955239,
+    "p10": 54880.0,
+    "p25": 73200.0,
+    "p75": 395576.23,
+    "p90": 1482221.74,
+    "p95": 1997477.51,
+    "p99": 20176890.0
+  },
+  "inventory_value_card": 167777888.06,
+  "inventory_value_count": 167777888.06,
+  "reconciliation": {
+    "records_with_both_qty": 263,
+    "consistent_card_minus_count": 263,
+    "consistent_count_minus_card": 263,
+    "inconsistent_count": 0,
+    "inconsistent_examples": [],
+    "shortage_qty_filled": 0,
+    "shortage_val_filled": 0,
+    "value_formula_matches": 0,
+    "value_formula_mismatches": 0
+  },
+  "iirup_total_cost": 1457854.54,
+  "formulas_found": [
+    {
+      "sheet": "LAND FINAL",
+      "cell": "E14",
+      "formula": "=SUM(E15:E82)"
+    },
+    {
+      "sheet": "LAND FINAL",
+      "cell": "E83",
+      "formula": "=SUM(E84:E86)"
+    },
+    {
+      "sheet": "LAND FINAL",
+      "cell": "E87",
+      "formula": "=SUM(E88:E104)"
+    },
+    {
+      "sheet": "LAND FINAL",
+      "cell": "E105",
+      "formula": "=SUM(E106:E132)"
+    },
+    {
+      "sheet": "LAND FINAL",
+      "cell": "E123",
+      "formula": "=947551.4-828380.4"
+    },
+    {
+      "sheet": "LAND FINAL",
+      "cell": "E134",
+      "formula": "=SUM(E135:E139)"
+    },
+    {
+      "sheet": "LAND FINAL",
+      "cell": "E140",
+      "formula": "=SUM(E141:E156)"
+    },
+    {
+      "sheet": "LAND FINAL",
+      "cell": "E157",
+      "formula": "=SUM(E158:E177)"
+    },
+    {
+      "sheet": "LAND FINAL",
+      "cell": "E178",
+      "formula": "=SUM(E179:E180)"
+    },
+    {
+      "sheet": "LAND FINAL",
+      "cell": "E181",
+      "formula": "=SUM(E182:E183)"
+    },
+    {
+      "sheet": "LAND FINAL",
+      "cell": "E184",
+      "formula": "=E181+E178+E157+E140+E134+E105+E87+E14+E83"
+    },
+    {
+      "sheet": "SUPPLIES AND EQUIPMENT FINAL",
+      "cell": "E14",
+      "formula": "=SUM(E15:E17)"
+    },
+    {
+      "sheet": "SUPPLIES AND EQUIPMENT FINAL",
+      "cell": "E18",
+      "formula": "=SUM(E19:E39)"
+    },
+    {
+      "sheet": "SUPPLIES AND EQUIPMENT FINAL",
+      "cell": "E40",
+      "formula": "=SUM(E41:E69)"
+    },
+    {
+      "sheet": "SUPPLIES AND EQUIPMENT FINAL",
+      "cell": "E70",
+      "formula": "=SUM(E71:E73)"
+    },
+    {
+      "sheet": "SUPPLIES AND EQUIPMENT FINAL",
+      "cell": "E74",
+      "formula": "=SUM(E75:E79)"
+    },
+    {
+      "sheet": "SUPPLIES AND EQUIPMENT FINAL",
+      "cell": "E82",
+      "formula": "=SUM(E83:E86)"
+    },
+    {
+      "sheet": "SUPPLIES AND EQUIPMENT FINAL",
+      "cell": "E87",
+      "formula": "=SUM(E88:E90)"
+    },
+    {
+      "sheet": "SUPPLIES AND EQUIPMENT FINAL",
+      "cell": "E91",
+      "formula": "=SUM(E92:E101)"
+    },
+    {
+      "sheet": "SUPPLIES AND EQUIPMENT FINAL",
+      "cell": "E102",
+      "formula": "=SUM(E103:E107)"
+    },
+    {
+      "sheet": "SUPPLIES AND EQUIPMENT FINAL",
+      "cell": "E108",
+      "formula": "=SUM(E109:E111)"
+    },
+    {
+      "sheet": "SUPPLIES AND EQUIPMENT FINAL",
+      "cell": "E112",
+      "formula": "=SUM(E113)"
+    },
+    {
+      "sheet": "SUPPLIES AND EQUIPMENT FINAL",
+      "cell": "E114",
+      "formula": "=SUM(E115:E116)"
+    },
+    {
+      "sheet": "SUPPLIES AND EQUIPMENT FINAL",
+      "cell": "E117",
+      "formula": "=SUM(E118:E119)"
+    },
+    {
+      "sheet": "SUPPLIES AND EQUIPMENT FINAL",
+      "cell": "E120",
+      "formula": "=E108+E102+E91+E87+E82+E70+E40+E18+E14+E74+E112+E114+E117"
+    },
+    {
+      "sheet": "SEF SCHOOL BUILDING",
+      "cell": "E14",
+      "formula": "=SUM(E15:E20)"
+    },
+    {
+      "sheet": "SEF SCHOOL BUILDING",
+      "cell": "E21",
+      "formula": "=E22"
+    },
+    {
+      "sheet": "SEF SCHOOL BUILDING",
+      "cell": "E23",
+      "formula": "=SUM(E24:E26)"
+    },
+    {
+      "sheet": "SEF SCHOOL BUILDING",
+      "cell": "E27",
+      "formula": "=SUM(E28:E31)"
+    },
+    {
+      "sheet": "SEF SCHOOL BUILDING",
+      "cell": "E32",
+      "formula": "=E33"
+    },
+    {
+      "sheet": "SEF SCHOOL BUILDING",
+      "cell": "E34",
+      "formula": "=SUM(E35)"
+    },
+    {
+      "sheet": "SEF SCHOOL BUILDING",
+      "cell": "E36",
+      "formula": "=E27+E32+E34"
+    },
+    {
+      "sheet": "SEF OFFICE EQUIPMENT",
+      "cell": "E14",
+      "formula": "=SUM(E15:E20)"
+    },
+    {
+      "sheet": "SEF OFFICE EQUIPMENT",
+      "cell": "E21",
+      "formula": "=E22"
+    },
+    {
+      "sheet": "SEF OFFICE EQUIPMENT",
+      "cell": "E23",
+      "formula": "=SUM(E24:E26)"
+    },
+    {
+      "sheet": "SEF OFFICE EQUIPMENT",
+      "cell": "E27",
+      "formula": "=E14+E21+E23"
+    },
+    {
+      "sheet": "LAND TITLE",
+      "cell": "E14",
+      "formula": "=SUM(E15:E62)"
+    },
+    {
+      "sheet": "LAND TITLE",
+      "cell": "E63",
+      "formula": "=E14"
+    },
+    {
+      "sheet": "FORM",
+      "cell": "E14",
+      "formula": "=SUM(E15:E31)"
+    },
+    {
+      "sheet": "FORM",
+      "cell": "E32",
+      "formula": "=E14"
+    }
+  ],
+  "formula_count_by_sheet": {
+    "LAND FINAL": 11,
+    "SUPPLIES AND EQUIPMENT FINAL": 14,
+    "SEF SCHOOL BUILDING": 7,
+    "SEF OFFICE EQUIPMENT": 4,
+    "LAND TITLE": 2,
+    "FORM": 2,
+    "IIRUP": 8
+  }
+}

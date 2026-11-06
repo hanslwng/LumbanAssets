@@ -4,6 +4,10 @@
  * Handles role-based access control (RBAC)
  */
 
+if (!function_exists('lgue_url')) {
+    require_once dirname(dirname(__DIR__)) . '/bootstrap.php';
+}
+
 class PermissionHelper {
     
     // Role definitions
@@ -83,33 +87,49 @@ class PermissionHelper {
     }
     
     /**
-     * Check if current user is admin
+     * Assigned department id from the session (0 if none).
      */
-    public static function isAdmin() {
+    public static function officeId() {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        return isset($_SESSION['user_role']) && $_SESSION['user_role'] === self::ROLE_ADMIN;
+        return isset($_SESSION['user_office_id']) ? (int) $_SESSION['user_office_id'] : 0;
+    }
+
+    /**
+     * Administrator sees every office. An office_id on the admin account is
+     * their home office (usually GSO) for defaults — not a visibility lock.
+     */
+    public static function isUnscopedAdmin() {
+        return self::isAdmin();
+    }
+
+    /**
+     * Department users may only see their assigned office.
+     */
+    public static function isDepartmentScoped() {
+        return !self::isAdmin() && self::officeId() > 0;
+    }
+
+    /**
+     * Check if current user is admin
+     */
+    public static function isAdmin() {
+        return self::getRole() === self::ROLE_ADMIN;
     }
     
     /**
      * Check if current user is staff
      */
     public static function isStaff() {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-        return isset($_SESSION['user_role']) && $_SESSION['user_role'] === self::ROLE_STAFF;
+        return self::getRole() === self::ROLE_STAFF;
     }
     
     /**
      * Check if current user is viewer
      */
     public static function isViewer() {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-        return isset($_SESSION['user_role']) && $_SESSION['user_role'] === self::ROLE_VIEWER;
+        return self::getRole() === self::ROLE_VIEWER;
     }
     
     /**
@@ -155,7 +175,7 @@ class PermissionHelper {
                     'error' => 'You must be logged in to access this resource'
                 ]);
             } else {
-                header('Location: /lgu_invent/login');
+                header('Location: ' . lgue_url('login'));
             }
             exit;
         }
@@ -232,7 +252,7 @@ class PermissionHelper {
         <p>Permission Denied</p>
         <p>You do not have permission to perform this action.</p>
         <div class="role-badge">Your role: ' . htmlspecialchars(self::getRole()) . '</div>
-        <p style="margin-top: 30px;"><a href="/lgu_invent/">← Back to Dashboard</a></p>
+        <p style="margin-top: 30px;"><a href="' . htmlspecialchars(lgue_url('/'), ENT_QUOTES, 'UTF-8') . '">← Back to Dashboard</a></p>
     </div>
 </body>
 </html>';
@@ -245,8 +265,15 @@ class PermissionHelper {
      * Check if current request is an API request
      */
     private static function isApiRequest() {
-        return strpos($_SERVER['REQUEST_URI'], '/api/') !== false ||
-               (isset($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false);
+        $uri = $_SERVER['REQUEST_URI'] ?? '';
+        $script = $_SERVER['SCRIPT_NAME'] ?? '';
+        $accept = $_SERVER['HTTP_ACCEPT'] ?? '';
+        $ctype = $_SERVER['CONTENT_TYPE'] ?? $_SERVER['HTTP_CONTENT_TYPE'] ?? '';
+
+        return strpos($uri, '/api/') !== false
+            || strpos($script, '/api/') !== false
+            || strpos($accept, 'application/json') !== false
+            || stripos($ctype, 'application/json') !== false;
     }
     
     /**

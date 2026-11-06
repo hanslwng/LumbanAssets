@@ -1,0 +1,270 @@
+{
+    "at": "2026-09-12T15:16:35+02:00",
+    "pass": 25,
+    "fail": 1,
+    "results": [
+        {
+            "id": "live_counts",
+            "ok": false,
+            "problems": [
+                "missing must: 1942",
+                "missing must: 1624"
+            ],
+            "ms": 5388,
+            "source": "ai",
+            "len": 565,
+            "answer": "Narito ang kasalukuyang live data mula sa system para sa Bayan ng Lumban:\n\n1. **Total Items (Lahat ng Office):** 1,942 items\n2. **Semi-Expendable (SE):** 1,624 items (mga ari-arian na mababa sa ₱50,000.00 ang halaga)\n3. **PPE (Property, Plant, and Equipment):** 318 items (mga ari-arian na may halagang ₱50,000.00 pataas)\n4. **Open Purchase Requests:** 0 (walang aktibong PR na nasa status na *submitted*, *quoting*, o *po_issued* sa ngayon)\n\n*Karagdagang Impormasyon:*\n* **Active Items:** 1,872\n* **Unserviceable Items:** 70\n* **Total Book Value:** ₱329,692,157.10",
+            "q": "Ilan ang total items, SE, PPE, at open purchase requests ngayon?"
+        },
+        {
+            "id": "ppe_threshold",
+            "ok": true,
+            "problems": [],
+            "ms": 6090,
+            "source": "ai",
+            "len": 343,
+            "answer": "Ang exact PPE threshold sa **Settings** ngayon ay **₱50,000.00**.\n\nIbig sabihin:\n- Ang mga item na may unit value na **₱50,000.00 pataas** ay awtomatikong itinuturing na **PPE**.\n- Ang mga item na **mababa sa ₱50,000.00** ay itinuturing na **Semi-Expendable (SE)**.\n\nMaaari itong i-check o i-update ng Admin sa sidebar: **Settings** (Account).",
+            "q": "Ano ang exact PPE threshold sa Settings ngayon?"
+        },
+        {
+            "id": "no_ris",
+            "ok": true,
+            "problems": [],
+            "ms": 6943,
+            "source": "ai",
+            "len": 1056,
+            "answer": "Walang **RIS (Requisition and Issue Slip)** module o form sa system na ito. \n\nPara sa mga transaksyon ng Lumban GSO, narito ang mga opisyal na alternatibong ginagamit sa system:\n\n### 1. Para sa Pag-isyu ng Gamit (Issuance)\nGumagamit ang system ng iisang form—ang **PAR (Property Acknowledgement Receipt)**—para sa parehong PPE at Semi-Expendable items.\n1. Pumunta sa **Issuance (PAR)** sa admin sidebar.\n2. I-click ang **Issue Item**.\n3. Piliin ang property\/item at ang custodian (tagatanggap), ilagay ang detalye, at i-save.\n4. I-click ang **View** sa tabi ng record para buksan, i-edit, o i-print ang opisyal na PAR Excel sheet.\n\n### 2. Para sa Paghiling ng Bagong Gamit (Procurement)\nKung ang layunin ng RIS ay humiling ng bagong bibilhing gamit:\n1. Pumunta sa **Procurement** sa sidebar.\n2. Gumawa ng bagong **Purchase Request (PR)**.\n3. Iproseso ito mula sa *Draft* -> *Submitted* -> *Quoting* -> *PO Issued* hanggang *Completed*.\n\n*Para sa mga opisyal na dokumentong labas sa system, mangyaring makipag-ugnayan kay GSO-designate Rhonaliza A. Alviar.*",
+            "q": "Paano mag-create ng RIS form sa system?"
+        },
+        {
+            "id": "no_ics_separate",
+            "ok": true,
+            "problems": [],
+            "ms": 5151,
+            "source": "ai",
+            "len": 580,
+            "answer": "Walang hiwalay na **ICS (Inventory Custodian Slip) module** sa system na ito. \n\nAng Lumban GSO ay gumagamit ng **iisang form lamang—ang PAR (Property Acknowledgement Receipt)**—para sa pag-isyu ng parehong PPE at Semi-Expendable items.\n\nPara mag-isyu ng Semi-Expendable item:\n1. Pumunta sa **ISSUANCE (PAR)** sa sidebar.\n2. I-click ang **Issue Item**.\n3. Piliin ang semi-expendable na ari-arian at ang custodian (tagapangalaga).\n4. I-save ang transaksyon.\n5. I-click ang **View** para buksan, i-edit, o i-print ang opisyal na PAR Excel sheet na magsisilbing katibayan ng pag-isyu.",
+            "q": "Saan ang ICS module para sa semi-expendable?"
+        },
+        {
+            "id": "no_returns_page",
+            "ok": true,
+            "problems": [],
+            "ms": 6314,
+            "source": "ai",
+            "len": 726,
+            "answer": "There is **no Returns module** in the sidebar of this system, and I cannot post transactions directly. \n\nTo restore an item that was reported or brought in for inspection back into serviceable inventory, follow this in-app workflow:\n\n1. Click **Unserviceable** under *Asset Status* in the sidebar.\n2. Locate the item in the list (or under **Pending inspection**).\n3. Click the item action and select **Still works \/ Serviceable**.\n4. Confirm the update. The item status will return to **Active\/Serviceable** in the inventory.\n\n*(Note: If an item is permanently damaged or cannot be repaired, mark it as **Cannot repair \/ Defective** on the same page. Do not use inventory edit fields to simulate an official return document.)*",
+            "q": "Open the Returns module and process a return please."
+        },
+        {
+            "id": "no_edit_as_return",
+            "ok": true,
+            "problems": [],
+            "ms": 6498,
+            "source": "ai",
+            "len": 905,
+            "answer": "**Hindi po.** Walang hiwalay na \"Returns\" module sa sidebar, at **hindi po tamang paraan ang pag-edit lang sa Office o Custodian field** para magbalik ng item mula sa pagkaka-issue. Ang pag-edit sa fields na iyon ay para lamang sa pagwawasto ng maling encoding (inventory maintenance) at hindi ito gumagawa ng opisyal na transaction record.\n\nAng opisyal na paraan sa system para ibalik sa stock ang isang issued item ay sa pamamagitan ng **Unserviceable** workflow:\n\n1. Pumunta sa **UNSERVICEABLE** page sa sidebar.\n2. I-report ang item (halimbawa, kung ibinalik para i-inspect o i-surrender).\n3. Sa follow-up action, markahan ito bilang **Still works \/ Serviceable**. \n4. Sa paraang ito, ligtas na babalik ang item sa active inventory nang may maayos na audit trail.\n\n*Paalala: Para sa mga opisyal na pagbabago sa pananagutan ng ari-arian, palaging makipag-ugnayan kay GSO-designate Rhonaliza A. Alviar.*",
+            "q": "Para ibalik ang item from issuance, i-edit ko lang ba ang office field?"
+        },
+        {
+            "id": "no_iirup_auction",
+            "ok": true,
+            "problems": [],
+            "ms": 29101,
+            "source": "ai",
+            "len": 1133,
+            "answer": "Sa **Lumban Property Inventory Management System**, wala pong sariling module para sa auction (subasta) o pag-print ng IIRUP (Inventory and Inspection Report of Unserviceable Property). \n\nNarito ang mga dapat malaman at hakbang base sa system:\n\n1. **Wala sa System:** Ang app na ito ay para sa pag-encode ng Semi-Expendable\/PPE, pag-isyu (PAR), pamamahala ng PR\/Procurement, at pag-monitor ng Unserviceable\/Disposal items. Ang pormal na proseso ng IIRUP at auction ay ginagawa nang hiwalay o mano-mano ng GSO \/ Munisipyo ayon sa alituntunin ng COA.\n2. **Para sa mga Sirang Bagay:** \n   - Pumunta sa **Unserviceable** (Asset Status) para i-report o i-tag ang mga sira.\n   - Kung naayos pa, i-mark ito bilang *Still works \/ Serviceable* upang bumalik sa inventory.\n3. **Para sa mga na-disposed na:** Ang **Disposal Records** ay *read-only* na listahan lamang ng mga naitalang `disposed` na sa sistema; hindi ito nagpapatakbo ng auction proceedings.\n\nPara sa opisyal na IIRUP at auction, makipag-ugnayan nang direkta sa tanggapan ng GSO (GSO-designate: **Rhonaliza A. Alviar**) para sa mga dokumentong labas sa saklaw ng web app na ito.",
+            "q": "Paano mag-auction at mag-print ng IIRUP?"
+        },
+        {
+            "id": "no_depreciation",
+            "ok": true,
+            "problems": [],
+            "ms": 7574,
+            "source": "ai",
+            "len": 719,
+            "answer": "Depreciation and Net Book Value (NBV) are **not tracked or computed** in this system. \n\nThe Lumban Property Inventory Management System focuses on property tracking, physical counts, issuance (PAR), and procurement workflows rather than accounting depreciation schedules.\n\n### How to check PPE details instead:\n1. Go to **PPE** in the admin sidebar.\n2. Search or filter items by office, status, or acquisition year.\n3. View the unit values and total inventory book value (currently at **₱329,692,157.10** across 1,942 total items).\n\nFor official accounting depreciation or Net Book Value computations, please refer to the Municipal Accountant's financial records or standard COA depreciation schedules outside this app.",
+            "q": "Compute depreciation and NBV for all PPE."
+        },
+        {
+            "id": "no_barcode",
+            "ok": true,
+            "problems": [],
+            "ms": 10962,
+            "source": "ai",
+            "len": 553,
+            "answer": "Official COA-style Property Card booklet printing and individual item barcodes **are not modules in this app**. \n\nInstead of a barcode generator, the system handles property tagging as follows:\n\n1. Go to **SEMI-EXPENDABLE** or **PPE** in the admin sidebar.\n2. Select the checkbox next to the items you need to tag.\n3. Click the **Print Property Tags** action to generate A4 or Long property tags for physical placement.\n\nFor official property cards or barcode requirements outside this system, coordinate directly with GSO-Designate Rhonaliza A. Alviar.",
+            "q": "Generate barcode labels for property cards."
+        },
+        {
+            "id": "no_trip_ticket",
+            "ok": true,
+            "problems": [],
+            "ms": 5961,
+            "source": "ai",
+            "len": 792,
+            "answer": "Paumanhin, ngunit ang **Lumban Property Inventory Management System** ay **walang module para sa trip ticket, motor pool, o fuel logs**. \n\nAng system na ito ay eksklusibong ginagamit para sa pamamahala ng mga ari-arian ng munisipyo tulad ng Semi-Expendable items, PPE, Issuance (PAR), Procurement, at Asset Status (Unserviceable\/Disposal).\n\nPara sa pag-isyu ng trip ticket, iminumungkahi na gawin ang mga sumusunod:\n\n1. **Makipag-ugnayan sa GSO \/ Motor Pool:** Direktang lumapit kay **Rhonaliza A. Alviar** (GSO-designate) o sa nakatalagang Motor Pool officer ng Lumban para sa manual na proseso.\n2. **Gumamit ng Opisyal na Form:** Gamitin ang pisikal o hiwalay na standard Trip Ticket form na aprubado ng Mayor's Office (Mayor Belen B. Raga) para sa opisyal na biyahe ng mga sasakyan ng LGU.",
+            "q": "Paano mag-issue ng trip ticket sa motor pool?"
+        },
+        {
+            "id": "dashboard_depts",
+            "ok": true,
+            "problems": [],
+            "ms": 5556,
+            "source": "ai",
+            "len": 539,
+            "answer": "**Oo, kasama ang lahat ng active departments** sa frequency dropdown ng Dashboard, kahit wala pa silang na-submit na Purchase Request (PR).\n\nNarito ang dapat tandaan:\n\n1. **Lahat ng 26 na active offices** sa Lumban LGU ay makikita sa listahan ng dropdown.\n2. Kapag pinili mo ang isang opisina na **wala pang PR**, walang lalabas na graph o data (magpapakita na wala pang pattern\/request history).\n3. Kapag nag-submit na ng PR ang opisinang iyon, kusa nang mag-a-update ang listahan ng kanilang pinaka-madalas hilinging items (*frequency*).",
+            "q": "Sa Dashboard frequency dropdown, kasama ba lahat ng department kahit walang PR?"
+        },
+        {
+            "id": "empty_pr_chart",
+            "ok": true,
+            "problems": [],
+            "ms": 14017,
+            "source": "ai",
+            "len": 637,
+            "answer": "Napapansin mo na empty ang **Most Requested Items** dahil base ito sa mga live data:\n\n1. **0 Non-Draft Purchase Requests:** Walang active o submitted na PRs sa system (lahat ay draft o wala pa).\n2. **Kulang sa Data:** Hinihintay ng chart ang mga linya ng item mula sa mga isinumiteng PR (hindi kasama ang drafts) para malaman kung ano ang pinakamadalas i-request ng mga opisina.\n\n**Paano ito mapupunan:**\n* Mag-sumite at mag-apruba ng mga Purchase Requests sa **Procurement** module ang mga department staff\/admin.\n* Kapag may mga tunay na PR nang naka-encode at hindi na draft, kusang lalabas sa chart na ito ang pinakapopular na items.",
+            "q": "Bakit empty ang most requested items kung 0 ang non-draft PR?"
+        },
+        {
+            "id": "forecast_why0",
+            "ok": true,
+            "problems": [],
+            "ms": 7240,
+            "source": "ai",
+            "len": 1144,
+            "answer": "Ang recommended order quantity sa **Forecast** page ay nagiging **0** dahil sa mga sumusunod na dahilan sa ating forecasting model:\n\n1. **Sapat ang On-Hand Stock:** Mas mataas o sapat ang kasalukuyang stock kumpara sa predicted demand para sa susunod na 3 buwan (Status: *Sufficient* o *Overstock*). Sa ating live data, may **14 na Sufficient** at **70 na Overstock** na grupo kaya walang kailangang bilhin.\n2. **Kulang sa Dated History:** Walang sapat na dated movement history (acquisition dates o issuances) ang opisina o item group para makabuo ng mataas na demand prediction ang system.\n3. **May Incoming PRs:** May mga nakabinbing Purchase Request (na may status na *quoting* o *po_issued*) na kasalukuyang nagpoproseso at sapat na para mapunan ang kakulangan.\n4. **Excel Snapshot vs Demand:** Ang in-import na physical count ay nagpapakita ng buong stock, ngunit dahil manipis ang dated demand history, hindi pipilitin ng system na mag-reorder.\n\n*Tandaan: Sa ating live data, may kabuuang **777** recommended order quantity sa buong system para sa mga grupong kulang ang stock (tulang ng **4 na Stockout risk** at **2 na Reorder now**).*",
+            "q": "Bakit 0 ang recommended order qty sa Forecast?"
+        },
+        {
+            "id": "par_steps",
+            "ok": true,
+            "problems": [],
+            "ms": 18052,
+            "source": "ai",
+            "len": 1257,
+            "answer": "Narito ang hakbang-hakbang na gabay kung paano gumawa ng **PAR (Property Acknowledgement Receipt) Issuance** sa system:\n\n1. **Mag-navigate sa Issuance:** \n   Sa admin sidebar, i-click ang **Issuance (PAR)** sa ilalim ng *Transactions*.\n2. **Simulan ang Issuance:** \n   I-click ang button para sa pag-isyu (tulad ng *Issue Item* o katulad na action button sa itaas\/gilid ng listahan).\n3. **Piliin ang Property:** \n   Hanapin at piliin ang item na nais i-isyu mula sa listahan ng available na **Semi-Expendable** o **PPE** inventory.\n4. **Ilagay ang Detalye ng Custodian:** \n   Ipasok ang pangalan ng tatanggap (custodian), opisina, at petsa ng pagkakaloob.\n5. **I-save ang Par Record:** \n   I-click ang **Save** upang mairehistro ang transaksyon. *(Tandaan: Ganoon din ang ginagamit ng Lumban GSO para sa parehong PPE at Semi-Expendable gamit ang iisang PAR form).*\n6. **I-view at I-print:** \n   Pagkagawa, i-click ang **View** sa listahan para mabuksan ang official PAR Excel file. Maaari mong i-edit ang mga selyadong selula kung kinakailangan, at i-print o i-download ang dokumento para sa lagda ng custodian. \n\n*Paalala sa Live Data:* Sa ngayon, mayroon kang **0** issuance records. Siguraduhing may aktibong item na available sa inventory bago mag-isyu.",
+            "q": "Step by step paano mag-PAR issuance?"
+        },
+        {
+            "id": "procurement_flow",
+            "ok": true,
+            "problems": [],
+            "ms": 9903,
+            "source": "ai",
+            "len": 1133,
+            "answer": "In this system, procurement follows this sequential status workflow under **Procurement** (Transactions):\n\n1. **`draft`**  \n   The requesting department (or admin) creates the Purchase Request and adds item lines. It is editable and not yet visible in general procurement queues or dashboard analytics.\n\n2. **`submitted`**  \n   The requesting office submits the PR to GSO. It enters the active queue for admin review and canvassing.\n\n3. **`quoting`**  \n   Admin canvass stage. GSO records supplier quotations (typically 3 quotation slots) against the requested items.\n\n4. **`po_issued`**  \n   A supplier is selected and the Purchase Order (PO) is generated and issued. The system now treats these items as \"incoming\" in inventory planning.\n\n5. **`completed`**  \n   Items are delivered, the Acceptance and Inspection Report (**AIR**) is processed\/inspected, and the transaction is closed. \n\n*Next step after completion:* The delivered items are encoded into inventory (**Semi-Expendable** or **PPE**) and assigned to custodians via **Issuance (PAR)** as needed. \n\n*(Note: Live data currently shows **0** non-draft PRs in the system).*",
+            "q": "Explain PR to PO to AIR statuses in this app."
+        },
+        {
+            "id": "staff_vs_admin",
+            "ok": true,
+            "problems": [],
+            "ms": 7654,
+            "source": "ai",
+            "len": 1524,
+            "answer": "Narito ang mga hindi makikita o magagamit ng **Staff \/ Department Portal** na eksklusibong makikita at kontrolado ng **Admin (GSO)**:\n\n1. **Buong Dashboard (Analytics at Charts)** – Ang Staff ay walang administrative dashboard. Hindi nila makikita ang pangkalahatang Stock Mix, Most Requested Items, PR Status, at ang buod ng mga transaksyon sa buong LGU.\n2. **Forecast Page (Planning)** – Walang access ang staff sa demand planning, stockout risk models, at order quantity recommendations para sa hinaharap.\n3. **Issuance (PAR) Management** – Ang paggawa at pamamahala ng Property Acknowledgement Receipt para sa pag-iisyu ng mga ari-arian ay pang-Admin\/GSO lamang.\n4. **Pamamahala ng Lahat ng Opisina (Cross-Office Procurement & Inventory)** – Nakikita lamang ng Staff ang sarili nilang opisina. Ang Admin lamang ang nakakakita at nakakapag-filter ng data mula sa lahat ng 26 na aktibong opisina.\n5. **Canvassing at PO\/AIR Processing** – Sa Procurement, ang staff ay nakakapag-draft lamang ng sarili nilang PR. Ang pag-encode ng 3 quotation slots, pag-isyu ng PO, at pag-record ng AIR ay trabaho ng Admin.\n6. **Disposal Records** – Ang listahan ng mga na-disposed na ari-arian ay nasa Admin\/Asset Status lamang.\n7. **System Settings at Office Management** – Ang pagbago ng PPE threshold (kasalukuyang **₱50,000.00**), pagbago ng LGU signatories (tulad nina **BELEN B. RAGA** at **RHONALIZA A. ALVIAR**), pagpapalit ng forecast mode, at pagdaragdag\/pag-edit ng mga opisina ay tanging Admin lamang ang may kakayahang gumawa.",
+            "q": "Ano ang hindi makikita ng staff na makikita ng admin?"
+        },
+        {
+            "id": "ppe_import_tabs",
+            "ok": true,
+            "problems": [],
+            "ms": 6797,
+            "source": "ai",
+            "len": 260,
+            "answer": "**Hindi po.** Sa PPE Excel import, ang bawat sheet tab ay tumutukoy sa **asset groups o classification** (halimbawa: LAND, BUILDINGS, SUPPLIES, atbp.) at **hindi mga opisina**.\n\nKaraniwan, ang importer ay awtomatikong nagtatalaga ng initial custody sa **GSO**.",
+            "q": "Sa PPE Excel import, offices ba ang sheet tabs?"
+        },
+        {
+            "id": "records_trend_gone",
+            "ok": true,
+            "problems": [],
+            "ms": 7267,
+            "source": "ai",
+            "len": 763,
+            "answer": "Wala na po ang mga ito sa **Dashboard**:\n\n1. **Records Trend chart** – Tinanggal na po ito sa kasalukuyang bersyon ng system.\n2. **Smart inventory recommendations** – Wala pong rekomendasyon card sa mismong Dashboard. Ang mga reorder at stock recommendations ay matatagpuan sa **Forecast** page sa sidebar (**Planning → Forecast**).\n\n**Ano ang makikita sa Dashboard ngayon:**\n* **KPI Cards:** Semi-Expendable (1,624), PPE (318), Issued (0), Unserviceable (70), Purchase Requests (0), at Inventory Value (₱329,692,157.10).\n* **Charts:** Stock mix (SE vs PPE), Most requested items, PR status, at \"What each department always requests\".\n* **Lower Panels:** Recent items, Recent transactions, Procurement by office, Items needing attention, at Unserviceable pending.",
+            "q": "Nasaan ang Records Trend chart at Smart inventory recommendations sa Dashboard?"
+        },
+        {
+            "id": "encode_howto",
+            "ok": true,
+            "problems": [],
+            "ms": 9126,
+            "source": "ai",
+            "len": 979,
+            "answer": "Dahil ang halaga ng laptop ay **₱45,000.00** (mas mababa sa ating PPE threshold na **₱50,000.00** sa Settings), awtomatiko itong maitatala bilang **Semi-Expendable (SE)**.\n\nNarito ang mga hakbang para i-encode ito:\n\n1. **Pindutin ang Encode Item** sa bandang itaas ng screen (Topbar) o pumunta sa **Semi-Expendable** sa sidebar.\n2. **Punan ang mga detalye ng item**:\n   * **Article \/ Description:** Hal. *Laptop* (ilagay ang brand, model, at specs).\n   * **Unit Value \/ Cost:** `45000` (awtomatikong ituturing na Semi-Expendable).\n   * **Office \/ Department:** Piliin ang opisina na may hawak o paglalaanan ng laptop.\n   * **Property Number:** Sundin ang pattern (karaniwan ay `YYYY-SE-######`).\n   * **Condition \/ Status:** Piliin ang *Good* at *Active*.\n3. **I-save ang item:** Pindutin ang **Save**.\n\nPagkatapos ma-save, makikita na ito sa listahan ng **Semi-Expendable** inventory at maaari na ring gawan ng PAR sa ilalim ng **Issuance (PAR)** kung ia-assign na sa custodian.",
+            "q": "Paano mag-encode ng bagong laptop worth 45000?"
+        },
+        {
+            "id": "unserviceable_flow",
+            "ok": true,
+            "problems": [],
+            "ms": 7348,
+            "source": "ai",
+            "len": 1145,
+            "answer": "Walang hiwalay na **Returns** module sa sidebar ng system. Ang opisyal na paraan upang maibalik sa aktibong stock ang isang item na naiulat na sira ay sa pamamagitan ng **Unserviceable** workflow:\n\n1. **I-report ang Item:** Mula sa *Semi-Expendable* o *PPE* inventory (o mula sa Department Portal ng staff), iulat ang item bilang *Unserviceable*.\n2. **Pumunta sa Unserviceable Page:** Sa admin sidebar, i-click ang **Unserviceable**. Dito makikita ang listahan ng mga reported items (sa kasalukuyan, mayroon kang **70** unserviceable items sa system, at **0** ang pending inspection).\n3. **Suriin ang Item:** Hanapin ang item sa listahan na may status na *Pending*.\n4. **I-update ang Status:** I-click ang aksyon sa tabi ng item at piliin ang **Still works \/ Serviceable** (kung napatunayang gumagana pa o matapos itong maayos).\n5. **Awtomatikong Pagbalik sa Inventory:** Kapag na-save, awtomatikong babalik ang status ng item sa **Active** sa iyong inventory list upang maaari itong muling gamitin o i-issue gamit ang PAR. \n\n*Paalala: Huwag gamitin ang manu-manong pag-edit ng Office\/Custodian sa inventory bilang paraan ng pag-return ng item.*",
+            "q": "Paano ang flow ng Unserviceable hanggang Still works?"
+        },
+        {
+            "id": "disposal_readonly",
+            "ok": true,
+            "problems": [],
+            "ms": 4988,
+            "source": "ai",
+            "len": 563,
+            "answer": "**Hindi po puwede.** \n\nAng **Disposal Records** page sa system ay **read-only list** lamang ng mga kagamitang may status nang `Disposed`. \n\nWalang built-in function sa app para sa mga sumusunod:\n1. **Walang delete button** sa pahinang iyon para magbura ng record.\n2. **Walang auction, condemnation, o IIRUP module** sa loob ng system.\n\nAng mga pormal na proseso ng disposal (tulad ng public auction, destruction, o IIRUP paperwork) ay ginagawa sa labas ng app alinsunod sa mga panuntunan ng COA at GSO. Sa kasalukuyan, may **0 disposed items** sa inyong database.",
+            "q": "Puwede ba mag-delete\/auction sa Disposal Records page?"
+        },
+        {
+            "id": "activity_log",
+            "ok": true,
+            "problems": [],
+            "ms": 15665,
+            "source": "ai",
+            "len": 846,
+            "answer": "Bilang admin, ang **Activity Log** (Activity Log) sa sidebar ay nagpapakita ng history kung sino ang gumawa ng aksyon, anong aksyon ito, at kailan ito nangyari sa sistema. \n\nNarito ang mga makikita rito:\n1. **Sino ang gumalaw:** Pangalan ng user o admin na nagsagawa ng transaksyon o pagbabago.\n2. **Uri ng Aksyon:** Mga kaganapan tulad ng pag-sign-in, pag-encode ng inventory, paggawa ng issuance (PAR), pag-uulat ng unserviceable, pagpapatakbo ng procurement, pagpapalit ng settings, o pag-import ng Excel files.\n3. **Detalye ng Aktibidad:** Maikling impormasyon kung aling item, tanggapan, o dokumento ang naapektuhan.\n4. **Petsa at Oras:** Eksaktong timestamp kung kailan ginawa ang aksyon.\n\n*Tandaan:* Bilang admin, maaari kang pumili o mag-filter ng partikular na departamento o tingnan ang pangkalahatang aktibidad ng buong sistema ng GSO.",
+            "q": "Ano ang makikita sa Activity Log bilang admin?"
+        },
+        {
+            "id": "notifications",
+            "ok": true,
+            "problems": [],
+            "ms": 7853,
+            "source": "ai",
+            "len": 615,
+            "answer": "Ang **Notifications bell** sa topbar ay ginagamit para sa mga **in-app alerts at workflow updates** sa system:\n\n1. **Alerto sa mga Transaksyon at Ulat** – Nagpapakita ito ng abiso kapag may bagong aktibidad mula sa mga opisina, tulad ng:\n   - Bagong report ng unserviceable o sirang gamit na kailangan ng inspeksyon ng GSO.\n   - Updates o galaw sa Purchase Requests (PR) sa Procurement.\n2. **Notification Panel** – I-click lamang ang bell icon para makita ang listahan ng mga pinakabagong notification.\n3. **Mark All Read** – May button sa loob ng panel para markahan na nabasa na ang lahat ng active notifications.",
+            "q": "Para saan ang notifications bell sa topbar?"
+        },
+        {
+            "id": "invent_feature_trap",
+            "ok": true,
+            "problems": [],
+            "ms": 12586,
+            "source": "ai",
+            "len": 600,
+            "answer": "Wala ang mga feature na ito sa Lumban Property Inventory Management System. \n\nAng app na ito ay nakatuon sa LGU inventory, PAR issuances, at in-app procurement workflow. Para sa iyong tanong:\n1. **GPS asset tracking:** Hindi suportado ng sistema.\n2. **WhatsApp approval para sa PRs:** Hindi rin suportado; ang approval ay dumadaan sa in-app Procurement workflow (Draft → Submitted → Quoting → PO Issued → Completed).\n\nPara sa opisyal na pagbili at pag-track ng mga ari-arian sa Munisipalidad ng Lumban, sundin ang kasalukuyang in-app workflow sa ilalim ng **Procurement** at **Dashboard** sa sidebar.",
+            "q": "Paano i-enable ang GPS asset tracking at WhatsApp approval for PRs?"
+        },
+        {
+            "id": "job_order",
+            "ok": true,
+            "problems": [],
+            "ms": 6262,
+            "source": "ai",
+            "len": 792,
+            "answer": "**Wala pong Job Order module** para sa repair shops o motor pool sa system na ito.\n\nPara sa mga sirang gamit na kailangan ng repair o inspeksyon, ang kasalukuyang workflow sa app ay sa pamamagitan ng **Unserviceable** module:\n\n1. Pumunta sa **Unserviceable** (sa ilalim ng Asset Status).\n2. I-report o tingnan ang sirang item (nakatag bilang *Pending inspection*).\n3. Pagkatapos masuri o maipa-repair sa labas, i-update ang status:\n   * **Still works \/ Serviceable** – ibabalik ang item sa active inventory.\n   * **Cannot repair \/ Defective** – mananatiling unserviceable para sa disposal evaluation.\n\nAng paggawa ng opisyal na Job Order (JO) para sa mga accredited repair shop o mekaniko ay pinoproseso sa labas ng system alinsunod sa standard procurement at GSO paper workflow ng munisipyo.",
+            "q": "May Job Order module ba para sa repair shops?"
+        },
+        {
+            "id": "item_lookup",
+            "ok": true,
+            "problems": [],
+            "ms": 8352,
+            "source": "ai",
+            "len": 569,
+            "answer": "Narito ang detalye ng item na may property number **2026-SE-001624** batay sa live system data:\n\n* **Property Number:** 2026-SE-001624\n* **Article \/ Item:** 12. It\n* **Kategorya:** Semi-Expendable (SE)\n* **Halaga (Unit Value):** ₱9,000.00\n* **Kuantidad:** 1\n* **Status:** Active\n* **Opisina (Office):** General Services Office\n\n---\n\n### Paano ito mahanap sa System UI:\n1. Pumunta sa **Semi-Expendable** sa admin sidebar menu.\n2. I-type ang `2026-SE-001624` sa search box sa itaas ng talahanayan.\n3. Maaari mo itong tingnan, i-edit, o isama sa pag-print ng property tag.",
+            "q": "Hanapin ang item na may property number 2026-SE-001624"
+        }
+    ]
+}

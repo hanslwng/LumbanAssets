@@ -151,15 +151,15 @@ tbody tr:hover td{background:#FAFAF6}
 /* ── Modal ── */
 .overlay{display:none;position:fixed;inset:0;background:#00000060;z-index:100;align-items:flex-start;justify-content:center;padding:24px;overflow-y:auto}
 .overlay.open{display:flex}
-.modal{background:var(--surface);border-radius:var(--rxl);width:100%;max-width:640px;margin:auto;box-shadow:0 24px 64px #00000030}
+.modal{background:var(--surface);border-radius:var(--rxl);width:100%;max-width:640px;margin:auto;box-shadow:0 24px 64px #00000030;max-height:90vh;display:flex;flex-direction:column;overflow:hidden}
 .modal-lg{max-width:780px}
-.m-hd{padding:16px 22px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--surface);z-index:2;border-radius:var(--rxl) var(--rxl) 0 0}
+.m-hd{flex:0 0 auto;padding:16px 22px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--surface);z-index:2;border-radius:var(--rxl) var(--rxl) 0 0}
 .m-ttl{font-size:14px;font-weight:700;letter-spacing:-.01em}
 .m-ttl-sub{font-size:11px;color:var(--text3);font-weight:400;margin-left:8px}
 .m-close{background:none;border:none;cursor:pointer;font-size:20px;color:var(--text3);padding:2px 7px;border-radius:4px;line-height:1;transition:all .12s}
 .m-close:hover{background:var(--bg);color:var(--text)}
-.m-body{padding:20px 22px}
-.m-foot{padding:12px 22px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end;position:sticky;bottom:0;background:var(--surface);border-radius:0 0 var(--rxl) var(--rxl)}
+.m-body{flex:1 1 auto;min-height:0;overflow-y:auto;padding:20px 22px}
+.m-foot{flex:0 0 auto;padding:12px 22px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end;background:var(--surface);border-radius:0 0 var(--rxl) var(--rxl)}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .fg{display:flex;flex-direction:column;gap:4px}
 .fg.full{grid-column:1/-1}
@@ -322,3 +322,8 @@ tbody tr:hover td{background:#FAFAF6}
 .confirm-title{font-size:16px;font-weight:700;margin-bottom:8px;color:var(--text)}
 .confirm-message{font-size:13px;color:var(--text2);margin-bottom:20px;line-height:1.6}
 .confirm-actions{display:flex;gap:8px;justify-content:flex-end}
+
+#proc-pr-tbody tr.proc-row-sel td{background:rgba(26,71,42,0.09)}
+@media (max-width:980px){
+  #pg-procurement [style*="display:grid"]{grid-template-columns:1fr!important}
+}

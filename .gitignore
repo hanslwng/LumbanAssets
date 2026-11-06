@@ -4,9 +4,23 @@
 # Storage and cache
 storage/*
 !storage/.gitkeep
+!storage/.htaccess
+!storage/templates/
+!storage/templates/rpcse/
+!storage/templates/rpcse/README.md
+!storage/templates/rpcse/archive/
+!storage/templates/rpcse/archive/.gitkeep
+storage/templates/rpcse/*.xlsx
+storage/templates/rpcse/archive/*.xlsx
+!storage/templates/rpcppe/
+!storage/templates/rpcppe/README.md
+!storage/templates/rpcppe/archive/
+!storage/templates/rpcppe/archive/.gitkeep
+storage/templates/rpcppe/*.xlsx
+storage/templates/rpcppe/archive/*.xlsx
 
-# Configuration (if contains sensitive data)
-# config/database.php
+# Database settings: theme/config.php — keep secrets out of commits if customized for production.
+
 
 # Logs
 *.log
@@ -46,6 +60,7 @@ public/uploads/*
 # Composer (if used later)
 vendor/
 composer.lock
+composer.phar
 
 # Node modules (if used later)
 node_modules/

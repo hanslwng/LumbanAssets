@@ -1,234 +1,135 @@
-# LGU Property Inventory Management System (PHP Version)
+# LGU Property Inventory Management System
 
-This is a PHP conversion of the LGU Inventory System, designed for managing property inventory for Local Government Units (LGU) in the Philippines.
+PHP-based inventory application for Philippine LGUs: property items by office, PAR/ICS issuance, returns, unserviceable items, procurement-related prints, and COA-style physical count reports. Uses session auth, PDO for data access, REST-style JSON endpoints under `/api`, and **`theme/router.php`** (entered through the root **`router.php`** stub) for MVC-style routes.
+
+**Base URL assumption in this repo:** `/lgu_invent/` (see `RewriteBase` in `.htaccess`).
+
+---
 
 ## Features
 
-- **Property Management**: Track Semi-Expendable (SE) and Property, Plant & Equipment (PPE) items
-- **Office-Based Tracking**: Segregate items by office/department
-- **Issuance System**: Generate PAR (Property Acknowledgement Receipt) and ICS (Inventory Custodian Slip) forms
-- **Returns Management**: Track returned items with transfer or unserviceable marking
-- **Unserviceable Tracking**: Mark and track damaged or unusable items
-- **Disposal Records**: Record disposal of unserviceable items
-- **COA Reporting**: Generate Commission on Audit reports
-- **Dashboard**: Overview of inventory statistics and recent activities
+| Area | Behaviour |
+|------|-----------|
+| **Inventory** | Items as SE/PPE (`property_items`), office linkage, classification from unit value thresholds in **`theme/config.php`** |
+| **Issuance** | `issuance_records`; PAR vs ICS from category; printable forms |
+| **Returns** | `return_records`; transfer / unserviceable flows |
+| **Reports** | Inventory, COA-style physical counts, procurement printouts |
+| **Forecast** | Admin **Planning → Forecast**: live 3-month demand + smart reorder text. Guide: **`docs/FORECASTING.md`** |
+| **Auth** | `AuthController`, `User` model, `PermissionHelper`; session timeout (~1 hour) enforced in main shell |
 
-## System Requirements
+---
 
-- PHP 7.4 or higher
-- MySQL 5.7 or higher / MariaDB 10.2 or higher
-- Apache/Nginx web server
-- Modern web browser (Chrome, Firefox, Edge, Safari)
+## Requirements
 
-## Installation
+- PHP 7.4+ (PDO, `pdo_mysql`, `json`, `mbstring`, sessions)
+- MySQL 5.7+ / MariaDB 10.2+
+- Apache with `AllowOverride All` and **mod_rewrite** enabled
 
-### 1. Database Setup
+---
 
-```bash
-# Import the database schema
-mysql -u root -p < database.sql
-```
+## Quick start
 
-Or manually create the database:
-- Open phpMyAdmin or MySQL client
-- Create a new database named `lgu_inventory`
-- Import the `database.sql` file
+1. Place the project under your docroot (e.g. `C:\xampp\htdocs\lgu_invent`).
+2. Start Apache and MySQL.
+3. **Database — pick one:**
+   - **Automated:** open `http://localhost/lgu_invent/scripts/setup-database.php` (creates DB, core tables, sample offices).
+   - **Import SQL:** create database `lgu_inventory` (utf8mb4), then import `database/lgu_inventory (1).sql`.
+4. Edit **`theme/config.php`** (loaded via root **`bootstrap.php`**) if DB host/user/pass/name differ.
+5. **Users:** Create accounts through **Register** on the login page (requires seeded `offices`), or insert users manually in MySQL. For local development only you may run **`scripts/setup-test-users.php`** — rotate passwords before any shared environment.
+6. Open **`http://localhost/lgu_invent/`** — sign in; **admins** use the full dashboard, **department users** use **`/staff`** (procurement).
 
-### 2. Configure Database Connection
+**Legacy URLs:** `/setup-database.php`, `/setup-test-users.php`, and root-level `print-*.php` still work via `.htaccess` internal rewrite to `scripts/` and `print/`.
 
-Edit `config.php` and update the database credentials:
+---
 
-```php
-define('DB_HOST', 'localhost');
-define('DB_USER', 'your_username');
-define('DB_PASS', 'your_password');
-define('DB_NAME', 'lgu_inventory');
-```
+## Important paths
 
-### 3. Set Up Web Server
+| Path | Role |
+|------|------|
+| `bootstrap.php` | Defines **BASE_PATH** and loads **`theme/config.php`** (PDO, helpers, session start) |
+| `theme/config.php` | Database credentials, thresholds, procurement print constants |
+| `theme/router.php` | Routing for `/login`, `/staff`, `/dashboard`, logout, etc. |
+| `theme/index.php` | Authenticated **admin** SPA shell (HTML + sidebar) |
+| `theme/staff_portal.php` | **Department users** — procurement-only workspace (distinct UI per office theme) |
+| `router.php` (root) | Thin entry — `require`s `theme/router.php` (used by `.htaccess`) |
+| `index.php` (root) | Directory index — `require`s `router.php` (same rules as rewritten URLs; staff → `/staff`) |
+| `theme/.htaccess` | Denies **direct** HTTP access to `theme/*.php` (files still load via PHP `require`) |
+| `app/controllers/`, `app/models/`, `app/views/` | MVC layers |
+| `api/*.php` | JSON endpoints (each loads `bootstrap.php`) |
+| `scripts/` | One-time **setup-database.php**, **setup-test-users.php** |
+| `print/` | **print-issuance.php**, **print-procurement.php**, **print-physical-count-report.php** |
+| `assets/` | CSS/JS — main shell + **`staff-portal.css`** (`/lgu_invent/assets/…`) |
+| `public/assets/` | Login/auth assets (e.g. `auth-modern.css`, `logo.png`) |
 
-#### Apache
-- Copy all files to your web root directory (e.g., `/var/www/html/lgu-inventory/` or `C:\xampp\htdocs\lgu-inventory\`)
-- Ensure `.htaccess` is enabled (if using Apache)
-- Access via `http://localhost/lgu-inventory/`
+Logo for the modern login: `public/assets/logo.png`.
 
-#### Nginx
-- Configure your Nginx server block to point to the project directory
-- Ensure PHP-FPM is properly configured
+---
 
-### 4. File Permissions
+## API overview
 
-Ensure proper permissions for PHP to read/write:
+Typical patterns (see each file for query/body specifics):
 
-```bash
-chmod 755 /path/to/lgu-inventory
-chmod 644 /path/to/lgu-inventory/*.php
-```
+| Endpoint | Purpose |
+|----------|---------|
+| `GET/POST/PATCH … api/items.php` | Property items CRUD/filter |
+| `api/offices.php` | Offices |
+| `api/issuance.php` | Issuance records |
+| `api/returns.php` | Returns |
+| `api/unserviceable.php` | Unserviceable / disposal linkage |
+| `api/dashboard.php` | Dashboard aggregates |
+| Other `api/*.php` | Procurement, reorder helpers, etc. |
 
-## Project Structure
+All endpoints expect a working DB connection; failures often return JSON with hints pointing at **`scripts/setup-database.php`**.
 
-```
-lgu-inventory/
-├── api/                    # API endpoints
-│   ├── items.php          # Property items CRUD
-│   ├── offices.php        # Offices management
-│   ├── issuance.php       # Issuance records (PAR/ICS)
-│   ├── returns.php        # Return records
-│   ├── unserviceable.php  # Unserviceable items
-│   └── dashboard.php      # Dashboard statistics
-├── assets/
-│   ├── css/
-│   │   └── style.css      # Application styles
-│   └── js/
-│       └── app.js         # Main JavaScript application
-├── includes/
-│   └── modals.php         # Modal dialogs
-├── config.php             # Database configuration
-├── database.sql           # Database schema
-├── index.php              # Main application file
-└── README.md              # This file
-```
+---
 
-## Database Schema
+## Property classification & forms
 
-### Tables
+- **SE (Semi-expendable):** unit value **below** the PPE threshold in **`theme/config.php`** — ICS-style handling.
+- **PPE:** at or above threshold — PAR-style handling.
+- Property numbers and form types are enforced in controllers/models and mirrored in issuance/print views.
 
-1. **offices** - Office/department information
-2. **property_items** - Property inventory items
-3. **issuance_records** - PAR/ICS issuance records
-4. **return_records** - Item return records
-5. **unserviceable_records** - Unserviceable item tracking
-6. **disposal_records** - Disposal records
+---
 
-## API Endpoints
+## Print entry points
 
-### Items API (`api/items.php`)
-- `GET` - Retrieve items (with filters: category, status, office_id, search)
-- `POST` - Create new item
-- `PUT` - Update item
-- `DELETE` - Delete item
+Opened in-browser (after login/session where required):
 
-### Offices API (`api/offices.php`)
-- `GET` - Retrieve offices with item counts
-- `POST` - Create new office
-- `PUT` - Update office
-- `DELETE` - Delete office
+- `print/print-issuance.php?id={issuance_record_id}` — PAR or ICS layout.
+- `print/print-procurement.php` — query params `type=pr|rfq|po|air` plus `id` (wired from procurement JS).
+- `print/print-physical-count-report.php` — COA-style physical count; expects `category=SE|PPE` and optional filters.
 
-### Issuance API (`api/issuance.php`)
-- `GET` - Retrieve issuance records
-- `POST` - Create new issuance (PAR/ICS)
+---
 
-### Returns API (`api/returns.php`)
-- `GET` - Retrieve return records
-- `POST` - Create return record
+## Security notes (production)
 
-### Unserviceable API (`api/unserviceable.php`)
-- `GET` - Retrieve unserviceable items
-- `POST` - Mark item as unserviceable
-- `PUT` - Update disposal status
+- Turn off verbose PHP errors (`theme/config.php` suppresses display for cleaner JSON callers).
+- Change all seeded passwords immediately.
+- Prefer HTTPS; restrict filesystem permissions; do not expose `scripts/` on public internet beyond initial provisioning if possible (IP allowlist, `.htpasswd`, or run SQL import only).
 
-### Dashboard API (`api/dashboard.php`)
-- `GET` - Retrieve dashboard statistics and recent activities
-
-## Usage Guide
-
-### Encoding New Items
-
-1. Click "Encode Item" button in the topbar
-2. Fill in item details:
-   - Description (required)
-   - Unit Value (required) - System auto-classifies as SE or PPE
-   - Quantity
-   - Assigned Office (required)
-   - Acquisition Date
-   - Remarks
-3. System automatically generates property number in format: `YYYY-[SE|PPE]-XXXXXX`
-
-### Issuing Items (PAR/ICS)
-
-1. Click "Issue Item" button
-2. Select property item
-3. System automatically determines form type:
-   - **PAR** for PPE items (₱50,000 and above)
-   - **ICS** for Semi-Expendable items (below ₱50,000)
-4. Fill in recipient details
-5. Generate form
-
-### Recording Returns
-
-1. Click "Record Return" button
-2. Select issued item
-3. Choose return action:
-   - **Mark Unserviceable** - Item is damaged/unusable
-   - **Transfer to Office** - Reassign to another office
-4. Record return details
-
-### Property Classification
-
-- **Semi-Expendable (SE)**: Items with unit value below ₱50,000
-  - Property Number Format: `YYYY-SE-XXXXXX`
-  - Form Type: ICS (Inventory Custodian Slip)
-  
-- **Property, Plant & Equipment (PPE)**: Items with unit value ₱50,000 and above
-  - Property Number Format: `YYYY-PPE-XXXXXX`
-  - Form Type: PAR (Property Acknowledgement Receipt)
-
-## Security Considerations
-
-1. **Input Sanitization**: All user inputs are sanitized using `sanitizeInput()` function
-2. **Prepared Statements**: All database queries use prepared statements to prevent SQL injection
-3. **Session Management**: PHP sessions are used for user state management
-4. **Access Control**: Implement authentication and authorization as needed
-
-## Customization
-
-### Changing Classification Threshold
-
-Edit `config.php`:
-
-```php
-define('PPE_THRESHOLD', 50000); // Change threshold value
-```
-
-### Adding Custom Fields
-
-1. Modify database schema in `database.sql`
-2. Update API endpoints in `api/` folder
-3. Update forms in `includes/modals.php`
-4. Update JavaScript in `assets/js/app.js`
+---
 
 ## Troubleshooting
 
-### Database Connection Error
-- Verify database credentials in `config.php`
-- Ensure MySQL service is running
-- Check database exists and user has proper permissions
+- **Blank page / JSON parse errors:** ensure MySQL is running and **`theme/config.php`** matches your DB.
+- **`Unexpected token '<'` in AJAX:** HTML error returned instead of JSON — DB down or fatal PHP error; check logs.
+- **404 on routes:** verify `mod_rewrite` and `.htaccess`; `RewriteBase` must match your folder name (`/lgu_invent/`).
+- **Stale links:** bookmarks to old root `setup-*.php` / `print-*.php` should still rewrite; prefer canonical URLs under `scripts/` and `print/`.
 
-### API Not Working
-- Check PHP error logs
-- Verify file permissions
-- Ensure mod_rewrite is enabled (Apache)
+---
 
-### Blank Page
-- Enable PHP error reporting in `php.ini`
-- Check browser console for JavaScript errors
+## Module summary (architecture)
 
-## Browser Compatibility
+- **Authentication:** `router.php` + `AuthController` + `app/models/User.php` + sessions; RBAC helpers in `app/helpers/PermissionHelper.php`; login UI `app/views/auth/login-modern.php`.
+- **Inventory:** `Item` model / `ItemController`; items table with category, office, quantity, physical count fields; printable property card views under `app/views/items/`.
+- **Issuance:** `Issuance` model + APIs; issuance print pipeline `includes/issuance_print_prepare.php` + PAR/ICS view partials.
+- **Returns:** `ReturnController` / `ReturnModel`; links issuance and item rows.
+- **Property card / PAR–ICS parity:** Formal print layouts reuse government-style tables in issuance and report views; authoritative schema is the shipped SQL (`database/lgu_inventory (1).sql`) plus any migrations you apply locally.
 
-- Chrome 90+
-- Firefox 88+
-- Safari 14+
-- Edge 90+
+---
 
-## License
+## License / use
 
-Internal use only for LGU Property Office.
+Internal LGU use unless your organization defines otherwise.
 
-## Support
-
-For technical support or questions, contact your system administrator.
-
-## Version History
-
-- **v2.0** - PHP conversion with RESTful API
-- **v1.0** - Original HTML/JavaScript version
+**Version:** 2.x (PHP + API stack).

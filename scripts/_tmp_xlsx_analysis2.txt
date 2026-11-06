@@ -1,0 +1,155 @@
+FILE: Lumban_LGU_PR_Historical_Jan-Sep_2026_ML_Dataset.xlsx
+NOTES FROM WORKBOOK:
+  - Historical ML dataset assumptions
+  - Period: January 2026 through September 2026.
+  - Synthetic historical data for demand-forecasting model development; it is not official LGU procurement/appropriation data.
+  - Each row is one Purchase Request. Each PR contains multiple related consumable items.
+  - Department budgets are working monthly ceilings. They vary by month to model demand-driven increases/decreases.
+  - PR frequency, quantities, and totals include controlled random variation and seasonal demand patterns.
+  - Unit prices are illustrative Philippine-peso values for dataset realism, not supplier quotations.
+  - For a production ML model, replace these synthetic values with actual PR dates, line items, quantities, prices, approvals, and cancellations if available.
+
+PR headers: 1165
+Parsed line items: 8743
+Lines with unparsed qty/unit: 0
+Unique depts: 27
+Unique codes: ['ACCOUNTING', 'ADMIN', 'ASSESSOR', 'BUDGET', 'COA', 'DA', 'DEPED', 'DILG', 'ENGR', 'GSO', 'HRMO', 'LICENSE', 'LWS', 'MARKET', 'MCR', 'MDRRMO', 'MPDC', 'MSWDO', 'OM', 'PDAO', 'PESO', 'RHU', 'SB', 'SENIOR', 'SWM', 'TRADING POST', 'TREASURY']
+Months: ['2026-01', '2026-02', '2026-03', '2026-04', '2026-05', '2026-06', '2026-07', '2026-08', '2026-09']
+PR totals sum: 8,351,150
+
+=== PR COUNT SERIES BY DEPARTMENT ===
+Accounting Office
+  PR/mo=[2, 4, 5, 2, 5, 3, 4, 5, 6] avg=4.00 spend/mo=[9900, 16800, 24100, 6850, 26500, 18050, 14250, 21650, 43750]
+Administrative Office
+  PR/mo=[4, 4, 6, 4, 7, 7, 5, 4, 4] avg=5.00 spend/mo=[22050, 18550, 38300, 21900, 46450, 51150, 26850, 31300, 22350]
+Assessor’s Office
+  PR/mo=[3, 2, 3, 5, 2, 6, 5, 2, 2] avg=3.33 spend/mo=[12400, 11050, 20350, 30300, 14000, 36350, 27800, 10550, 10650]
+Budget Office
+  PR/mo=[4, 5, 2, 5, 2, 3, 4, 4, 5] avg=3.78 spend/mo=[19550, 34100, 10100, 26700, 9800, 15700, 20550, 22500, 24750]
+Commission on Audit
+  PR/mo=[3, 3, 4, 5, 2, 3, 4, 5, 4] avg=3.67 spend/mo=[21300, 16050, 22200, 34100, 14000, 18850, 17700, 30950, 19850]
+Department of Agriculture
+  PR/mo=[7, 5, 6, 7, 6, 5, 6, 4, 4] avg=5.56 spend/mo=[46500, 39500, 43300, 48150, 42800, 38050, 58050, 43800, 31950]
+Department of Education
+  PR/mo=[4, 6, 4, 7, 5, 8, 7, 5, 5] avg=5.67 spend/mo=[28850, 41050, 22500, 37650, 34250, 60450, 43200, 35200, 38250]
+Department of the Interior and Local Government
+  PR/mo=[5, 5, 2, 4, 2, 6, 5, 4, 2] avg=3.89 spend/mo=[23100, 18900, 11950, 11150, 6700, 26650, 20500, 14800, 11200]
+Engineering Office
+  PR/mo=[6, 5, 4, 7, 7, 6, 5, 4, 4] avg=5.33 spend/mo=[25850, 25000, 20800, 37700, 38100, 25750, 26100, 25850, 29950]
+General Services Office
+  PR/mo=[8, 8, 6, 5, 7, 7, 8, 8, 5] avg=6.89 spend/mo=[77150, 79000, 65750, 55500, 93050, 79850, 93500, 100050, 56800]
+Human Resource Management Office
+  PR/mo=[3, 2, 4, 3, 5, 3, 4, 4, 5] avg=3.67 spend/mo=[13250, 12200, 15850, 20350, 26100, 11200, 17450, 17600, 28250]
+License Office
+  PR/mo=[3, 4, 3, 3, 3, 6, 3, 3, 5] avg=3.67 spend/mo=[14150, 15250, 12150, 17150, 13150, 37600, 14100, 13800, 22050]
+Lumban Public Market
+  PR/mo=[4, 7, 7, 5, 5, 5, 4, 5, 7] avg=5.44 spend/mo=[28450, 44900, 57450, 35650, 44650, 48100, 29500, 49700, 48150]
+Lumban Waterworks System
+  PR/mo=[5, 6, 5, 6, 7, 9, 7, 5, 8] avg=6.44 spend/mo=[49850, 82250, 62200, 56150, 78050, 132700, 76800, 58550, 97250]
+Municipal Civil Registrar
+  PR/mo=[7, 7, 5, 4, 4, 4, 4, 8, 8] avg=5.67 spend/mo=[44650, 37600, 27750, 29000, 24100, 21150, 31000, 45000, 54650]
+Municipal Disaster Risk Reduction and Management Office
+  PR/mo=[6, 5, 8, 7, 7, 6, 6, 5, 8] avg=6.44 spend/mo=[45400, 42000, 73050, 56200, 70450, 69050, 77050, 47550, 80300]
+Municipal Planning and Development Office
+  PR/mo=[2, 5, 5, 3, 2, 3, 5, 5, 3] avg=3.67 spend/mo=[7350, 29000, 23050, 15650, 14250, 15700, 31550, 27300, 16300]
+Municipal Social Welfare and Development Office
+  PR/mo=[4, 4, 4, 7, 6, 7, 7, 7, 4] avg=5.56 spend/mo=[28200, 30800, 33950, 51100, 34700, 43600, 57700, 68350, 30950]
+Office of the Mayor
+  PR/mo=[3, 5, 3, 4, 4, 5, 3, 5, 4] avg=4.00 spend/mo=[16050, 33050, 15500, 19100, 20500, 26500, 14200, 30800, 18800]
+Office of the Person With Disability Affairs
+  PR/mo=[4, 2, 2, 3, 2, 3, 5, 4, 4] avg=3.22 spend/mo=[24650, 6850, 9000, 15200, 9500, 11050, 18700, 16100, 13700]
+Office of the Senior Citizen Affairs (OSCA)
+  PR/mo=[3, 2, 5, 5, 2, 6, 3, 3, 2] avg=3.44 spend/mo=[13350, 8350, 26400, 25950, 10700, 23700, 18250, 15800, 11700]
+Organic Trading Post
+  PR/mo=[4, 4, 5, 6, 7, 5, 6, 6, 6] avg=5.44 spend/mo=[23950, 24800, 29900, 42650, 45300, 35500, 42700, 40100, 41950]
+Public Employment Services Office
+  PR/mo=[5, 4, 5, 3, 4, 5, 3, 2, 4] avg=3.89 spend/mo=[22150, 14100, 30200, 13450, 25950, 23550, 19300, 6850, 18750]
+Rural Health Unit
+  PR/mo=[5, 6, 8, 5, 7, 8, 6, 5, 6] avg=6.22 spend/mo=[63850, 77100, 90500, 69450, 91550, 97800, 77200, 73150, 75550]
+Sangguniang Bayan Office
+  PR/mo=[2, 4, 4, 2, 3, 4, 5, 3, 5] avg=3.56 spend/mo=[11050, 23950, 25950, 9900, 23650, 19950, 27600, 12700, 29750]
+Solid Waste Management
+  PR/mo=[8, 8, 6, 5, 5, 6, 7, 6, 6] avg=6.33 spend/mo=[64900, 65750, 44000, 42450, 36900, 68650, 71450, 50550, 61600]
+Treasury Office
+  PR/mo=[6, 5, 7, 4, 6, 7, 7, 4, 5] avg=5.67 spend/mo=[28850, 25550, 44950, 25250, 31850, 38500, 33000, 25900, 31200]
+PR freq CV across depts=0.240 min=3.22 max=6.89
+
+=== ITEM CATALOG REALISM ===
+Unique item names: 76
+Top 25 items:
+   536  Printer toner
+   462  Carbon paper
+   448  Legal-size paper
+   418  Ballpen black
+   406  Manila paper
+   406  Bond paper A4
+   403  Correction tape
+   394  Permanent marker
+   394  Folders
+   393  Logbook
+   386  Staples
+   381  Paper clips
+   379  Notepads
+   378  Long envelopes
+   377  Masking tape
+   371  Ballpen blue
+   367  Pencils
+   364  Highlighter
+    94  Rubber gloves
+    92  Printer ink
+    72  Face masks
+    68  Garbage bags, large
+    66  Disinfectant
+    65  Broom
+    65  Record folders
+Avg pairwise item-set Jaccard=0.735
+Identical catalogs=1
+Items appearing in ALL 27 depts: 18
+  e.g. Ballpen blue; Notepads; Bond paper A4; Masking tape; Permanent marker; Folders; Carbon paper; Ballpen black; Highlighter; Printer toner
+Most shared items:
+  27/27 — Ballpen blue
+  27/27 — Notepads
+  27/27 — Bond paper A4
+  27/27 — Masking tape
+  27/27 — Permanent marker
+  27/27 — Folders
+  27/27 — Carbon paper
+  27/27 — Ballpen black
+  27/27 — Highlighter
+  27/27 — Printer toner
+  27/27 — Correction tape
+  27/27 — Pencils
+
+=== SAMPLE TOP ITEMS PER DEPT (shows differentiation) ===
+Rural Health Unit: Correction tape(22); Manila paper(21); Alcohol 70%(21); Logbook(20); Staples(19); Long envelopes(18); Highlighter(18); Permanent marker(18)
+Solid Waste Management: Rubber gloves(20); Legal-size paper(20); Logbook(19); Pencils(19); Ballpen blue(18); Bleach(18); Ballpen black(18); Face masks(17)
+Accounting Office: Printer toner(23); Legal-size paper(23); Carbon paper(22); Staples(17); Folders(17); Bond paper A4(16); Highlighter(15); Manila paper(14)
+Engineering Office: Pencils(22); Ballpen black(18); Correction tape(18); Folders(17); Paper clips(17); Highlighter(17); Bond paper A4(17); Legal-size paper(16)
+Office of the Mayor: Printer toner(20); Long envelopes(19); Pencils(17); Ballpen blue(17); Bond paper A4(17); Invitation envelopes(17); Folders(16); Ballpen black(16)
+
+=== SPEND VS MONTHLY CEILING ===
+dept-months over ceiling(+5%): 222/243 (91%)
+Monthly Department Summary sample (spend can exceed base budget):
+  headers=['Department Code', 'Department', 'Base Max Monthly Budget', 'Jan 2026', 'Feb 2026', 'Mar 2026', 'Apr 2026', 'May 2026', 'Jun 2026', 'Jul 2026', 'Aug 2026', 'Sep 2026', 'Jan-Sep Total', 'PR Count']
+  ('SWM', 'Solid Waste Management', 32000, 64900, 65750, 44000, 42450, 36900, 68650, 71450, 50550, 61600, 506250, 57)
+  ('PDAO', 'Office of the Person With Disability Affairs', 9000, 24650, 6850, 9000, 15200, 9500, 11050, 18700, 16100, 13700, 124750, 29)
+  ('SENIOR', 'Office of the Senior Citizen Affairs (OSCA)', 10000, 13350, 8350, 26400, 25950, 10700, 23700, 18250, 15800, 11700, 154200, 31)
+
+=== OFFICE NAME MAPPING HINTS (Excel -> app) ===
+  Solid Waste Management -> Environment Office / ENRO?
+  Rural Health Unit -> Health Office
+  Municipal Disaster Risk Reduction and Management Office -> Disaster Risk Office
+  Municipal Social Welfare and Development Office -> Social Welfare Office
+  Municipal Planning and Development Office -> Planning Office
+  Human Resource Management Office -> Human Resource Office
+  Sangguniang Bayan Office -> Office of the Vice Mayor?
+  Department of Agriculture -> Agriculture Office
+  Assessor’s Office -> Assessor Office
+  Office of the Senior Citizen Affairs (OSCA) -> Office of the Senior Citizen Affairs
+
+=== VERDICT ===
+1) Workbook Notes say this is SYNTHETIC ML training data, not official LGU records.
+2) Still MUCH more realistic than current demo: item lists differ by dept, PR totals vary, monthly PR counts vary.
+3) Structure is PR-header rows with packed item text — import must parse 'Name Qty Unit' tokens.
+4) Some months exceed monthly ceiling (by design in summary) — forecast/budget status will show over-budget often.
+5) Ready to import AFTER office-code mapping + line parsing + wipe old consumable demo PRs.
